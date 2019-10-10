@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-function Arrow({ className }) {
+export function Arrow({ className }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -15,12 +15,12 @@ function Arrow({ className }) {
 }
 
 const ArrowStyled = styled(Arrow)`
-  fill: ${props => props.theme.accent};
+  fill: ${props => (props.white ? props.theme.brightFont : props.theme.accent)};
   height: 40px;
   width: 40px;
   transform: ${props => (props.rotate ? "rotate(180deg)" : "none")};
 `;
 
-export default function Pointer({ rotate }) {
-  return <ArrowStyled rotate={rotate} />;
+export default function Pointer({ white, rotate }) {
+  return <ArrowStyled white={white} rotate={rotate} />;
 }
