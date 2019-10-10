@@ -6,6 +6,7 @@ const StyledHeader = styled.header`
   color: ${props => props.theme.brightFront};
   display: flex;
   align-items: center;
+
   padding-left: 40px;
   padding-right: 40px;
   width: 100%;
@@ -18,10 +19,10 @@ const StyledH2 = styled.h2`
   padding: 0;
 `;
 
-function Header() {
+function Top() {
   return (
     <StyledHeader>
-      <StyledH2></StyledH2>
+      <StyledH2>This is a Header</StyledH2>
     </StyledHeader>
   );
 }

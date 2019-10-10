@@ -1,31 +1,36 @@
 import React from "react";
-import styled from "styled-components";
-import Button from "../components/Button";
+import Button, { ButtonAlt } from "../components/Button";
 
 export default {
   title: "Buttons"
 };
 
-const ButtonAlt = styled(Button)`
-  background: ${props => props.theme.contrast};
-  color: ${props => props.theme.brightFont};
-  border: ${props => props.theme.contrast};
-`;
-
-export const Active = () => (
+export const DefaultActive = () => (
   <Button active={true} onClick={() => console.log("clicked")}>
     Active Button
   </Button>
 );
 
-export const Inactive = () => (
+export const DefaultInactive = () => (
   <Button active={false} onClick={() => console.log("clicked")}>
     inactive Button
   </Button>
 );
 
-export const ActiveAlt = () => (
-  <ButtonAlt active={true} onClick={() => console.log("clicked")}>
+export const DefaultActiveBig = () => (
+  <Button active={true} big={true} onClick={() => console.log("clicked")}>
+    Active Button
+  </Button>
+);
+
+export const DefaultInactiveBig = () => (
+  <Button active={false} big={true} onClick={() => console.log("clicked")}>
+    inactive Button
+  </Button>
+);
+
+export const DefaultActiveAltBig = () => (
+  <ButtonAlt active={true} big={true} onClick={() => console.log("clicked")}>
     active AltButton
   </ButtonAlt>
 );
