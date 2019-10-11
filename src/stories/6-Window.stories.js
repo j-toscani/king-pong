@@ -31,5 +31,8 @@ export const Loss = () => (
 );
 
 export const Chat = () => (
-  <ChatWindow messages={messages} handleSubmitMessage={null}></ChatWindow>
+  <ChatWindow
+    messages={messages}
+    handleSubmitMessage={() => console.log("message submitted")}
+  ></ChatWindow>
 );

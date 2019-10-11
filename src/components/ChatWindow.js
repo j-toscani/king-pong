@@ -7,7 +7,7 @@ function ChatWindow({ messages, handleSubmitMessage }) {
   return (
     <StyledWindow chat>
       <ChatHistory messages={messages}></ChatHistory>
-      <ChatInput getMessage={handleSubmitMessage}></ChatInput>
+      <ChatInput handleSubmitMessage={handleSubmitMessage}></ChatInput>
     </StyledWindow>
   );
 }
