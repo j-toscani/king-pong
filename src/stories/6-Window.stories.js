@@ -1,5 +1,6 @@
 import React from "react";
 import WinLossWindow from "../components/WinLossWindow";
+import ChatInput from "../components/ChatInput";
 
 export default {
   title: "Windows"
@@ -22,3 +23,5 @@ export const Win = () => (
 export const Loss = () => (
   <WinLossWindow onClick={() => console.log("loss")} player={p2} />
 );
+
+export const ChatInterface = () => <ChatInput></ChatInput>;
