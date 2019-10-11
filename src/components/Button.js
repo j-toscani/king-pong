@@ -4,16 +4,16 @@ import styled, { css } from "styled-components";
 const StyledButton = styled.button`
   border-radius: 10px;
   ${props =>
-    props.active
+    props.disabled
       ? css`
-          background: ${props.theme.accent};
-          color: ${props.theme.darkFont};
-          border: solid 2px ${props.theme.accent};
-        `
-      : css`
           background: "transparent";
           color: ${props.theme.contrast};
           border: solid 2px ${props.theme.contrast};
+        `
+      : css`
+          background: ${props.theme.accent};
+          color: ${props.theme.darkFont};
+          border: solid 2px ${props.theme.accent};
         `}
   ${props =>
     props.big
@@ -36,31 +36,22 @@ const StyledButton = styled.button`
   justify-content: center;
 `;
 
-const AltButton = styled(Button)`
+export const AltButton = styled(Button)`
   background: ${props => props.theme.contrast};
   color: ${props => props.theme.brightFont};
   border: ${props => props.theme.contrast};
 `;
 
-function Button({ active, big, onClick, className, children }) {
+function Button({ disabled, big, onClick, className, children }) {
   return (
     <StyledButton
-      disabled={!active}
+      disabled={disabled}
       big={big}
       className={className}
       onClick={onClick}
-      active={active}
     >
       {children}
     </StyledButton>
-  );
-}
-
-export function ButtonAlt({ big, onClick, className, children }) {
-  return (
-    <AltButton big={big} className={className} onClick={onClick}>
-      {children}
-    </AltButton>
   );
 }
 
