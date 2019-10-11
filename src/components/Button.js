@@ -49,6 +49,7 @@ function Button({ disabled, big, onClick, className, children }) {
       big={big}
       className={className}
       onClick={onClick}
+      round={true}
     >
       {children}
     </StyledButton>

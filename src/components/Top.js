@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Pointer from "../ressources/icons/Pointer";
 import LogoStyled from "../ressources/icons/Logo";
 
-const StyledHeader = styled.header`
+export const StyledHeader = styled.header`
   background: ${props => props.theme.contrast};
   color: ${props => props.theme.brightFont};
   display: flex;
