@@ -10,7 +10,7 @@ const StyledHeader = styled.header`
   align-items: center;
   justify-content: space-between;
   padding-left: 40px;
-  padding-right: 40px;
+  padding-right: 30px;
   width: 100%;
   height: 80px;
 `;
@@ -18,15 +18,25 @@ const StyledHeader = styled.header`
 const StyledH2 = styled.h2`
   color: ${props => props.theme.brightFont};
   margin: 0;
-  padding: 0;
+  padding-right: 10;
   font-size: 20px;
 `;
 
-export function TopPointer({ headline, rotate }) {
+const InputFieldStyled = styled.button`
+  padding: 0;
+  margin: 0;
+  text-align: right;
+  background: ${props => props.theme.contrast};
+  border: none;
+`;
+
+export function TopPointer({ headline, rotate, onClick }) {
   return (
     <StyledHeader headline={headline}>
       <StyledH2>{headline}</StyledH2>
-      <Pointer rotate={rotate}></Pointer>
+      <InputFieldStyled onClick={onClick}>
+        <Pointer rotate={rotate}></Pointer>
+      </InputFieldStyled>
     </StyledHeader>
   );
 }

@@ -5,6 +5,12 @@ export default {
   title: "Game Input Buttons"
 };
 
-export const LeftButton = () => <GameButton direction={"left"} />;
-export const RightButton = () => <GameButton direction={"right"} />;
-export const Concede = () => <ConcedeButton></ConcedeButton>;
+export const LeftButton = () => (
+  <GameButton onClick={() => console.log("left")} direction={"left"} />
+);
+export const RightButton = () => (
+  <GameButton onClick={() => console.log("right")} direction={"right"} />
+);
+export const Concede = () => (
+  <ConcedeButton onClick={() => console.log("clicked")}></ConcedeButton>
+);
