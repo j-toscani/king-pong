@@ -1,6 +1,7 @@
 import React from "react";
 import WinLossWindow from "../components/WinLossWindow";
 import ChatWindow from "../components/ChatWindow";
+import GreetingWindow from "../components/GreetingWindow";
 
 export default {
   title: "Windows"
@@ -36,3 +37,5 @@ export const Chat = () => (
     handleSubmitMessage={() => console.log("message submitted")}
   ></ChatWindow>
 );
+
+export const Greeting = () => <GreetingWindow></GreetingWindow>;

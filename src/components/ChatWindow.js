@@ -1,13 +1,13 @@
 import React from "react";
 import StyledWindow from "./StyledWindow";
 import ChatHistory from "./ChatHistory";
-import ChatInput from "./ChatInput";
+import ChatBar from "./ChatBar";
 
 function ChatWindow({ messages, handleSubmitMessage }) {
   return (
     <StyledWindow chat>
       <ChatHistory messages={messages}></ChatHistory>
-      <ChatInput handleSubmitMessage={handleSubmitMessage}></ChatInput>
+      <ChatBar handleSubmitMessage={handleSubmitMessage}></ChatBar>
     </StyledWindow>
   );
 }

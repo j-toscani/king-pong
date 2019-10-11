@@ -3,31 +3,35 @@ import React from "react";
 import StyledWindow from "./StyledWindow";
 import Button from "./Button";
 
-const Cheer = styled.h3`
+const Headline = styled.h3`
   font-size: 20px;
   margin: 0;
+`;
+
+const StyledWindowSee = styled(StyledWindow)`
+  opacity: 0.8;
 `;
 
 function WinLossWindow({ player, onClick }) {
   if (player.win === true) {
     return (
-      <StyledWindow>
-        <Cheer>{player.cheer}</Cheer>
+      <StyledWindowSee>
+        <Headline>{player.cheer}</Headline>
         <div>{player.message}</div>
         <Button active onClick={onClick}>
           Back to Play
         </Button>
-      </StyledWindow>
+      </StyledWindowSee>
     );
   } else if (player.win !== true) {
     return (
-      <StyledWindow>
-        <Cheer>{player.cheer}</Cheer>
+      <StyledWindowSee>
+        <Headline>{player.cheer}</Headline>
         <div>{player.message}</div>
         <Button active onClick={onClick}>
           Back to Play
         </Button>
-      </StyledWindow>
+      </StyledWindowSee>
     );
   }
 }

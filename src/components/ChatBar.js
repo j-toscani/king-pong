@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const ChatInput = styled.input`
+export const Input = styled.input`
   height: 30px;
   width: 65%;
   padding: 5px;
@@ -50,7 +50,7 @@ function ChatBar({ handleSubmitMessage }) {
       }}
     >
       <Sender>You: </Sender>
-      <ChatInput type="input" placeholder="Tap to start chatting!"></ChatInput>
+      <Input type="input" placeholder="Tap to start chatting!"></Input>
       <SubmitButton type="submit" />
     </InputContainer>
   );
