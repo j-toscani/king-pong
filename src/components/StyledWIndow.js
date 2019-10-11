@@ -7,7 +7,6 @@ const StyledWindow = styled.div`
   background: ${props => props.theme.contrast};
   height: 250px;
   width: 290px;
-  padding: 5px;
 
   ${props =>
     props.chat

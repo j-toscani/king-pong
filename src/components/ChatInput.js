@@ -13,10 +13,11 @@ const ChatInput = styled.input`
 const Sender = styled.label`
   margin-left: 10px;
   margin-right: 10px;
+  color: ${props => props.theme.darkFont};
 `;
 
 const SubmitButton = styled.input`
-  height: 100%;
+  height: 30px;
   border: none;
   outline: none;
   box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.3);
@@ -31,19 +32,18 @@ const InputContainer = styled.form`
   height: 40px;
   padding: 5px;
   border-radius: 0 0 10px 10px;
-  color: ${props => props.theme.darkFont};
   display: flex;
   align-items: center;
   background: ${props => props.theme.accent};
 `;
 
-function ChatBar({ submitMessage }) {
+function ChatBar({ handleSubmitMessage }) {
   return (
     <InputContainer
       onSubmit={event => {
         event.preventDefault();
-        if (submitMessage) {
-          submitMessage();
+        if (handleSubmitMessage) {
+          handleSubmitMessage();
         } else {
           console.log("message send");
         }

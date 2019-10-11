@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React from "react";
-import StyledWindow from "./StyledWIndow";
+import StyledWindow from "./StyledWindow";
 import Button from "./Button";
 
 const Cheer = styled.h3`

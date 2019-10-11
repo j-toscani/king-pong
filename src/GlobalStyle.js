@@ -14,4 +14,9 @@ body {
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
 }
+
+button, input {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+}
 `;

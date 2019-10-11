@@ -12,9 +12,11 @@ const ChatDisplay = styled.div`
 function ChatHistory({ messages }) {
   return (
     <ChatDisplay>
-      {messages.map((p1, user, message) => (
-        <ChatMessage player={(p1, user, message)}></ChatMessage>
-      ))}
+      {messages.map((message, index) => {
+        return (
+          <ChatMessage key={message[index]} message={message}></ChatMessage>
+        );
+      })}
     </ChatDisplay>
   );
 }

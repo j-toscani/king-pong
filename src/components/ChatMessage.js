@@ -3,17 +3,17 @@ import styled from "styled-components";
 
 const MessageContainer = styled.div`
   display: grid;
-  grid-template: 1fr / 30% 40%;
+  padding: 2px;
+  grid-template: 1fr / 35% 65%;
   background: "transparent";
-  color: ${props =>
-    props.player.p1 ? props.theme.brightFont : props.theme.darkFont};
+  color: ${props => (props.p1 ? props.theme.brightFont : props.theme.accent)};
 `;
 
-function ChatMessage({ player }) {
+function ChatMessage({ message }) {
   return (
-    <MessageContainer p1={player.p1}>
-      <span>{`${player.name} :`}</span>
-      <span>{player.message}</span>
+    <MessageContainer p1={message.p1}>
+      <span>{`${message.name} :`}</span>
+      <span>{message.content}</span>
     </MessageContainer>
   );
 }
