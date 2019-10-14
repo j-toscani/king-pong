@@ -20,6 +20,8 @@ const Background = styled.div`
 `;
 
 const OverlayContainer = styled.section`
+  /* transform: ${({ open }) =>
+    open ? "translateX(0)" : "translateX(-100%)"}; */
   width: 75vw;
   max-width: 360px;
   min-height: 550px;
@@ -39,7 +41,7 @@ const BottomContainer = styled.div`
   justify-content: space-between;
 `;
 
-function Overlay() {
+function Overlay({ open }) {
   return (
     <>
       <Background></Background>
