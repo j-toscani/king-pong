@@ -5,14 +5,16 @@ import RetreatButton from "./RetreatButton";
 
 const Background = styled.div`
   position: absolute;
-  z-index: -1;
+
   width: 100vw;
   max-width: 360px;
   min-height: 550px;
+  filter: blur(4px);
+  opacity: 0.8;
+  z-index: -1;
   width: 100%;
   background: ${props => props.theme.main};
-  filter: blur(4px);
-  opacity: 0.5;
+
   padding-top: 50px;
   padding-bottom: 35px;
 `;
@@ -21,7 +23,7 @@ const OverlayContainer = styled.section`
   width: 75vw;
   max-width: 360px;
   min-height: 550px;
-
+  z-index: 3;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -45,6 +47,7 @@ function Overlay() {
         <Settings></Settings>
         <BottomContainer>
           <RetreatButton name={"Profile"}></RetreatButton>
+
           <RetreatButton name={"About"}></RetreatButton>
         </BottomContainer>
       </OverlayContainer>
