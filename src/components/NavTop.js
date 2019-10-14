@@ -28,21 +28,21 @@ const SettingsInput = styled.button`
   padding: 0;
 `;
 
-function NavTop({ state, round, onClick }) {
-  if (state === "before") {
+function NavTop({ state, handleChange }) {
+  if (state === "open") {
     return (
       <StyledHeader>
-        <SettingsInput onClick={onClick} round={round}>
+        <SettingsInput onClick={handleChange}>
           <Cross></Cross>
         </SettingsInput>
         <StyledH2>Play!</StyledH2>
         <LogoStyled></LogoStyled>
       </StyledHeader>
     );
-  } else if (state === "after") {
+  } else if (state === "closed") {
     return (
       <StyledHeader>
-        <SettingsInput onClick={onClick} round={round}>
+        <SettingsInput onClick={handleChange}>
           <Options></Options>
         </SettingsInput>
         <StyledH2>Settings</StyledH2>

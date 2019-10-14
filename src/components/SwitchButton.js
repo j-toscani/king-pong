@@ -22,18 +22,20 @@ const Point = styled.label`
   width: 25px;
   height: 25px;
   top: -4px;
+  left: 4px;
+  box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.3);
   ${props =>
     props.active
       ? css`
           position: absolute;
-          transform: translateX(30px);
-          transition-delay: 500;
+          transform: translateX(26px);
+          transition: all 0.5s;
         `
       : css`
-          left: 5px;
+          left: 4px;
           position: absolute;
-          transition-delay: 500;
-        `}
+          transition: all 0.5s;
+        `};
 `;
 
 export default function SwitchButton({ id, active, handleChange }) {
