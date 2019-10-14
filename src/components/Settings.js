@@ -24,10 +24,7 @@ const Container = styled.div`
   color: ${props => props.theme.brightFont};
 `;
 
-export default function Settings() {
-  const [darkmode, setDarkmode] = React.useState(false);
-  const [sound, setSound] = React.useState(false);
-
+export default function Settings({ handleToggleMode, mute, darkmode }) {
   return (
     <Container>
       <Option>
@@ -35,19 +32,15 @@ export default function Settings() {
         <SwitchButton
           id={"Darkmode"}
           active={darkmode}
-          handleChange={() => {
-            setDarkmode(!darkmode);
-          }}
+          handleChange={() => handleToggleMode("darkmode")}
         ></SwitchButton>
       </Option>
       <Option>
         Sound
         <SwitchButton
           id={"Sound"}
-          active={sound}
-          handleChange={() => {
-            setSound(!sound);
-          }}
+          active={mute}
+          handleChange={() => handleToggleMode("mute")}
         ></SwitchButton>
       </Option>
     </Container>

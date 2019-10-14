@@ -22,19 +22,20 @@ import RetreatButton from "./RetreatButton";
 const OverlayContainer = styled.section`
   transform: ${props => (props.open ? "translateX(0)" : "translateX(-100%)")};
   transition: all 0.5s;
+  left: 0;
   width: 75vw;
   max-width: 360px;
   height: 100%;
   min-height: 550px;
-  z-index: 3;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-top: 50px;
+  padding-top: 35px;
   padding-bottom: 35px;
   position: absolute;
+
   background: ${props => props.theme.main};
-  left: 0;
 `;
 
 const BottomContainer = styled.div`
@@ -45,10 +46,15 @@ const BottomContainer = styled.div`
   justify-content: space-between;
 `;
 
-function Overlay({ open }) {
+function Overlay({ open, mute, darkmode, handleToggleMode }) {
   return (
     <OverlayContainer open={open}>
-      <Settings></Settings>
+      <Settings
+        handleToggleMode={handleToggleMode}
+        open={open}
+        mute={mute}
+        darkmode={darkmode}
+      ></Settings>
       <BottomContainer>
         <RetreatButton name={"Profile"}></RetreatButton>
         <RetreatButton name={"About"}></RetreatButton>

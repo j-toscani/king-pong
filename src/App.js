@@ -25,9 +25,11 @@ const Container = styled.div`
 function App() {
   const [darkmode, setDarkmode] = React.useState(false);
   const [mute, setMute] = React.useState(true);
-  function toggleMode(mode) {
-    if (mode === darkmode) setDarkmode(!darkmode);
-    if (mode === mute) setMute(!mute);
+  function handleToggleMode(mode) {
+    if (mode === "darkmode") setDarkmode(!darkmode);
+    if (mode === "mute") setMute(!mute);
+    console.log(mute);
+    console.log(darkmode);
   }
   return (
     <ThemeProvider theme={darkmode ? darkTheme : defaultTheme}>
@@ -52,7 +54,9 @@ function App() {
           <Route
             path="/select"
             exact
-            component={props => <GameSelect {...props} />}
+            component={props => (
+              <GameSelect handleToggleMode={handleToggleMode} {...props} />
+            )}
           />
           <Route
             path="/entername"

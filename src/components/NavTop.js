@@ -7,7 +7,7 @@ import LogoStyled from "../ressources/icons/Logo";
 
 const StyledH2 = styled.h2`
   color: ${props => props.theme.brightFont};
-  font-size: 20px;
+  font-size: 24px;
   text-align: left;
   font-weight: 400;
   font-style: none;
