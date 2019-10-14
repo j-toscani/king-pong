@@ -1,5 +1,6 @@
 import React from "react";
 import Button, { AltButton } from "../components/Button";
+import SwitchButton from "../components/SwitchButton";
 
 export default {
   title: "Buttons"
@@ -32,3 +33,16 @@ export const DefaultActiveAltBig = () => (
     active AltButton
   </AltButton>
 );
+
+export const Switch = () => {
+  const [active, setActive] = React.useState(false);
+  return (
+    <SwitchButton
+      id={"name"}
+      active={active}
+      handleChange={() => {
+        setActive(!active);
+      }}
+    ></SwitchButton>
+  );
+};
