@@ -1,25 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { StyledHeader } from "./Top";
-import { AltButton } from "./Button";
 import Cross from "../ressources/icons/Cross";
 import Options from "../ressources/icons/Options";
 import LogoStyled from "../ressources/icons/Logo";
-
-const CheckSettings = styled(Options)`
-  height: 35px;
-  width: 35px;
-  padding: 0;
-
-  min-width: 0;
-`;
-
-const RoundButton = styled(AltButton)`
-  border-radius: 50%;
-  height: 35px;
-  width: 35px;
-  fill: ${props => props.theme.brightFont};
-`;
 
 const StyledH2 = styled.h2`
   color: ${props => props.theme.brightFont};
@@ -29,20 +13,28 @@ const StyledH2 = styled.h2`
   font-style: none;
 `;
 
-const LeaveSettings = styled(Cross)`
-  height: 35px;
-  width: 35px;
+const SettingsInput = styled.button`
+  background: ${props => props.theme.contrast};
+  color: ${props => props.theme.brightFont};
+  fill: ${props => props.theme.brightFont};
+  border: ${props => props.theme.contrast};
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  border-radius: 50%;
+  margin: 0;
   padding: 0;
-  min-width: 0;
 `;
 
 function NavTop({ state, round, onClick }) {
   if (state === "before") {
     return (
       <StyledHeader>
-        <RoundButton onClick={onClick} round={round}>
-          <CheckSettings></CheckSettings>
-        </RoundButton>
+        <SettingsInput onClick={onClick} round={round}>
+          <Cross></Cross>
+        </SettingsInput>
         <StyledH2>Play!</StyledH2>
         <LogoStyled></LogoStyled>
       </StyledHeader>
@@ -50,9 +42,9 @@ function NavTop({ state, round, onClick }) {
   } else if (state === "after") {
     return (
       <StyledHeader>
-        <RoundButton onClick={onClick} round={round}>
-          <LeaveSettings></LeaveSettings>
-        </RoundButton>
+        <SettingsInput onClick={onClick} round={round}>
+          <Options></Options>
+        </SettingsInput>
         <StyledH2>Settings</StyledH2>
         <LogoStyled></LogoStyled>
       </StyledHeader>

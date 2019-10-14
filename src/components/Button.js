@@ -31,14 +31,12 @@ const StyledButton = styled.button`
           padding-left: 4%;
           padding-right: 4%;
         `}
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 export const AltButton = styled(Button)`
   background: ${props => props.theme.contrast};
   color: ${props => props.theme.brightFont};
+  fill: ${props => props.theme.brightFont};
   border: ${props => props.theme.contrast};
 `;
 

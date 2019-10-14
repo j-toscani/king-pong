@@ -1,6 +1,7 @@
 import React from "react";
+import styled from "styled-components";
 
-function Options({ className }) {
+function UnstyledOptions({ className }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -67,5 +68,10 @@ function Options({ className }) {
     </svg>
   );
 }
+
+const Options = styled(UnstyledOptions)`
+  flex-grow: 1;
+  margin: 2px;
+`;
 
 export default Options;
