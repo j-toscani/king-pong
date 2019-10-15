@@ -5,16 +5,13 @@ import RetreatButton from "./RetreatButton";
 
 const Background = styled.div`
   position: absolute;
-
   width: 100vw;
   max-width: 360px;
   min-height: 550px;
   filter: blur(4px);
   opacity: 0.8;
   z-index: -1;
-  width: 100%;
   background: ${props => props.theme.main};
-
   padding-top: 50px;
   padding-bottom: 35px;
 `;
