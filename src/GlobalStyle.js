@@ -12,5 +12,15 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+}
+
+main{
+ background: ${props => props.theme.main};
+}
+
+button, input {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
 }
 `;
