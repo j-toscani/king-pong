@@ -19,7 +19,7 @@ const OverlayContainer = styled.section`
   padding-top: 35px;
   padding-bottom: 35px;
   position: absolute;
-
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
   background: ${props => props.theme.main};
 `;
 
@@ -40,7 +40,7 @@ const BottomContainer = styled.div`
   justify-content: space-between;
 `;
 
-function Overlay({ open, mute, darkmode, handleToggleMode }) {
+function Overlay({ open, mute, darkmode, handleToggleMode, inGame }) {
   let history = useHistory();
 
   function handleClick(destination) {
@@ -63,10 +63,12 @@ function Overlay({ open, mute, darkmode, handleToggleMode }) {
           <RetreatButton
             handleClick={handleClick}
             name={"Profile"}
+            inGame={inGame}
           ></RetreatButton>
           <RetreatButton
             handleClick={handleClick}
             name={"About"}
+            inGame={inGame}
           ></RetreatButton>
         </BottomContainer>
       </OverlayContainer>

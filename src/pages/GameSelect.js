@@ -27,7 +27,7 @@ export default function GameSelect({ open, handleToggleMode, mute, darkmode }) {
   let history = useHistory();
 
   function handleClick() {
-    history.push(`/ChatRoom`);
+    history.push(`gameroom/chat`);
   }
 
   return (
@@ -52,6 +52,7 @@ export default function GameSelect({ open, handleToggleMode, mute, darkmode }) {
           open={open}
           mute={mute}
           darkmode={darkmode}
+          inGame={false}
           handleToggleMode={handleToggleMode}
         />
       </Container>

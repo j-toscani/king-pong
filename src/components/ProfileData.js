@@ -19,12 +19,12 @@ const Container = styled.div`
 
 function ProfileData({ user }) {
   return (
-    <dic>
+    <div>
       <Container>
         <span>Name:</span>
-        <span>Wurstinator</span>
+        <span>{user.name}</span>
       </Container>
-      <Container alt={true}>
+      <Container alt="true">
         <div>
           {user.wins} <hr></hr> Won
         </div>
@@ -38,7 +38,7 @@ function ProfileData({ user }) {
         <span>Rank :</span>
         <span>{`# ${user.rank}`}</span>
       </Container>
-    </dic>
+    </div>
   );
 }
 

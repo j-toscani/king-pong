@@ -36,7 +36,7 @@ export default function Chatroom({
 
   function handleSubmitMessage(content) {
     const newChatHistory = [...chatHistory];
-    console.log(newChatHistory);
+
     const newMessage = {
       p1: true,
       nickname: nickname === "" ? "anonymous" : nickname,
@@ -44,7 +44,6 @@ export default function Chatroom({
     };
     newChatHistory.push(newMessage);
     updateHistory(newChatHistory);
-    console.log(newChatHistory);
   }
 
   return (
@@ -60,7 +59,7 @@ export default function Chatroom({
           handleSubmitMessage={handleSubmitMessage}
         ></ChatWindow>
         <ButtonContainer>
-          <Button onClick={() => handleClick("game")} disabled big>
+          <Button onClick={() => handleClick("gameroom/game")} disabled big>
             Ready!
           </Button>
           <AltButton onClick={() => handleClick("select")} big>
@@ -72,6 +71,7 @@ export default function Chatroom({
           mute={mute}
           darkmode={darkmode}
           handleToggleMode={handleToggleMode}
+          inGame={true}
         />
       </StyledMain>
     </>

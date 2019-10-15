@@ -27,7 +27,14 @@ function App() {
   const [darkmode, setDarkmode] = React.useState(false);
   const [mute, setMute] = React.useState(true);
   const [open, setOpen] = React.useState(false);
-  const [nickname, setNickname] = React.useState("");
+  const [nickname, setNickname] = React.useState(null);
+
+  const user = {
+    name: nickname === null ? "You" : nickname,
+    wins: 5,
+    losses: 2,
+    rank: 3
+  };
 
   function handleToggleMode(mode) {
     if (mode === "darkmode") setDarkmode(!darkmode);
@@ -45,7 +52,7 @@ function App() {
             component={props => <About {...props} />}
           />
           <Route
-            path="/chatroom"
+            path="/gameroom/chat"
             exact
             component={props => (
               <Chatroom
@@ -59,7 +66,7 @@ function App() {
             )}
           />
           <Route
-            path="/game"
+            path="/gameroom/game"
             exact
             component={props => <GameScreen {...props} />}
           />
@@ -90,7 +97,7 @@ function App() {
           <Route
             path="/profile"
             exact
-            component={props => <Profile {...props} />}
+            component={props => <Profile user={user} {...props} />}
           />
           <Route path="/" exact component={props => <Welcome {...props} />} />
         </Router>
