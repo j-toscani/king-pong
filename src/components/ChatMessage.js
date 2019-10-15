@@ -12,7 +12,7 @@ const MessageContainer = styled.div`
 function ChatMessage({ message }) {
   return (
     <MessageContainer p1={message.p1}>
-      <span>{`${message.name} :`}</span>
+      <span>{`${message.nickname} :`}</span>
       <span>{message.content}</span>
     </MessageContainer>
   );

@@ -9,9 +9,7 @@ const StyledWindow = styled.div`
   width: 290px;
   ${props =>
     props.chat
-      ? css`
-          margin-top: auto;
-        `
+      ? css``
       : css`
           justify-content: space-around;
           text-align: center;

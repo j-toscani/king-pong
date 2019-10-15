@@ -35,7 +35,7 @@ export default function GameSelect({ open, handleToggleMode, mute, darkmode }) {
       <NavTop
         state={open ? "open" : "closed"}
         handleToggleMode={handleToggleMode}
-        headline={"GameSelect"}
+        headline={"Start a Game!"}
       ></NavTop>
       <Container>
         <Background>

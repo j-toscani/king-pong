@@ -47,7 +47,16 @@ function App() {
           <Route
             path="/chatroom"
             exact
-            component={props => <Chatroom {...props} />}
+            component={props => (
+              <Chatroom
+                nickname={nickname}
+                handleToggleMode={handleToggleMode}
+                darkmode={darkmode}
+                mute={mute}
+                open={open}
+                {...props}
+              />
+            )}
           />
           <Route
             path="/game"

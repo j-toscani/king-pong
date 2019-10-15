@@ -4,22 +4,6 @@ import Settings from "./Settings";
 import RetreatButton from "./RetreatButton";
 import { useHistory } from "react-router-dom";
 
-// const Background = styled.div`
-//   position: absolute;
-
-//   width: 100vw;
-//   max-width: 360px;
-//   min-height: 550px;
-//   filter: blur(4px);
-//   opacity: 0.8;
-//   z-index: -1;
-//   width: 100%;
-//   background: ${props => props.theme.main};
-
-//   padding-top: 50px;
-//   padding-bottom: 35px;
-// `;
-
 const OverlayContainer = styled.section`
   transform: ${props => (props.open ? "translateX(0)" : "translateX(-100%)")};
   transition: all 0.5s;
@@ -39,6 +23,15 @@ const OverlayContainer = styled.section`
   background: ${props => props.theme.main};
 `;
 
+const Background = styled.div`
+  background-color: transparent;
+  opacity: 0.8;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transform: ${props => (props.open ? "translateX(0)" : "translateX(-100%)")};
+`;
+
 const BottomContainer = styled.div`
   height: 135px;
   width: 100%;
@@ -54,21 +47,30 @@ function Overlay({ open, mute, darkmode, handleToggleMode }) {
     history.push(`/${destination}`);
   }
   return (
-    <OverlayContainer open={open}>
-      <Settings
-        handleToggleMode={handleToggleMode}
+    <>
+      <Background
         open={open}
-        mute={mute}
-        darkmode={darkmode}
-      ></Settings>
-      <BottomContainer>
-        <RetreatButton
-          handleClick={handleClick}
-          name={"Profile"}
-        ></RetreatButton>
-        <RetreatButton handleClick={handleClick} name={"About"}></RetreatButton>
-      </BottomContainer>
-    </OverlayContainer>
+        onClick={() => handleToggleMode("open")}
+      ></Background>
+      <OverlayContainer open={open}>
+        <Settings
+          handleToggleMode={handleToggleMode}
+          open={open}
+          mute={mute}
+          darkmode={darkmode}
+        ></Settings>
+        <BottomContainer>
+          <RetreatButton
+            handleClick={handleClick}
+            name={"Profile"}
+          ></RetreatButton>
+          <RetreatButton
+            handleClick={handleClick}
+            name={"About"}
+          ></RetreatButton>
+        </BottomContainer>
+      </OverlayContainer>
+    </>
   );
 }
 
