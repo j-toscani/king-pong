@@ -3,6 +3,7 @@ import styled from "styled-components";
 import NavTop from "../components/NavTop";
 import Button, { AltButton } from "../components/Button";
 import Overlay from "../components/Overlay";
+import { useHistory } from "react-router-dom";
 
 const Container = styled.main`
   position: relative;
@@ -14,7 +15,7 @@ const Container = styled.main`
 
 const Background = styled.div`
   background: ${props => (props.alt ? props.theme.main : props.theme.contrast)};
-  margin-bottom: ${props => (props.alt ? "100px" : 0)};
+  margin-bottom: ${props => (props.alt ? "100px" : false)};
   height: 150px;
   width: 100%;
   display: flex;
@@ -23,8 +24,10 @@ const Background = styled.div`
 `;
 
 export default function GameSelect({ open, handleToggleMode, mute, darkmode }) {
+  let history = useHistory();
+
   function handleClick() {
-    console.log("clicked");
+    history.push(`/ChatRoom`);
   }
 
   return (
@@ -40,7 +43,7 @@ export default function GameSelect({ open, handleToggleMode, mute, darkmode }) {
             Open Game!
           </Button>
         </Background>
-        <Background alt>
+        <Background alt="true">
           <AltButton active big onClick={handleClick}>
             Join Game!
           </AltButton>

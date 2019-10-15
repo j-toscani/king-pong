@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Pointer from "../ressources/icons/Pointer";
 import LogoStyled from "../ressources/icons/Logo";
+import { useHistory } from "react-router-dom";
 
 export const StyledHeader = styled.header`
   background: ${props => props.theme.contrast};
@@ -31,10 +32,16 @@ const InputFieldStyled = styled.button`
 `;
 
 export function TopPointer({ headline, rotate, onClick }) {
+  let history = useHistory();
+
+  function handleClick(destination) {
+    history.push(`/${destination}`);
+  }
+
   return (
     <StyledHeader headline={headline}>
       <StyledH2>{headline}</StyledH2>
-      <InputFieldStyled onClick={onClick}>
+      <InputFieldStyled onClick={() => handleClick("select")}>
         <Pointer rotate={rotate}></Pointer>
       </InputFieldStyled>
     </StyledHeader>

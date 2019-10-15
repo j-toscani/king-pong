@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Settings from "./Settings";
 import RetreatButton from "./RetreatButton";
+import { useHistory } from "react-router-dom";
 
 // const Background = styled.div`
 //   position: absolute;
@@ -47,6 +48,11 @@ const BottomContainer = styled.div`
 `;
 
 function Overlay({ open, mute, darkmode, handleToggleMode }) {
+  let history = useHistory();
+
+  function handleClick(destination) {
+    history.push(`/${destination}`);
+  }
   return (
     <OverlayContainer open={open}>
       <Settings
@@ -56,8 +62,11 @@ function Overlay({ open, mute, darkmode, handleToggleMode }) {
         darkmode={darkmode}
       ></Settings>
       <BottomContainer>
-        <RetreatButton name={"Profile"}></RetreatButton>
-        <RetreatButton name={"About"}></RetreatButton>
+        <RetreatButton
+          handleClick={handleClick}
+          name={"Profile"}
+        ></RetreatButton>
+        <RetreatButton handleClick={handleClick} name={"About"}></RetreatButton>
       </BottomContainer>
     </OverlayContainer>
   );

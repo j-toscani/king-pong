@@ -16,9 +16,9 @@ const RetreatStyled = styled.button`
   border: none;
 `;
 
-function RetreatButton({ name }) {
+function RetreatButton({ handleClick, name }) {
   return (
-    <RetreatStyled name={name}>
+    <RetreatStyled onClick={() => handleClick(name)} name={name}>
       {name}
       <Pointer rotate={true} />
     </RetreatStyled>

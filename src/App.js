@@ -18,7 +18,7 @@ const Container = styled.div`
   display: grid;
   grid-template: 80px 1fr / 1fr;
   width: 100vw;
-  max-width: 450px;
+  /* max-width: 450px; */
   height: 100vh;
   background: ${props => props.theme.main};
 `;
@@ -26,12 +26,13 @@ const Container = styled.div`
 function App() {
   const [darkmode, setDarkmode] = React.useState(false);
   const [mute, setMute] = React.useState(true);
-  const [open, setMenuoverlay] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [nickname, setNickname] = React.useState("");
 
   function handleToggleMode(mode) {
     if (mode === "darkmode") setDarkmode(!darkmode);
     if (mode === "mute") setMute(!mute);
-    if (mode === "open") setMenuoverlay(!open);
+    if (mode === "open") setOpen(!open);
   }
   return (
     <ThemeProvider theme={darkmode ? darkTheme : defaultTheme}>
@@ -69,7 +70,13 @@ function App() {
           <Route
             path="/entername"
             exact
-            component={props => <NicknameInput {...props} />}
+            component={props => (
+              <NicknameInput
+                setNickname={setNickname}
+                nickname={nickname}
+                {...props}
+              />
+            )}
           />
           <Route
             path="/profile"

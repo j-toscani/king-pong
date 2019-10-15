@@ -3,6 +3,7 @@ import StyledWindow from "./StyledWindow";
 import Button from "./Button";
 import { Input } from "./ChatBar";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 
 const NameInput = styled(Input)`
   border-radius: 10px;
@@ -23,10 +24,20 @@ const StyledWindowGreeting = styled(StyledWindow)`
   justify-content: space-around;
 `;
 
-function GreetingWindow() {
-  const [nickname, setNickname] = React.useState("");
+function GreetingWindow({ setNickname }) {
+  const [inputValue, setInputValue] = React.useState(null);
+
+  let history = useHistory();
+
+  function handleClick(destination) {
+    history.push(`/${destination}`);
+  }
+
   function submitNickname() {
-    console.log(nickname);
+    const nickname = inputValue;
+    setNickname(nickname);
+    alert(`Hello ${nickname}, let´s play Pong!`);
+    handleClick("select");
   }
   return (
     <StyledWindowGreeting>
@@ -35,7 +46,7 @@ function GreetingWindow() {
       </Headline>
       <NameInput
         placeholder="Tap to enter..."
-        onChange={event => setNickname(event.target.value)}
+        onChange={event => setInputValue(event.target.value)}
       ></NameInput>
       <Button big active onClick={submitNickname}>
         Start!

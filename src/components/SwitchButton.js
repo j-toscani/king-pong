@@ -24,6 +24,7 @@ const Point = styled.label`
   top: -4px;
   left: 4px;
   box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.3);
+
   ${props =>
     props.active
       ? css`
@@ -34,7 +35,6 @@ const Point = styled.label`
       : css`
           left: 4px;
           position: absolute;
-          transition: all 0.5s;
         `};
 `;
 
