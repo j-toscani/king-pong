@@ -13,7 +13,7 @@ const StyledH2 = styled.h2`
   font-style: none;
 `;
 
-const SettingsInput = styled.button`
+const ToggleSettings = styled.button`
   background: ${props => props.theme.contrast};
   color: ${props => props.theme.brightFont};
   fill: ${props => props.theme.brightFont};
@@ -32,9 +32,9 @@ function NavTop({ state, handleChange }) {
   if (state === "open") {
     return (
       <StyledHeader>
-        <SettingsInput onClick={handleChange}>
+        <ToggleSettings onClick={handleChange}>
           <Cross></Cross>
-        </SettingsInput>
+        </ToggleSettings>
         <StyledH2>Play!</StyledH2>
         <LogoStyled></LogoStyled>
       </StyledHeader>
@@ -42,9 +42,9 @@ function NavTop({ state, handleChange }) {
   } else if (state === "closed") {
     return (
       <StyledHeader>
-        <SettingsInput onClick={handleChange}>
+        <ToggleSettings onClick={handleChange}>
           <Options></Options>
-        </SettingsInput>
+        </ToggleSettings>
         <StyledH2>Settings</StyledH2>
         <LogoStyled></LogoStyled>
       </StyledHeader>
