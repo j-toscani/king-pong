@@ -11,6 +11,9 @@ body {
   font-size: 16px;
   margin: 0;
   padding: 0;
+  display:flex;
+  align-items: center;
+  justify-content: center;
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
 }

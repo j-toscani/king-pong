@@ -31,7 +31,7 @@ export default function Settings({ handleToggleMode, mute, darkmode }) {
         Darkmode
         <SwitchButton
           id={"Darkmode"}
-          active={darkmode}
+          mode={darkmode}
           handleChange={() => handleToggleMode("darkmode")}
         ></SwitchButton>
       </Option>
@@ -39,7 +39,7 @@ export default function Settings({ handleToggleMode, mute, darkmode }) {
         Sound
         <SwitchButton
           id={"Sound"}
-          active={mute}
+          mode={mute}
           handleChange={() => handleToggleMode("mute")}
         ></SwitchButton>
       </Option>

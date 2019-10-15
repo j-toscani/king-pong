@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled, { css } from "styled-components";
 
 const Background = styled.div`
@@ -38,13 +38,13 @@ const Point = styled.label`
         `};
 `;
 
-export default function SwitchButton({ id, active, handleChange }) {
+export default function SwitchButton({ id, mode, handleChange }) {
   return (
     <Background>
-      <Point htmlFor={id} active={active}></Point>
+      <Point htmlFor={id} active={mode}></Point>
       <Switch
         id={id}
-        active={active}
+        active={mode}
         onChange={handleChange}
         type="checkbox"
       ></Switch>

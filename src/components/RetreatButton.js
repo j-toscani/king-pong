@@ -13,6 +13,7 @@ const RetreatStyled = styled.button`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border: none;
 `;
 
 function RetreatButton({ name }) {

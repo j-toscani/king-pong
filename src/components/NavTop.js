@@ -28,24 +28,24 @@ const ToggleSettings = styled.button`
   padding: 0;
 `;
 
-function NavTop({ state, handleChange }) {
+function NavTop({ state, handleToggleMode }) {
   if (state === "open") {
     return (
       <StyledHeader>
-        <ToggleSettings onClick={handleChange}>
+        <ToggleSettings onClick={() => handleToggleMode("open")}>
           <Cross></Cross>
         </ToggleSettings>
-        <StyledH2>Play!</StyledH2>
+        <StyledH2>Settings</StyledH2>
         <LogoStyled></LogoStyled>
       </StyledHeader>
     );
   } else if (state === "closed") {
     return (
       <StyledHeader>
-        <ToggleSettings onClick={handleChange}>
+        <ToggleSettings onClick={() => handleToggleMode("open")}>
           <Options></Options>
         </ToggleSettings>
-        <StyledH2>Settings</StyledH2>
+        <StyledH2>Play!</StyledH2>
         <LogoStyled></LogoStyled>
       </StyledHeader>
     );

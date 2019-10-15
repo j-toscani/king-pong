@@ -18,6 +18,7 @@ const Container = styled.div`
   display: grid;
   grid-template: 80px 1fr / 1fr;
   width: 100vw;
+  max-width: 450px;
   height: 100vh;
   background: ${props => props.theme.main};
 `;
@@ -25,16 +26,17 @@ const Container = styled.div`
 function App() {
   const [darkmode, setDarkmode] = React.useState(false);
   const [mute, setMute] = React.useState(true);
+  const [open, setMenuoverlay] = React.useState(false);
+
   function handleToggleMode(mode) {
     if (mode === "darkmode") setDarkmode(!darkmode);
     if (mode === "mute") setMute(!mute);
-    console.log(mute);
-    console.log(darkmode);
+    if (mode === "open") setMenuoverlay(!open);
   }
   return (
     <ThemeProvider theme={darkmode ? darkTheme : defaultTheme}>
+      <GlobalStyles />
       <Container>
-        <GlobalStyles />
         <Router>
           <Route
             path="/about"
@@ -55,7 +57,13 @@ function App() {
             path="/select"
             exact
             component={props => (
-              <GameSelect handleToggleMode={handleToggleMode} {...props} />
+              <GameSelect
+                handleToggleMode={handleToggleMode}
+                darkmode={darkmode}
+                mute={mute}
+                open={open}
+                {...props}
+              />
             )}
           />
           <Route
