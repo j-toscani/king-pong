@@ -25,9 +25,8 @@ const Background = styled.div`
 export default function GameSelect({ handleToggleMode, mute, darkmode }) {
   const [open, setMenuoverlay] = React.useState(false);
 
-  function handleChange() {
+  function handleOverlay() {
     setMenuoverlay(!open);
-    console.log(open);
   }
 
   function handleClick() {
@@ -38,7 +37,7 @@ export default function GameSelect({ handleToggleMode, mute, darkmode }) {
     <>
       <NavTop
         state={open ? "open" : "closed"}
-        handleChange={handleChange}
+        handleChange={handleOverlay}
         headline={"GameSelect"}
       ></NavTop>
       <Container>
