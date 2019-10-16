@@ -18,7 +18,7 @@ const Container = styled.div`
   display: grid;
   grid-template: 80px 1fr / 1fr;
   width: 100vw;
-  /* max-width: 450px; */
+
   height: 100vh;
   background: ${props => props.theme.main};
 `;

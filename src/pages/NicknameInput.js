@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import GreetingWindow from "../components/GreetingWindow";
 import { TopLogo } from "../components/Top";
 

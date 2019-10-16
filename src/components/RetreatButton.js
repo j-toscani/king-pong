@@ -23,13 +23,9 @@ const RetreatStyled = styled.button`
         `}
 `;
 
-function RetreatButton({ handleClick, name, inGame }) {
+function RetreatButton({ handleClick, name }) {
   return (
-    <RetreatStyled
-      disabled={inGame}
-      onClick={() => handleClick(name)}
-      name={name}
-    >
+    <RetreatStyled onClick={() => handleClick(name)} name={name}>
       {name}
       <Pointer rotate={true} />
     </RetreatStyled>

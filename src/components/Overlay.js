@@ -59,18 +59,18 @@ function Overlay({ open, mute, darkmode, handleToggleMode, inGame }) {
           mute={mute}
           darkmode={darkmode}
         ></Settings>
-        <BottomContainer>
-          <RetreatButton
-            handleClick={handleClick}
-            name={"Profile"}
-            inGame={inGame}
-          ></RetreatButton>
-          <RetreatButton
-            handleClick={handleClick}
-            name={"About"}
-            inGame={inGame}
-          ></RetreatButton>
-        </BottomContainer>
+        {!inGame && (
+          <BottomContainer>
+            <RetreatButton
+              handleClick={handleClick}
+              name={"Profile"}
+            ></RetreatButton>
+            <RetreatButton
+              handleClick={handleClick}
+              name={"About"}
+            ></RetreatButton>
+          </BottomContainer>
+        )}
       </OverlayContainer>
     </>
   );
