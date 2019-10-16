@@ -59,7 +59,7 @@ export default function Chatroom({
           handleSubmitMessage={handleSubmitMessage}
         ></ChatWindow>
         <ButtonContainer>
-          <Button onClick={() => handleClick("gameroom/game")} disabled big>
+          <Button onClick={() => handleClick("gameroom/game/:id")} big>
             Ready!
           </Button>
           <AltButton onClick={() => handleClick("select")} big>

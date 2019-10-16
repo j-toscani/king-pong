@@ -31,7 +31,7 @@ const InputFieldStyled = styled.button`
   border: none;
 `;
 
-export function TopPointer({ headline, rotate, onClick }) {
+export function TopPointer({ headline, rotate }) {
   let history = useHistory();
 
   function handleClick(destination) {
