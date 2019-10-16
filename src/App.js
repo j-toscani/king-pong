@@ -26,7 +26,7 @@ const Container = styled.div`
 function App() {
   const [darkmode, setDarkmode] = React.useState(false);
   const [mute, setMute] = React.useState(true);
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const [nickname, setNickname] = React.useState(null);
 
   const user = {
@@ -52,7 +52,7 @@ function App() {
             component={props => <About {...props} />}
           />
           <Route
-            path="/gameroom/chat"
+            path="/gameroom/chat/:id"
             exact
             component={props => (
               <Chatroom
@@ -64,7 +64,7 @@ function App() {
               />
             )}
           />
-          <Route path="/gameroom/game" exact component={GameScreen} />
+          <Route path="/gameroom/game/:id" exact component={GameScreen} />
           <Route
             path="/select"
             exact
