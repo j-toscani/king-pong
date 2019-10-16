@@ -6,10 +6,12 @@ import darkTheme from "./themes/dark.js";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import About from "./pages/About.js";
 import GameSelect from "./pages/GameSelect.js";
-import GameScreen from "./pages/GameScreen.js";
+import GameRoom from "./pages/GameRoom.js";
 import NicknameInput from "./pages/NicknameInput.js";
 import Profile from "./pages/Profile.js";
+import GameScreen from "./pages/GameScreen";
 import Chatroom from "./pages/Chatroom.js";
+
 import Welcome from "./pages/Welcome.js";
 
 const Container = styled.div`
@@ -33,7 +35,8 @@ function App() {
     name: nickname || "Anonymous",
     wins: 5,
     losses: 2,
-    rank: 3
+    rank: 3,
+    players: 2
   };
 
   function handleToggleMode(mode) {
@@ -52,6 +55,11 @@ function App() {
             component={props => <About {...props} />}
           />
           <Route
+            path="/gameroom"
+            exact
+            component={props => <GameRoom user={user} {...props} />}
+          />
+          <Route
             path="/gameroom/chat/:id"
             exact
             component={props => (
@@ -67,7 +75,13 @@ function App() {
           <Route
             path="/gameroom/game/:id"
             exact
-            component={props => <GameScreen nickname={user.name}></GameScreen>}
+            component={props =>
+              props.players ? (
+                <h2>Hi!</h2>
+              ) : (
+                <GameScreen nickname={user.name}></GameScreen>
+              )
+            }
           />
           <Route
             path="/select"

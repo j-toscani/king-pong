@@ -3,13 +3,8 @@ import styled from "styled-components";
 import { TopLogo } from "../components/Top";
 import GameInput from "../components/GameInput";
 import Button from "../components/Button";
+import GameBoard from "../components/GameBoard";
 import { useHistory } from "react-router-dom";
-
-const GameBoard = styled.canvas`
-  background: ${props => props.theme.accent};
-  height: 400px;
-  width: 295px;
-`;
 
 const Container = styled.main`
   height: 100%;
