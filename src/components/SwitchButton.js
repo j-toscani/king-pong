@@ -9,7 +9,8 @@ const Background = styled.div`
   width: 60px;
   height: 20px;
   position: relative;
-  background: ${props => props.theme.brightFont};
+  background: ${props =>
+    props.active ? props.theme.main : props.theme.brightFont};
 `;
 
 const Switch = styled.input`
@@ -22,15 +23,13 @@ const Point = styled.label`
   width: 25px;
   height: 25px;
   top: -4px;
-  left: 4px;
   box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.3);
 
   ${props =>
     props.active
       ? css`
           position: absolute;
-          transform: translateX(26px);
-          transition: all 0.5s;
+          right: 4px;
         `
       : css`
           left: 4px;
@@ -40,11 +39,11 @@ const Point = styled.label`
 
 export default function SwitchButton({ id, mode, handleChange }) {
   return (
-    <Background>
-      <Point htmlFor={id} active={mode}></Point>
+    <Background active={mode}>
+      <Point htmlFor={id} active={!mode}></Point>
       <Switch
         id={id}
-        active={mode}
+        active={!mode}
         onChange={handleChange}
         type="checkbox"
       ></Switch>

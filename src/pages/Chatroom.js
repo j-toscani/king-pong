@@ -39,7 +39,7 @@ export default function Chatroom({
 
     const newMessage = {
       p1: true,
-      nickname: nickname === "" ? "anonymous" : nickname,
+      nickname: nickname ? nickname : "Pal",
       content: content
     };
     newChatHistory.push(newMessage);

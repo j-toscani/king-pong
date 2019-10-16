@@ -8,6 +8,7 @@ const ChatDisplay = styled.div`
   display: flex;
   flex-direction: column;
   padding: 2px;
+  overflow: auto;
 `;
 
 function ChatHistory({ messages }) {

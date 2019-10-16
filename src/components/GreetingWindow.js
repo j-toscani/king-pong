@@ -36,7 +36,11 @@ function GreetingWindow({ setNickname }) {
   function submitNickname() {
     const nickname = inputValue;
     setNickname(nickname);
-    alert(`Hello ${nickname}, let´s play Pong!`);
+    alert(
+      nickname
+        ? `Hello ${nickname}, let´s play Pong!`
+        : `Hello Pal, let´s play Pong!`
+    );
     handleClick("select");
   }
   return (
