@@ -5,6 +5,7 @@ const MessageContainer = styled.div`
   display: grid;
   padding: 2px;
   grid-template: 1fr / 35% 65%;
+  width: 100%;
   background: "transparent";
   color: ${props => (props.p1 ? props.theme.brightFont : props.theme.accent)};
 `;
@@ -12,7 +13,7 @@ const MessageContainer = styled.div`
 function ChatMessage({ message }) {
   return (
     <MessageContainer p1={message.p1}>
-      <span>{`${message.name} :`}</span>
+      <span>{`${message.nickname} :`}</span>
       <span>{message.content}</span>
     </MessageContainer>
   );

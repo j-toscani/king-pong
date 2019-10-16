@@ -7,7 +7,7 @@ import LogoStyled from "../ressources/icons/Logo";
 
 const StyledH2 = styled.h2`
   color: ${props => props.theme.brightFont};
-  font-size: 20px;
+  font-size: 24px;
   text-align: left;
   font-weight: 400;
   font-style: none;
@@ -28,24 +28,24 @@ const ToggleSettings = styled.button`
   padding: 0;
 `;
 
-function NavTop({ state, round, onClick }) {
-  if (state === "before") {
+function NavTop({ state, handleToggleMode, headline }) {
+  if (state === "open") {
     return (
       <StyledHeader>
-        <ToggleSettings onClick={onClick} round={round}>
+        <ToggleSettings onClick={() => handleToggleMode("open")}>
           <Cross></Cross>
         </ToggleSettings>
-        <StyledH2>Play!</StyledH2>
+        <StyledH2>Settings</StyledH2>
         <LogoStyled></LogoStyled>
       </StyledHeader>
     );
-  } else if (state === "after") {
+  } else if (state === "closed") {
     return (
       <StyledHeader>
-        <ToggleSettings onClick={onClick} round={round}>
+        <ToggleSettings onClick={() => handleToggleMode("open")}>
           <Options></Options>
         </ToggleSettings>
-        <StyledH2>Settings</StyledH2>
+        <StyledH2>{headline}</StyledH2>
         <LogoStyled></LogoStyled>
       </StyledHeader>
     );

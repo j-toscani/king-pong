@@ -6,7 +6,7 @@ const StyledButton = styled.button`
   ${props =>
     props.disabled
       ? css`
-          background: "transparent";
+          background: ${props.theme.main};
           color: ${props.theme.contrast};
           border: solid 2px ${props.theme.contrast};
         `

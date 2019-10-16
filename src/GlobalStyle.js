@@ -17,6 +17,10 @@ body {
 
 main{
  background: ${props => props.theme.main};
+display: flex;
+border: none;
+  justify-content: center;
+  align-items: center;
 }
 
 button, input {

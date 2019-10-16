@@ -38,12 +38,14 @@ const InputContainer = styled.form`
 `;
 
 function ChatBar({ handleSubmitMessage }) {
+  const [message, setMessage] = React.useState(null);
   return (
     <InputContainer
+      onChange={event => setMessage(event.target.value)}
       onSubmit={event => {
         event.preventDefault();
         if (handleSubmitMessage) {
-          handleSubmitMessage();
+          handleSubmitMessage(message);
         } else {
           console.log("message send");
         }

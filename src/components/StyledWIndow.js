@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 
 const StyledWindow = styled.div`
   display: flex;
-  flex-direction: column;
+
   border-radius: 0 0 10px 10px;
   background: ${props => props.theme.contrast};
   height: 250px;
@@ -10,13 +10,15 @@ const StyledWindow = styled.div`
   ${props =>
     props.chat
       ? css`
-          margin-top: auto;
-        `
+      padding= 0;
+      flex-direction: column;
+      `
       : css`
           justify-content: space-around;
           text-align: center;
           padding: 15px;
           color: ${props => props.theme.brightFont};
+          flex-direction: column;
         `}
 `;
 

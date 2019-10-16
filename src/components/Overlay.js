@@ -2,30 +2,34 @@ import React from "react";
 import styled from "styled-components";
 import Settings from "./Settings";
 import RetreatButton from "./RetreatButton";
-
-const Background = styled.div`
-  position: absolute;
-  width: 100vw;
-  max-width: 360px;
-  min-height: 550px;
-  filter: blur(4px);
-  opacity: 0.8;
-  z-index: -1;
-  background: ${props => props.theme.main};
-  padding-top: 50px;
-  padding-bottom: 35px;
-`;
+import { useHistory } from "react-router-dom";
 
 const OverlayContainer = styled.section`
+  transform: ${props => (props.open ? "translateX(0)" : "translateX(-100%)")};
+  transition: all 0.5s;
+  left: 0;
   width: 75vw;
   max-width: 360px;
+  height: 100%;
   min-height: 550px;
-  z-index: 3;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-top: 50px;
+  padding-top: 35px;
   padding-bottom: 35px;
+  position: absolute;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+  background: ${props => props.theme.main};
+`;
+
+const Background = styled.div`
+  background-color: transparent;
+  opacity: 0.8;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transform: ${props => (props.open ? "translateX(0)" : "translateX(-100%)")};
 `;
 
 const BottomContainer = styled.div`
@@ -36,17 +40,37 @@ const BottomContainer = styled.div`
   justify-content: space-between;
 `;
 
-function Overlay() {
+function Overlay({ open, mute, darkmode, handleToggleMode, inGame }) {
+  let history = useHistory();
+
+  function handleClick(destination) {
+    history.push(`/${destination}`);
+  }
   return (
     <>
-      <Background></Background>
-      <OverlayContainer>
-        <Settings></Settings>
-        <BottomContainer>
-          <RetreatButton name={"Profile"}></RetreatButton>
-
-          <RetreatButton name={"About"}></RetreatButton>
-        </BottomContainer>
+      <Background
+        open={open}
+        onClick={() => handleToggleMode("open")}
+      ></Background>
+      <OverlayContainer open={open}>
+        <Settings
+          handleToggleMode={handleToggleMode}
+          open={open}
+          mute={mute}
+          darkmode={darkmode}
+        ></Settings>
+        {!inGame && (
+          <BottomContainer>
+            <RetreatButton
+              handleClick={handleClick}
+              name={"Profile"}
+            ></RetreatButton>
+            <RetreatButton
+              handleClick={handleClick}
+              name={"About"}
+            ></RetreatButton>
+          </BottomContainer>
+        )}
       </OverlayContainer>
     </>
   );
