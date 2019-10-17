@@ -31,10 +31,22 @@ const ConcedeButton = styled(Button)`
 
 export default function GameScreen({ nickname }) {
   let history = useHistory();
-
+  const [state, setState] = React.useState(10);
   function handleClick() {
     history.push(`/select`);
   }
+
+  function handleInputClick(direction) {
+    if (direction === "up") {
+      const newState = state + 10;
+      setState(Number(newState));
+    }
+    if (direction === "down") {
+      const newState = state - 10;
+      setState(Number(newState));
+    }
+  }
+
   return (
     <>
       <TopLogo headline={`${nickname}'s Game`}></TopLogo>
@@ -42,15 +54,15 @@ export default function GameScreen({ nickname }) {
         <ConcedeButton big onClick={handleClick}>
           Concede
         </ConcedeButton>
-        <GameBoard></GameBoard>
+        <GameBoard change={state}></GameBoard>
         <InputContainer>
           <GameInput
             direction={"left"}
-            onClick={() => console.log("move left")}
+            onClick={() => handleInputClick("up")}
           ></GameInput>
           <GameInput
             direction={"right"}
-            onClick={() => console.log("move right")}
+            onClick={() => handleInputClick("down")}
           ></GameInput>
         </InputContainer>
       </Container>
