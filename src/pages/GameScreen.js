@@ -31,25 +31,11 @@ const ConcedeButton = styled(Button)`
 
 export default function GameScreen({ nickname }) {
   let history = useHistory();
-  const [state, setState] = React.useState(10);
-  const [moveLeft, toggleMoveLeft] = React.useState(false);
-  const [moveRight, toggleMoveRight] = React.useState(false);
+  const [leftPressed, togglePressedLeft] = React.useState(false);
+  const [rightPressed, togglePressedRight] = React.useState(false);
 
   function handleClick() {
     history.push(`/select`);
-  }
-
-  function handleInputClick(direction) {
-    if (direction === "up") {
-      const newState = state + 10;
-      setState(newState);
-      requestAnimationFrame(() => handleInputClick("up"));
-    }
-    if (direction === "down") {
-      const newState = state - 10;
-      setState(newState);
-      requestAnimationFrame(() => handleInputClick("down"));
-    }
   }
 
   return (
@@ -59,15 +45,32 @@ export default function GameScreen({ nickname }) {
         <ConcedeButton big onClick={handleClick}>
           Concede
         </ConcedeButton>
-        <GameBoard change={state}></GameBoard>
+        <GameBoard
+          rightPressed={rightPressed}
+          leftPressed={leftPressed}
+        ></GameBoard>
         <InputContainer>
           <GameInput
             direction={"left"}
-            onClick={() => handleInputClick("down")}
+            handleTap={() => {
+              togglePressedLeft(true);
+              console.log(leftPressed);
+            }}
+            handleRelease={() => {
+              togglePressedLeft(false);
+              console.log(leftPressed);
+            }}
           ></GameInput>
           <GameInput
             direction={"right"}
-            onClick={() => handleInputClick("up")}
+            handleTap={() => {
+              togglePressedRight(true);
+              console.log(rightPressed);
+            }}
+            handleRelease={() => {
+              togglePressedRight(false);
+              console.log(rightPressed);
+            }}
           ></GameInput>
         </InputContainer>
       </Container>

@@ -20,20 +20,12 @@ const StyledInputButton = styled.button`
   width: 140px;
 `;
 
-function GameButton({ onClick, direction }) {
-  if (direction === "right") {
-    return (
-      <StyledInputButton onClick={onClick}>
-        <Pointer white />
-      </StyledInputButton>
-    );
-  } else if (direction === "left") {
-    return (
-      <StyledInputButton onClick={onClick}>
-        <Pointer rotate white />
-      </StyledInputButton>
-    );
-  }
+function GameButton({ handleTap, handleRelease, direction, touchButton }) {
+  return (
+    <StyledInputButton onTouchStart={handleTap} onTouchEnd={handleRelease}>
+      <Pointer rotate={direction === "left"} white />
+    </StyledInputButton>
+  );
 }
 
 export function ConcedeButton({ onClick }) {

@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import HeartRow from "./HeartRow";
 import { useHistory } from "react-router-dom";
+import { detectCollisionBetween } from "../GameData/Collision";
 
 const StyledCanvas = styled.canvas`
   background: ${props => props.theme.accent};
@@ -13,61 +14,90 @@ const GameContainer = styled.section`
   position: relative;
 `;
 
-export default function GameBoard({ change }) {
+export default function GameBoard({ leftPressed, rightPressed }) {
   //include gameobjects as the state
   //include draw-function to draw everything once when canvas gets clicked, fiddle around with positioning
   // implement gameloop to let the ball bounce araound
   // implement controles
-  const [ball, changeBall] = React.useState({
-    x: 1,
-    y: 1,
-    dx: 1,
-    dy: 1
-  });
-  const [paddle, ChangePaddle] = React.useState(change);
+  const [moveLeft, toggleMovementLeft] = React.useState(false);
+  const [moveRight, toggleMovementRight] = React.useState(false);
+  const [game, updateGame] = React.useState([
+    // ball
+    {
+      x: 100,
+      y: 150,
+      w: 10,
+      h: 10,
+      dx: 1,
+      dy: 1,
+      pdx: 2
+    },
+    // paddle
+    { x: 10, y: 10, w: 100, h: 10, dx: 1, dy: 0 },
+    // canvas
+    {
+      x: 295,
+      y: 400
+    }
+  ]);
   const [lifes, setLifes] = React.useState(5);
 
   const canvasRef = React.useRef(null);
 
-  React.useEffect(() => ChangePaddle(change), [change]);
-  console.log(change);
-  console.log(paddle);
+  React.useEffect(() => toggleMovementLeft(leftPressed), [leftPressed]);
+  React.useEffect(() => toggleMovementRight(rightPressed), [rightPressed]);
   React.useEffect(() => {
     if (lifes > 0) {
       let canvas = canvasRef.current;
       let ctx = canvas.getContext("2d");
       let requestId;
-      const board = {
-        x: 295,
-        y: 400
-      };
-      const draw = object => {
+      const draw = input => {
+        const ball = input[0];
+        const paddle = input[1];
+        const board = input[2];
+        const collision =
+          ball.y < paddle.y + paddle.h &&
+          (ball.x > paddle.x && ball.x < paddle.x + paddle.w);
+
         ctx.clearRect(0, 0, 295, 400);
-        ctx.fillRect(object.x, object.y, 10, 10);
-        ctx.fillRect(paddle, 10, 100, 100);
-        requestId = requestAnimationFrame(() => draw(ball));
-        if (object.x > board.x - 10 || object.x < 0) {
-          object.dx *= -1;
+        ctx.fillRect(ball.x, ball.y, 10, 10);
+        ctx.fillRect(paddle.x, 10, paddle.w, paddle.h);
+
+        requestId = requestAnimationFrame(() => draw(game));
+        if (ball.x > board.x - 10 || ball.x < 0) {
+          ball.dx *= -1;
         }
-        if (object.y > board.y - 10 || object.y < 0) {
-          object.dy *= -1;
+        if (collision) {
+          ball.dy *= -1;
+        }
+        if (ball.y > board.y - 10) {
+          ball.dy *= -1;
           const lifeLost = lifes - 1;
           setLifes(lifeLost);
-          console.log(lifes);
         }
-        object.x += object.dx;
-        object.y += object.dy;
-        changeBall(object);
+
+        if (moveLeft) {
+          paddle.x -= paddle.dx;
+        } else if (moveRight) {
+          paddle.x += paddle.dx;
+        }
+
+        ball.x += ball.dx;
+        ball.y += ball.dy;
+
+        const state = [ball, paddle, board];
+
+        updateGame(state);
       };
 
-      draw(ball);
+      draw(game);
       return () => {
         cancelAnimationFrame(requestId);
       };
     } else {
       alert("Game Over");
     }
-  }, [lifes, ball.dy, paddle]);
+  }, [lifes, moveRight, moveLeft]);
 
   let history = useHistory();
 
@@ -84,18 +114,24 @@ export default function GameBoard({ change }) {
         width="295"
         height="400"
         ref={canvasRef}
-        onClick={() => {
-          console.log(ball.dy);
-          if (ball.dy === 1) {
-            changeBall(prevState => {
-              return { ...prevState, dy: -1 };
-            });
-          } else {
-            changeBall(prevState => {
-              return { ...prevState, dy: 1 };
-            });
+        onClick={
+          () => {
+            alert("You will be sent to main Page!");
+            handleGameEnding();
           }
-        }}
+          //   () => {
+          //   console.log(ball.dy);
+          //   if (ball.dy === 1) {
+          //     updateBall(prevState => {
+          //       return { ...prevState, dy: -1 };
+          //     });
+          //   } else {
+          //     updateBall(prevState => {
+          //       return { ...prevState, dy: 1 };
+          //     });
+          //   }
+          // }
+        }
       ></StyledCanvas>
     </GameContainer>
   );
