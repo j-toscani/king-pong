@@ -13,21 +13,25 @@ const GameContainer = styled.section`
   position: relative;
 `;
 
-export default function GameBoard(props) {
+export default function GameBoard({ change }) {
   //include gameobjects as the state
   //include draw-function to draw everything once when canvas gets clicked, fiddle around with positioning
   // implement gameloop to let the ball bounce araound
   // implement controles
-  const [ball, changeState] = React.useState({
+  const [ball, changeBall] = React.useState({
     x: 1,
     y: 1,
     dx: 1,
     dy: 1
   });
+  const [paddle, ChangePaddle] = React.useState(change);
   const [lifes, setLifes] = React.useState(5);
 
   const canvasRef = React.useRef(null);
 
+  React.useEffect(() => ChangePaddle(change), [change]);
+  console.log(change);
+  console.log(paddle);
   React.useEffect(() => {
     if (lifes > 0) {
       let canvas = canvasRef.current;
@@ -40,6 +44,7 @@ export default function GameBoard(props) {
       const draw = object => {
         ctx.clearRect(0, 0, 295, 400);
         ctx.fillRect(object.x, object.y, 10, 10);
+        ctx.fillRect(paddle, 10, 100, 100);
         requestId = requestAnimationFrame(() => draw(ball));
         if (object.x > board.x - 10 || object.x < 0) {
           object.dx *= -1;
@@ -52,7 +57,7 @@ export default function GameBoard(props) {
         }
         object.x += object.dx;
         object.y += object.dy;
-        changeState(object);
+        changeBall(object);
       };
 
       draw(ball);
@@ -61,9 +66,8 @@ export default function GameBoard(props) {
       };
     } else {
       alert("Game Over");
-      handleGameEnding();
     }
-  }, [lifes, ball.dy]);
+  }, [lifes, ball.dy, paddle]);
 
   let history = useHistory();
 
@@ -83,13 +87,11 @@ export default function GameBoard(props) {
         onClick={() => {
           console.log(ball.dy);
           if (ball.dy === 1) {
-            console.log("hey");
-            changeState(prevState => {
+            changeBall(prevState => {
               return { ...prevState, dy: -1 };
             });
           } else {
-            console.log("ho");
-            changeState(prevState => {
+            changeBall(prevState => {
               return { ...prevState, dy: 1 };
             });
           }

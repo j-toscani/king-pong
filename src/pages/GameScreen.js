@@ -39,11 +39,11 @@ export default function GameScreen({ nickname }) {
   function handleInputClick(direction) {
     if (direction === "up") {
       const newState = state + 10;
-      setState(Number(newState));
+      setState(newState);
     }
     if (direction === "down") {
       const newState = state - 10;
-      setState(Number(newState));
+      setState(newState);
     }
   }
 
