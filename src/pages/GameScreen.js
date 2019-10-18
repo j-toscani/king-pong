@@ -32,6 +32,9 @@ const ConcedeButton = styled(Button)`
 export default function GameScreen({ nickname }) {
   let history = useHistory();
   const [state, setState] = React.useState(10);
+  const [moveLeft, toggleMoveLeft] = React.useState(false);
+  const [moveRight, toggleMoveRight] = React.useState(false);
+
   function handleClick() {
     history.push(`/select`);
   }
@@ -40,10 +43,12 @@ export default function GameScreen({ nickname }) {
     if (direction === "up") {
       const newState = state + 10;
       setState(newState);
+      requestAnimationFrame(() => handleInputClick("up"));
     }
     if (direction === "down") {
       const newState = state - 10;
       setState(newState);
+      requestAnimationFrame(() => handleInputClick("down"));
     }
   }
 
@@ -58,11 +63,11 @@ export default function GameScreen({ nickname }) {
         <InputContainer>
           <GameInput
             direction={"left"}
-            onClick={() => handleInputClick("up")}
+            onClick={() => handleInputClick("down")}
           ></GameInput>
           <GameInput
             direction={"right"}
-            onClick={() => handleInputClick("down")}
+            onClick={() => handleInputClick("up")}
           ></GameInput>
         </InputContainer>
       </Container>
