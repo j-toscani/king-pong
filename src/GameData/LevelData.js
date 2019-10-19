@@ -3,25 +3,8 @@
 
 import { setNewLevel } from "../app.js";
 
-console.log("I am loaded!");
-
 const canvas = document.querySelector("#screen");
 const ctx = canvas.getContext("2d");
-
-// adjust life and score display
-const lifeDisplay = document.querySelector("#lifes");
-const scoreDisplay = document.querySelector("#score");
-
-function createUserInfo() {
-  lifeDisplay.innerHTML = `You have ${life} lifes remaining.`;
-  scoreDisplay.innerHTML = `Score: ${score}`;
-}
-
-// loading images
-const ballImage = new Image();
-ballImage.src = "sprites/ball.jpg";
-const paddleImageP1 = new Image();
-paddleImageP1.src = "./sprites/paddle.jpg";
 
 //Collision consequence
 
@@ -40,17 +23,6 @@ function consequenceAfterCollisionWithSquare(square) {
     ball.SpeedY *= -1;
   }
 }
-
-// Obstacle Variables (for testing)
-const obstacle = {
-  height: 100,
-  width: 100,
-  X: canvas.width / 2,
-  Y: canvas.height / 2
-};
-
-obstacle.X = obstacle.X - obstacle.height / 2;
-obstacle.Y = obstacle.Y - obstacle.width / 2;
 
 //Ball Functions
 function drawBall() {
@@ -92,30 +64,7 @@ function drawPaddleP1() {
     paddleP1.X = canvas.width - paddleP1.width;
   }
 }
-function movePaddelRightP1() {
-  paddleP1.X += paddleP1.SpeedY;
-}
-function movePaddleLeftP1() {
-  paddleP1.X -= paddleP1.SpeedY;
-}
-//Paddle interaction
-// https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key
-window.addEventListener("keydown", function(e) {
-  if (e.key === "ArrowRight" && paddleP1.X < canvas.width) {
-    movePaddelRightP1();
-  }
-  if (e.key === "ArrowLeft" && paddleP1.X > 0) {
-    movePaddleLeftP1();
-  }
-});
 
-function drawObstacle(object) {
-  ctx.fillRect(object.X, object.Y, object.width, object.height);
-  const collision = detectCollisionBetween(ball, object);
-  if (collision) {
-    consequenceAfterCollisionWithSquare(object);
-  }
-}
 //Game function
 export function drawLevel01() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);

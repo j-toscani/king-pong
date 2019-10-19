@@ -42,9 +42,7 @@ export default function GameScreen({ nickname }) {
     <>
       <TopLogo headline={`${nickname}'s Game`}></TopLogo>
       <Container>
-        <ConcedeButton big onClick={handleClick}>
-          Concede
-        </ConcedeButton>
+        <ConcedeButton onClick={handleClick}>Concede</ConcedeButton>
         <GameBoard
           rightPressed={rightPressed}
           leftPressed={leftPressed}

@@ -1,13 +1,18 @@
-export function setNewLevel(level) {
-  if (level === 1) {
-    drawLevel01();
-  } else if (level === 2) {
-    drawLevel02();
-  } else if (level === 3) {
-    drawLevel03();
-  } else if (level === 4) {
-    aöert("Your Rock!!! Thanks 4 playing <3");
-  }
+function drawBall(canvas, ball) {
+  canvas.fillStyle = ball.style;
+  canvas.fillRect(ball.x, ball.y, ball.w, ball.h);
 }
 
-setNewLevel(1);
+function drawPaddle(canvas, player) {
+  canvas.fillStyle = player.style;
+  canvas.fillRect(player.x, player.y, player.w, player.h);
+}
+
+export default function drawGameState(canvas, board, ball, player1, player2) {
+  canvas.clearRect(0, 0, board.x, board.y);
+  drawBall(canvas, ball);
+  drawPaddle(canvas, player1);
+  if (player2) {
+    drawPaddle(player2);
+  }
+}
