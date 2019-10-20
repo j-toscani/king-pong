@@ -23,7 +23,12 @@ const StyledInputButton = styled.button`
 
 function GameButton({ handleTap, handleRelease, direction, touchButton }) {
   return (
-    <StyledInputButton onTouchStart={handleTap} onTouchEnd={handleRelease}>
+    <StyledInputButton
+      onTouchStart={handleTap}
+      onMouseDown={handleTap}
+      onMouseUp={handleRelease}
+      onTouchEnd={handleRelease}
+    >
       <Pointer rotate={direction === "left"} white />
     </StyledInputButton>
   );

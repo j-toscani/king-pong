@@ -21,12 +21,12 @@ export default function GameBoard({ leftPressed, rightPressed }) {
   function handleGameEnding() {
     history.push(`/select`);
   }
+
   const [play, setPlay] = React.useState(false);
   const [moveLeft, toggleMovementLeft] = React.useState(false);
   const [moveRight, toggleMovementRight] = React.useState(false);
-  const [game, updateGame] = React.useState([
-    // ball
-    {
+  const [game, updateGame] = React.useState({
+    ball: {
       x: 100,
       y: 150,
       w: 10,
@@ -35,14 +35,12 @@ export default function GameBoard({ leftPressed, rightPressed }) {
       dy: 1,
       pdx: 2
     },
-    // paddle
-    { x: 290 / 2 - 50, y: 380, w: 100, h: 10, dx: 1, dy: 0 },
-    // canvas
-    {
+    player1: { x: 290 / 2 - 50, y: 380, w: 100, h: 10, dx: 1, dy: 0 },
+    board: {
       x: 295,
       y: 400
     }
-  ]);
+  });
 
   const [lifesP1, setlifesP1] = React.useState(5);
   const [lifesP2, setlifesP2] = React.useState(5);
@@ -51,14 +49,16 @@ export default function GameBoard({ leftPressed, rightPressed }) {
   React.useEffect(() => toggleMovementLeft(leftPressed), [leftPressed]);
   React.useEffect(() => toggleMovementRight(rightPressed), [rightPressed]);
   React.useEffect(() => {
-    if (lifesP1 > 0) {
+    debugger;
+    if (game && lifesP1 > 0) {
       let canvas = canvasRef.current;
       let ctx = canvas.getContext("2d");
       let requestId;
       const draw = game => {
-        const ball = game[0];
-        const player1 = game[1];
-        const board = game[2];
+        const ball = game["ball"];
+        const player1 = game["player1"];
+        const player2 = game["player2"];
+        const board = game["board"];
 
         requestId = requestAnimationFrame(() => draw(game));
         drawGameState(ctx, board, ball, player1);
@@ -78,7 +78,7 @@ export default function GameBoard({ leftPressed, rightPressed }) {
         ball.x += ball.dx;
         ball.y += ball.dy;
 
-        const state = [ball, player1, board];
+        const state = { ball, player1, board };
 
         if (lifesP1 && lifesP2 && !play) {
           setPlay(true);

@@ -8,7 +8,7 @@ const StyledMain = styled.main`
   background: ${props => props.theme.contrast};
 `;
 
-const WelcomeWondow = styled.section`
+const WelcomeWindow = styled.section`
   background: ${props => props.theme.accent};
   width: 270px;
   height: 420px;
@@ -31,11 +31,11 @@ export default function Welcome() {
     <>
       <TopLogo headline={"KingPong"}></TopLogo>
       <StyledMain>
-        <WelcomeWondow>
+        <WelcomeWindow>
           <AltButton big onClick={handleClick}>
             Tap to start!
           </AltButton>
-        </WelcomeWondow>
+        </WelcomeWindow>
       </StyledMain>
     </>
   );

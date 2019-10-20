@@ -7,9 +7,10 @@ export default function createEvents(
   setlifesP2,
   lifesP2
 ) {
-  const ball = game[0];
-  const player1 = game[1];
-  const board = game[2];
+  const ball = game["ball"];
+  const player1 = game["player1"];
+  const player2 = game["player2"];
+  const board = game["board"];
   return [
     {
       name: "Ball and the Wall left and right",
@@ -41,8 +42,6 @@ export default function createEvents(
         (ball.x > player1.x && ball.x < player1.x + player1.w),
       result: () => {
         ball.dy *= -1;
-        const lostLife = lifesP2 - 1;
-        setlifesP2(lostLife);
       }
     },
     {

@@ -13,7 +13,6 @@ export const StyledHeader = styled.header`
   padding-left: 40px;
   padding-right: 30px;
   width: 100%;
-  height: 80px;
 `;
 
 const StyledH2 = styled.h2`
