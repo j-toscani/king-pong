@@ -27,8 +27,7 @@ export default function GameSelect({ open, handleToggleMode, mute, darkmode }) {
   let history = useHistory();
 
   function handleClick() {
-    const id = Math.random();
-    history.push(`gameroom/chat/${id}`);
+    history.push(`gameroom/`);
   }
 
   return (

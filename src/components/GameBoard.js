@@ -44,7 +44,7 @@ export default function GameBoard({ leftPressed, rightPressed }) {
       pdx: 2
     },
     player1: {
-      player: false,
+      player: true,
       x: 290 / 2 - 50,
       y: 350,
       w: 100,
@@ -53,7 +53,7 @@ export default function GameBoard({ leftPressed, rightPressed }) {
       dy: 0
     },
     player2: {
-      player: true,
+      player: false,
       x: 290 / 2 - 50,
       y: 40,
       w: 100,
@@ -61,9 +61,12 @@ export default function GameBoard({ leftPressed, rightPressed }) {
       dx: 1,
       dy: 0
     },
-    board: {
+    global: {
       x: 295,
-      y: 400
+      y: 400,
+      cheerWin: "You Won!!!",
+      cheerLoss: "You Lost...",
+      winner: "opponent"
     }
   });
 
@@ -80,11 +83,11 @@ export default function GameBoard({ leftPressed, rightPressed }) {
       let ctx = canvas.getContext("2d");
       let requestId;
       const draw = game => {
-        const { ball, board, player1, player2, user } = game;
+        const { ball, global, player1, player2 } = game;
 
         requestId = requestAnimationFrame(() => draw(game));
         if (game) {
-          drawGameState(ctx, board, ball, player1, player2);
+          drawGameState(ctx, global, ball, player1, player2);
         }
         if (play) {
           const events = createEvents(
@@ -101,7 +104,7 @@ export default function GameBoard({ leftPressed, rightPressed }) {
         ball.x += ball.dx;
         ball.y += ball.dy;
 
-        const state = { ball, player1, board, player2 };
+        const state = { ball, player1, global, player2 };
 
         if (lifesP1 && lifesP2 && !play) {
           setPlay(true);
@@ -126,8 +129,7 @@ export default function GameBoard({ leftPressed, rightPressed }) {
       <StyledCanvas width="295" height="400" ref={canvasRef}></StyledCanvas>
       <Modal ref={modal}>
         <WinLossWindow
-          win={false}
-          player={false}
+          result={game["global"]}
           onClick={() => {
             handleGameEnding();
           }}

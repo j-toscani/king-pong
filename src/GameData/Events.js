@@ -7,7 +7,7 @@ export default function createEvents(
   setlifesP2,
   lifesP2
 ) {
-  const { player1, player2, board, ball } = game;
+  const { player1, player2, global, ball } = game;
 
   const player = game["player1"].player ? game["player1"] : game["player2"];
   const opponent = game["player2"].player ? game["player2"] : game["player1"];
@@ -15,7 +15,7 @@ export default function createEvents(
   return [
     {
       name: "Ball and the Wall left and right",
-      case: ball.x > board.x - ball.w || ball.x < 0,
+      case: ball.x > global.x - ball.w || ball.x < 0,
       result: () => (ball.dx *= -1)
     },
     {
@@ -29,7 +29,7 @@ export default function createEvents(
     },
     {
       name: "Ball and the Wall bottom",
-      case: ball.y > board.y - ball.h,
+      case: ball.y > global.y - ball.h,
       result: () => {
         ball.dy *= -1;
         const lostLife = lifesP2 - 1;
@@ -54,7 +54,7 @@ export default function createEvents(
     },
     {
       name: "Player moving Paddle right",
-      case: moveRight && player.x < board.x - player.w,
+      case: moveRight && player.x < global.x - player.w,
       result: () => {
         player.x += player.dx;
       }
