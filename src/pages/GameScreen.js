@@ -52,22 +52,18 @@ export default function GameScreen({ nickname }) {
             direction={"left"}
             handleTap={() => {
               togglePressedLeft(true);
-              console.log(leftPressed);
             }}
             handleRelease={() => {
               togglePressedLeft(false);
-              console.log(leftPressed);
             }}
           ></GameInput>
           <GameInput
             direction={"right"}
             handleTap={() => {
               togglePressedRight(true);
-              console.log(rightPressed);
             }}
             handleRelease={() => {
               togglePressedRight(false);
-              console.log(rightPressed);
             }}
           ></GameInput>
         </InputContainer>

@@ -6,7 +6,7 @@ function drawBall(canvas, ball) {
 }
 
 function drawPaddle(canvas, player) {
-  // canvas.fillStyle = player.style;
+  canvas.fillStyle = player.style;
   canvas.fillRect(player.x, player.y, player.w, player.h);
 }
 

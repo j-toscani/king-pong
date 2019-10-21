@@ -22,7 +22,6 @@ function GameButton({ handleTap, handleRelease, direction }) {
 
   console.log(width > 420);
   if (width > 420) {
-    console.log("boom");
     return (
       <StyledInputButton onMouseDown={handleTap} onMouseUp={handleRelease}>
         <Pointer rotate={direction === "left"} white />
@@ -35,7 +34,7 @@ function GameButton({ handleTap, handleRelease, direction }) {
       <StyledInputButton
         onTouchStart={handleTap}
         onTouchEnd={handleRelease}
-        // onContextMenu={e => e.preventDefault()}
+        onContextMenu={e => e.preventDefault()}
       >
         <Pointer rotate={direction === "left"} white />
       </StyledInputButton>
