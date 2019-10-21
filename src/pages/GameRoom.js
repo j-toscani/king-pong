@@ -2,8 +2,7 @@ import React from "react";
 
 import ChatRoom from "./ChatRoom";
 import GameScreen from "./GameScreen";
-import NavTop from "../components/NavTop";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
 
 export default function GameRoom({
@@ -14,12 +13,9 @@ export default function GameRoom({
   darkmode
 }) {
   let history = useHistory();
-
-  const id = useParams().id;
+  let id = Math.random();
   const [roomId, setRoomId] = React.useState(id);
   const [connected, setConnection] = React.useState(false);
-
-  console.log(roomId);
 
   function handleClick(destination) {
     if (destination === "select") {

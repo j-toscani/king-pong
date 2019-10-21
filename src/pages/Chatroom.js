@@ -4,7 +4,7 @@ import ChatWindow from "../components/ChatWindow";
 import Button, { AltButton } from "../components/Button";
 import NavTop from "../components/NavTop";
 import Overlay from "../components/Overlay";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const StyledMain = styled.main`
   flex-direction: column;

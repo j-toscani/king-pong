@@ -87,7 +87,7 @@ export default function GameBoard({ leftPressed, rightPressed }) {
 
         requestId = requestAnimationFrame(() => draw(game));
         if (game) {
-          drawGameState(ctx, global, ball, player1, player2);
+          drawGameState(ctx, global, ball, player1);
         }
         if (play) {
           const events = createEvents(
