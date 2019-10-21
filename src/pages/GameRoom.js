@@ -1,5 +1,4 @@
 import React from "react";
-
 import ChatRoom from "./ChatRoom";
 import GameScreen from "./GameScreen";
 import { useHistory } from "react-router-dom";

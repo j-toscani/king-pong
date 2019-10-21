@@ -39,8 +39,8 @@ export default function GameBoard({ leftPressed, rightPressed }) {
       y: 150,
       w: 10,
       h: 10,
-      dx: 1,
-      dy: 1,
+      dx: 1.5,
+      dy: 2.5,
       pdx: 2
     },
     player1: {
@@ -49,7 +49,7 @@ export default function GameBoard({ leftPressed, rightPressed }) {
       y: 350,
       w: 100,
       h: 10,
-      dx: 1,
+      dx: 3,
       dy: 0
     },
     player2: {
@@ -58,7 +58,7 @@ export default function GameBoard({ leftPressed, rightPressed }) {
       y: 40,
       w: 100,
       h: 10,
-      dx: 1,
+      dx: 2,
       dy: 0
     },
     global: {
@@ -70,7 +70,7 @@ export default function GameBoard({ leftPressed, rightPressed }) {
     }
   });
 
-  const [lifesP1, setlifesP1] = React.useState(1);
+  const [lifesP1, setlifesP1] = React.useState(5);
   const [lifesP2, setlifesP2] = React.useState(1);
   const canvasRef = React.useRef(null);
   const modal = React.useRef(null);
@@ -87,7 +87,7 @@ export default function GameBoard({ leftPressed, rightPressed }) {
 
         requestId = requestAnimationFrame(() => draw(game));
         if (game) {
-          drawGameState(ctx, global, ball, player1);
+          drawGameState(ctx, global, ball, player1, player2);
         }
         if (play) {
           const events = createEvents(
@@ -101,10 +101,17 @@ export default function GameBoard({ leftPressed, rightPressed }) {
           );
           handleEvents(events);
         }
+
+        // if (ball.x !== player2.x) {
+        //   player2.x -= player2.dx;
+        // }
+        // if (ball.x + 75 > player2.x) {
+        //   player2.x += player2.dx;
+        // }
         ball.x += ball.dx;
         ball.y += ball.dy;
 
-        const state = { ball, player1, global, player2 };
+        const state = { ball, player1, global };
 
         if (lifesP1 && lifesP2 && !play) {
           setPlay(true);

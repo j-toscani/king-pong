@@ -33,7 +33,6 @@ export default function ChatRoom({
       history.push("/select");
     } else {
       history.push(`${destination}`);
-      console.log(`${destination}`);
     }
   }
 

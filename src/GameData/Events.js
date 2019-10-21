@@ -46,6 +46,15 @@ export default function createEvents(
       }
     },
     {
+      name: "Ball and Player1",
+      case:
+        ball.y < player2.y + 10 &&
+        (ball.x > player2.x && ball.x < player2.x + player2.w),
+      result: () => {
+        ball.dy *= -1;
+      }
+    },
+    {
       name: "Player moving Paddle left",
       case: moveLeft && player.x > 0,
       result: () => {
