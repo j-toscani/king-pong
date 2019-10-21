@@ -1,12 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import Pointer from "../ressources/icons/Pointer";
-import Button from "../components/Button";
 
-const StyledConcede = styled(Button)`
-  box-shadow: 0px 3px 6px;
-  position: absolute;
-`;
+import useWindowDimensions from "../GameData/GetWIndowDimension";
 
 const StyledInputButton = styled.button`
   box-shadow: 0px 3px 6px;
@@ -21,25 +17,30 @@ const StyledInputButton = styled.button`
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 `;
 
-function GameButton({ handleTap, handleRelease, direction, touchButton }) {
-  return (
-    <StyledInputButton
-      onTouchStart={handleTap}
-      onMouseDown={handleTap}
-      onMouseUp={handleRelease}
-      onTouchEnd={handleRelease}
-    >
-      <Pointer rotate={direction === "left"} white />
-    </StyledInputButton>
-  );
-}
+function GameButton({ handleTap, handleRelease, direction }) {
+  const { height, width } = useWindowDimensions();
 
-export function ConcedeButton({ onClick }) {
-  return (
-    <StyledConcede active onClick={onClick}>
-      Concede
-    </StyledConcede>
-  );
+  console.log(width > 420);
+  if (width > 420) {
+    console.log("boom");
+    return (
+      <StyledInputButton onMouseDown={handleTap} onMouseUp={handleRelease}>
+        <Pointer rotate={direction === "left"} white />
+      </StyledInputButton>
+    );
+  }
+  if (width < 420) {
+    console.log("bam");
+    return (
+      <StyledInputButton
+        onTouchStart={handleTap}
+        onTouchEnd={handleRelease}
+        // onContextMenu={e => e.preventDefault()}
+      >
+        <Pointer rotate={direction === "left"} white />
+      </StyledInputButton>
+    );
+  }
 }
 
 export default GameButton;

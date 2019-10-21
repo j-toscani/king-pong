@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import HeartRow from "./HeartRow";
 import { useHistory } from "react-router-dom";
+import WinLossWindow from "../components/WinLossWindow";
 import drawGameState from "../GameData/Draw";
 import createEvents, { handleEvents } from "../GameData/Events";
 
@@ -13,6 +14,13 @@ const GameContainer = styled.section`
   margin: 0;
   padding: 0;
   position: relative;
+`;
+
+const Modal = styled.dialog`
+  border: none;
+  padding: 0;
+  margin: auto;
+  background: transparent;
 `;
 
 export default function GameBoard({ leftPressed, rightPressed }) {
@@ -35,34 +43,49 @@ export default function GameBoard({ leftPressed, rightPressed }) {
       dy: 1,
       pdx: 2
     },
-    player1: { x: 290 / 2 - 50, y: 380, w: 100, h: 10, dx: 1, dy: 0 },
+    player1: {
+      player: false,
+      x: 290 / 2 - 50,
+      y: 350,
+      w: 100,
+      h: 10,
+      dx: 1,
+      dy: 0
+    },
+    player2: {
+      player: true,
+      x: 290 / 2 - 50,
+      y: 40,
+      w: 100,
+      h: 10,
+      dx: 1,
+      dy: 0
+    },
     board: {
       x: 295,
       y: 400
     }
   });
 
-  const [lifesP1, setlifesP1] = React.useState(5);
-  const [lifesP2, setlifesP2] = React.useState(5);
+  const [lifesP1, setlifesP1] = React.useState(1);
+  const [lifesP2, setlifesP2] = React.useState(1);
   const canvasRef = React.useRef(null);
+  const modal = React.useRef(null);
 
   React.useEffect(() => toggleMovementLeft(leftPressed), [leftPressed]);
   React.useEffect(() => toggleMovementRight(rightPressed), [rightPressed]);
   React.useEffect(() => {
-    debugger;
-    if (game && lifesP1 > 0) {
+    if (game && lifesP1 > 0 && lifesP2 > 0) {
       let canvas = canvasRef.current;
       let ctx = canvas.getContext("2d");
       let requestId;
       const draw = game => {
-        const ball = game["ball"];
-        const player1 = game["player1"];
-        const player2 = game["player2"];
-        const board = game["board"];
+        const { ball, board, player1, player2, user } = game;
 
         requestId = requestAnimationFrame(() => draw(game));
-        drawGameState(ctx, board, ball, player1);
-
+        if (game) {
+          drawGameState(ctx, board, ball, player1, player2);
+        }
         if (play) {
           const events = createEvents(
             game,
@@ -78,7 +101,7 @@ export default function GameBoard({ leftPressed, rightPressed }) {
         ball.x += ball.dx;
         ball.y += ball.dy;
 
-        const state = { ball, player1, board };
+        const state = { ball, player1, board, player2 };
 
         if (lifesP1 && lifesP2 && !play) {
           setPlay(true);
@@ -90,8 +113,8 @@ export default function GameBoard({ leftPressed, rightPressed }) {
       return () => {
         cancelAnimationFrame(requestId);
       };
-    } else {
-      alert("Game Over");
+    } else if (!modal.current.open) {
+      modal.current.showModal();
     }
   }, [lifesP1, lifesP2, moveRight, moveLeft, play]);
 
@@ -100,15 +123,16 @@ export default function GameBoard({ leftPressed, rightPressed }) {
       <HeartRow p1 lifes={lifesP1}></HeartRow>
       <HeartRow p1={false} lifes={lifesP2}></HeartRow>
 
-      <StyledCanvas
-        width="295"
-        height="400"
-        ref={canvasRef}
-        onClick={() => {
-          alert("You will be sent to main Page!");
-          handleGameEnding();
-        }}
-      ></StyledCanvas>
+      <StyledCanvas width="295" height="400" ref={canvasRef}></StyledCanvas>
+      <Modal ref={modal}>
+        <WinLossWindow
+          win={false}
+          player={false}
+          onClick={() => {
+            handleGameEnding();
+          }}
+        />
+      </Modal>
     </GameContainer>
   );
 }

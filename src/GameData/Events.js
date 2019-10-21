@@ -7,10 +7,11 @@ export default function createEvents(
   setlifesP2,
   lifesP2
 ) {
-  const ball = game["ball"];
-  const player1 = game["player1"];
-  const player2 = game["player2"];
-  const board = game["board"];
+  const { player1, player2, board, ball } = game;
+
+  const player = game["player1"].player ? game["player1"] : game["player2"];
+  const opponent = game["player2"].player ? game["player2"] : game["player1"];
+
   return [
     {
       name: "Ball and the Wall left and right",
@@ -45,17 +46,17 @@ export default function createEvents(
       }
     },
     {
-      name: "Player moving Paddle",
-      case: moveLeft && player1.x > 0,
+      name: "Player moving Paddle left",
+      case: moveLeft && player.x > 0,
       result: () => {
-        player1.x -= player1.dx;
+        player.x -= player.dx;
       }
     },
     {
-      name: "Player moving Paddle",
-      case: moveRight && player1.x < board.x - player1.w,
+      name: "Player moving Paddle right",
+      case: moveRight && player.x < board.x - player.w,
       result: () => {
-        player1.x += player1.dx;
+        player.x += player.dx;
       }
     }
   ];
