@@ -9,10 +9,9 @@ import GameSelect from "./pages/GameSelect.js";
 
 import NicknameInput from "./pages/NicknameInput.js";
 import Profile from "./pages/Profile.js";
-import GameScreen from "./pages/GameScreen";
-import Chatroom from "./pages/Chatroom.js";
 
 import Welcome from "./pages/Welcome.js";
+import GameRoom from "./pages/GameRoom.js";
 
 const Container = styled.div`
   margin: 0;
@@ -56,10 +55,9 @@ function App() {
           />
 
           <Route
-            path="/gameroom/chat/:id"
-            exact
+            path="/gameroom"
             component={props => (
-              <Chatroom
+              <GameRoom
                 nickname={nickname}
                 handleToggleMode={handleToggleMode}
                 darkmode={darkmode}
@@ -67,11 +65,6 @@ function App() {
                 open={open}
               />
             )}
-          />
-          <Route
-            path="/gameroom/game/:id"
-            exact
-            component={props => <GameScreen nickname={user.name}></GameScreen>}
           />
           <Route
             path="/select"

@@ -7,15 +7,15 @@ export default function createEvents(
   setlifesP2,
   lifesP2
 ) {
-  const { player1, player2, board, ball } = game;
+  const { player1, player2, global, ball } = game;
 
   const player = game["player1"].player ? game["player1"] : game["player2"];
-  const opponent = game["player2"].player ? game["player2"] : game["player1"];
+  const opponent = game["player2"].player ? game["player1"] : game["player2"];
 
   return [
     {
       name: "Ball and the Wall left and right",
-      case: ball.x > board.x - ball.w || ball.x < 0,
+      case: ball.x > global.x - ball.w || ball.x < 0,
       result: () => (ball.dx *= -1)
     },
     {
@@ -29,7 +29,7 @@ export default function createEvents(
     },
     {
       name: "Ball and the Wall bottom",
-      case: ball.y > board.y - ball.h,
+      case: ball.y > global.y - ball.h,
       result: () => {
         ball.dy *= -1;
         const lostLife = lifesP2 - 1;
@@ -42,7 +42,23 @@ export default function createEvents(
         ball.y > player1.y - ball.h &&
         (ball.x > player1.x && ball.x < player1.x + player1.w),
       result: () => {
-        ball.dy *= -1;
+        if (ball.dy > 0) {
+          ball.dy *= -1;
+        } else {
+        }
+      }
+    },
+    {
+      name: "Ball and player2",
+      case:
+        ball.y < player2.y + 10 &&
+        (ball.x > player2.x && ball.x < player2.x + player2.w),
+      result: () => {
+        if (ball.dy < 0) {
+          ball.dy -= 0.2;
+          ball.dy *= -1;
+        } else {
+        }
       }
     },
     {
@@ -54,9 +70,24 @@ export default function createEvents(
     },
     {
       name: "Player moving Paddle right",
-      case: moveRight && player.x < board.x - player.w,
+      case: moveRight && player.x < global.x - player.w,
       result: () => {
         player.x += player.dx;
+      }
+    },
+    {
+      name: "Opponent moves to left to catch ball",
+      case: ball.x - 25 < opponent.x && opponent.x > 0,
+      result: () => {
+        opponent.x -= opponent.dx;
+        console.log(ball.x, opponent.x);
+      }
+    },
+    {
+      name: "Opponent moves to left to catch ball",
+      case: ball.x - 25 > opponent.x && opponent.x + opponent.w < global.x,
+      result: () => {
+        opponent.x += opponent.dx;
       }
     }
   ];

@@ -12,22 +12,22 @@ const StyledWindowSee = styled(StyledWindow)`
   opacity: 0.8;
 `;
 
-function WinLossWindow({ player, onClick }) {
-  if (player.win === true) {
+function WinLossWindow({ result, onClick }) {
+  if (result.winner === "opponent") {
     return (
       <StyledWindowSee>
-        <Headline>{player.cheer}</Headline>
-        <div>{player.message}</div>
+        <Headline>{result.cheerLoss}</Headline>
+
         <Button active onClick={onClick}>
           Back to Play
         </Button>
       </StyledWindowSee>
     );
-  } else if (player.win !== true) {
+  } else if (result.winner === "player") {
     return (
       <StyledWindowSee>
-        <Headline>{player.cheer}</Headline>
-        <div>{player.message}</div>
+        <Headline>{result.cheerWin}</Headline>
+
         <Button active onClick={onClick}>
           Back to Play
         </Button>

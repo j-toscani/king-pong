@@ -20,7 +20,6 @@ const StyledInputButton = styled.button`
 function GameButton({ handleTap, handleRelease, direction }) {
   const { height, width } = useWindowDimensions();
 
-  console.log(width > 420);
   if (width > 420) {
     return (
       <StyledInputButton onMouseDown={handleTap} onMouseUp={handleRelease}>
@@ -29,7 +28,6 @@ function GameButton({ handleTap, handleRelease, direction }) {
     );
   }
   if (width < 420) {
-    console.log("bam");
     return (
       <StyledInputButton
         onTouchStart={handleTap}
