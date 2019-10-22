@@ -21,7 +21,6 @@ export default function GameRoom({
       history.push("/select");
     } else {
       history.push(`${destination}`);
-      console.log(`${destination}`);
     }
   }
 
@@ -34,10 +33,7 @@ export default function GameRoom({
     <>
       <Switch>
         <Route exact path="/gameroom">
-          <div>
-            connecting
-            <button onClick={() => handleClick("chat")}>button</button>
-          </div>
+          <div>connecting</div>
         </Route>
         <Route exact path="/gameroom/chat">
           <ChatRoom

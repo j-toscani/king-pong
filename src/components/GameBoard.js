@@ -69,7 +69,6 @@ export default function GameBoard({ leftPressed, rightPressed }) {
       winner: "opponent"
     }
   });
-
   const [lifesP1, setlifesP1] = React.useState(5);
   const [lifesP2, setlifesP2] = React.useState(1);
   const canvasRef = React.useRef(null);
@@ -102,16 +101,10 @@ export default function GameBoard({ leftPressed, rightPressed }) {
           handleEvents(events);
         }
 
-        // if (ball.x !== player2.x) {
-        //   player2.x -= player2.dx;
-        // }
-        // if (ball.x + 75 > player2.x) {
-        //   player2.x += player2.dx;
-        // }
         ball.x += ball.dx;
         ball.y += ball.dy;
 
-        const state = { ball, player1, global };
+        const state = { ball, player1, global, player2 };
 
         if (lifesP1 && lifesP2 && !play) {
           setPlay(true);

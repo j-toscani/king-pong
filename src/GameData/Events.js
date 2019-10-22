@@ -10,7 +10,7 @@ export default function createEvents(
   const { player1, player2, global, ball } = game;
 
   const player = game["player1"].player ? game["player1"] : game["player2"];
-  const opponent = game["player2"].player ? game["player2"] : game["player1"];
+  const opponent = game["player2"].player ? game["player1"] : game["player2"];
 
   return [
     {
@@ -42,16 +42,23 @@ export default function createEvents(
         ball.y > player1.y - ball.h &&
         (ball.x > player1.x && ball.x < player1.x + player1.w),
       result: () => {
-        ball.dy *= -1;
+        if (ball.dy > 0) {
+          ball.dy *= -1;
+        } else {
+        }
       }
     },
     {
-      name: "Ball and Player1",
+      name: "Ball and player2",
       case:
         ball.y < player2.y + 10 &&
         (ball.x > player2.x && ball.x < player2.x + player2.w),
       result: () => {
-        ball.dy *= -1;
+        if (ball.dy < 0) {
+          ball.dy -= 0.2;
+          ball.dy *= -1;
+        } else {
+        }
       }
     },
     {
@@ -66,6 +73,21 @@ export default function createEvents(
       case: moveRight && player.x < global.x - player.w,
       result: () => {
         player.x += player.dx;
+      }
+    },
+    {
+      name: "Opponent moves to left to catch ball",
+      case: ball.x - 25 < opponent.x && opponent.x > 0,
+      result: () => {
+        opponent.x -= opponent.dx;
+        console.log(ball.x, opponent.x);
+      }
+    },
+    {
+      name: "Opponent moves to left to catch ball",
+      case: ball.x - 25 > opponent.x && opponent.x + opponent.w < global.x,
+      result: () => {
+        opponent.x += opponent.dx;
       }
     }
   ];
