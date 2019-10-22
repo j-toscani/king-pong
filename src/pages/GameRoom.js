@@ -4,37 +4,38 @@ import GameScreen from "./GameScreen";
 import { useHistory } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
 
-export default function GameRoom({
-  nickname,
-  open,
-  handleToggleMode,
-  mute,
-  darkmode
-}) {
+export default function GameRoom({ nickname, setSettings, settings }) {
   let history = useHistory();
-  let id = Math.random();
-  const [roomId, setRoomId] = React.useState(id);
+
+  const [roomId, setRoomId] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const [connectedTo, setConnectionTo] = React.useState(false);
 
+  function toggleOpen(open) {
+    setOpen(!open);
+  }
+
   React.useEffect(() => {
-    const port = 4000;
+    if (!connectedTo) {
+      let id = Math.random();
+      setRoomId(id);
+      const ws = new WebSocket("ws://127.0.0.1:4000/");
 
-    const ws = new WebSocket("ws://localhost:4000/");
+      ws.onopen = function() {
+        console.log("Websocket Client Connected");
+        ws.send("Hi this is web client.");
+      };
 
-    ws.onopen = function() {
-      console.log("Wbsocket Client Connected");
-      ws.send("Hi this is web client.");
-    };
-
-    ws.message = function(e) {
-      console.log("Recieved '" + e.data + "'");
-    };
-
-    history.push("/gameroom/chat");
-    setConnectionTo({ connected: true, roomId, ws });
+      ws.onmessage = function(e) {
+        console.log(typeof e.data, e.data);
+      };
+      console.log("hook executed");
+      history.push("/gameroom/chat");
+      setConnectionTo({ connected: true, roomId, ws });
+    } else {
+      console.log(`ID already declared: ${roomId}`);
+    }
   }, [roomId]);
-
-  console.log(connectedTo);
 
   return (
     <>
@@ -44,10 +45,11 @@ export default function GameRoom({
         </Route>
         <Route exact path="/gameroom/chat">
           <ChatRoom
+            connectedTo={connectedTo}
             nickname={nickname}
-            handleToggleMode={handleToggleMode}
-            darkmode={darkmode}
-            mute={mute}
+            setSettings={setSettings}
+            toggleOpen={toggleOpen}
+            settings={settings}
             open={open}
           ></ChatRoom>
         </Route>

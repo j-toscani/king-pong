@@ -24,12 +24,12 @@ const Point = styled.label`
   height: 25px;
   top: -4px;
   box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.3);
-
+  transform: all 0.5;
   ${props =>
     props.active
       ? css`
           position: absolute;
-          right: 4px;
+          transform: translateX(26px);
         `
       : css`
           left: 4px;
@@ -38,6 +38,9 @@ const Point = styled.label`
 `;
 
 export default function SwitchButton({ id, mode, handleChange }) {
+  const [visible, setVisible] = React.useState(false);
+
+  React.useEffect(() => setVisible(mode), [mode]);
   return (
     <Background active={mode}>
       <Point htmlFor={id} active={!mode}></Point>

@@ -40,24 +40,21 @@ const BottomContainer = styled.div`
   justify-content: space-between;
 `;
 
-function Overlay({ open, mute, darkmode, handleToggleMode, inGame }) {
+function Overlay({ open, setSettings, settings, inGame, toggleOpen }) {
   let history = useHistory();
+
+  const [visible, setVisible] = React.useState(false);
+
+  React.useEffect(() => setVisible(open), [open]);
 
   function handleClick(destination) {
     history.push(`/${destination}`);
   }
   return (
     <>
-      <Background
-        open={open}
-        onClick={() => handleToggleMode("open")}
-      ></Background>
+      <Background onClick={toggleOpen}></Background>
       <OverlayContainer open={open}>
-        <Settings
-          handleToggleMode={handleToggleMode}
-          mute={mute}
-          darkmode={darkmode}
-        ></Settings>
+        <Settings setSettings={setSettings} settings={settings}></Settings>
         {!inGame && (
           <BottomContainer>
             <RetreatButton

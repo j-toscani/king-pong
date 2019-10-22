@@ -21,10 +21,11 @@ const ButtonContainer = styled.div`
 
 export default function ChatRoom({
   nickname,
-  open,
-  handleToggleMode,
-  mute,
-  darkmode
+  setSettings,
+  settings,
+  connectedTo,
+  toggleOpen,
+  open
 }) {
   let history = useHistory();
 
@@ -47,14 +48,15 @@ export default function ChatRoom({
       content: content
     };
     newChatHistory.push(newMessage);
+    connectedTo["ws"].send(JSON.stringify(newMessage));
     updateHistory(newChatHistory);
   }
 
   return (
     <>
       <NavTop
-        state={open ? "open" : "closed"}
-        handleToggleMode={handleToggleMode}
+        open={open}
+        toggleOpen={toggleOpen}
         headline={"Chatroom"}
       ></NavTop>
       <StyledMain>
@@ -72,9 +74,9 @@ export default function ChatRoom({
         </ButtonContainer>
         <Overlay
           open={open}
-          mute={mute}
-          darkmode={darkmode}
-          handleToggleMode={handleToggleMode}
+          setSettings={setSettings}
+          toggleOpen={toggleOpen}
+          settings={settings}
           inGame={true}
         />
       </StyledMain>

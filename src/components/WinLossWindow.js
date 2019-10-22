@@ -13,7 +13,6 @@ const StyledWindowSee = styled(StyledWindow)`
 `;
 
 function WinLossWindow({ result, onClick, connectedTo }) {
-  console.log(connectedTo);
   if (result.winner === "opponent") {
     return (
       <StyledWindowSee>

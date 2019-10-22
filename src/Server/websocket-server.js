@@ -16,7 +16,7 @@ wsServer.on("request", request => {
 
   connection.on("message", message => {
     console.log("Received Message:", message.utf8Data);
-    connection.sendUTF("Hi this is Websocket server!");
+    connection.sendUTF(message.utf8Data);
   });
   connection.on("close", (reasonCode, description) => {
     console.log("Client has disconnected.");

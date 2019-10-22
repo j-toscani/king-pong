@@ -25,9 +25,17 @@ const Container = styled.div`
 `;
 
 function App() {
-  const [darkmode, setDarkmode] = React.useState(false);
-  const [mute, setMute] = React.useState(true);
-  const [open, setOpen] = React.useState(false);
+  const [settings, adjustSettings] = React.useState({
+    darkmode: false,
+    sound: true
+  });
+
+  function setSettings(name) {
+    const newSettings = { ...settings };
+    newSettings[name] = !settings[name];
+    adjustSettings(newSettings);
+  }
+
   const [nickname, setNickname] = React.useState(false);
 
   const user = {
@@ -38,13 +46,8 @@ function App() {
     players: 2
   };
 
-  function handleToggleMode(mode) {
-    if (mode === "darkmode") setDarkmode(!darkmode);
-    if (mode === "mute") setMute(!mute);
-    if (mode === "open") setOpen(!open);
-  }
   return (
-    <ThemeProvider theme={darkmode ? darkTheme : defaultTheme}>
+    <ThemeProvider theme={settings["darkmode"] ? darkTheme : defaultTheme}>
       <GlobalStyles />
       <Container>
         <Router>
@@ -59,10 +62,8 @@ function App() {
             component={props => (
               <GameRoom
                 nickname={nickname}
-                handleToggleMode={handleToggleMode}
-                darkmode={darkmode}
-                mute={mute}
-                open={open}
+                setSettings={setSettings}
+                settings={settings}
               />
             )}
           />
@@ -71,11 +72,8 @@ function App() {
             exact
             component={props => (
               <GameSelect
-                handleToggleMode={handleToggleMode}
-                darkmode={darkmode}
+                setSettings={setSettings}
                 nickname={user.name}
-                mute={mute}
-                open={open}
                 {...props}
               />
             )}

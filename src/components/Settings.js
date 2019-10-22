@@ -24,23 +24,26 @@ const Container = styled.div`
   color: ${props => props.theme.brightFont};
 `;
 
-export default function Settings({ handleToggleMode, mute, darkmode }) {
+export default function Settings({ setSettings, settings }) {
   return (
     <Container>
       <Option>
         Darkmode
         <SwitchButton
           id={"Darkmode"}
-          mode={darkmode}
-          handleChange={() => handleToggleMode("darkmode")}
+          mode={settings.darkmode}
+          handleChange={() => {
+            setSettings("darkmode");
+            console.log(settings);
+          }}
         ></SwitchButton>
       </Option>
       <Option>
         Sound
         <SwitchButton
           id={"Sound"}
-          mode={mute}
-          handleChange={() => handleToggleMode("mute")}
+          mode={settings.sound}
+          handleChange={() => setSettings("sound")}
         ></SwitchButton>
       </Option>
     </Container>
