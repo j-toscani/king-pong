@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { TopPointer } from "../components/Top";
-import ProfileData from "../components/ProfileData";
 
 const Container = styled.main`
   background: ${props => props.theme.accent};

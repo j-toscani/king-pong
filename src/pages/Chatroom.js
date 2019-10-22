@@ -4,7 +4,7 @@ import ChatWindow from "../components/ChatWindow";
 import Button, { AltButton } from "../components/Button";
 import NavTop from "../components/NavTop";
 import Overlay from "../components/Overlay";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 const StyledMain = styled.main`
   flex-direction: column;
@@ -28,8 +28,10 @@ export default function Chatroom({
 }) {
   let history = useHistory();
 
+  const id = useParams().id;
+
   function handleClick(destination) {
-    history.push(`/${destination}`);
+    history.push(`/${destination}/${id}`);
   }
 
   const [chatHistory, updateHistory] = React.useState([]);
@@ -45,7 +47,6 @@ export default function Chatroom({
     newChatHistory.push(newMessage);
     updateHistory(newChatHistory);
   }
-
   return (
     <>
       <NavTop
@@ -59,7 +60,7 @@ export default function Chatroom({
           handleSubmitMessage={handleSubmitMessage}
         ></ChatWindow>
         <ButtonContainer>
-          <Button onClick={() => handleClick("gameroom/game")} disabled big>
+          <Button onClick={() => handleClick("gameroom/game")} big>
             Ready!
           </Button>
           <AltButton onClick={() => handleClick("select")} big>

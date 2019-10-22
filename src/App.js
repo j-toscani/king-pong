@@ -6,17 +6,19 @@ import darkTheme from "./themes/dark.js";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import About from "./pages/About.js";
 import GameSelect from "./pages/GameSelect.js";
-import GameScreen from "./pages/GameScreen.js";
+
 import NicknameInput from "./pages/NicknameInput.js";
 import Profile from "./pages/Profile.js";
+import GameScreen from "./pages/GameScreen";
 import Chatroom from "./pages/Chatroom.js";
+
 import Welcome from "./pages/Welcome.js";
 
 const Container = styled.div`
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template: 80px 1fr / 1fr;
+  grid-template: 100px 1fr / 1fr;
   width: 100vw;
 
   height: 100vh;
@@ -27,13 +29,14 @@ function App() {
   const [darkmode, setDarkmode] = React.useState(false);
   const [mute, setMute] = React.useState(true);
   const [open, setOpen] = React.useState(false);
-  const [nickname, setNickname] = React.useState(null);
+  const [nickname, setNickname] = React.useState(false);
 
   const user = {
-    name: nickname === null ? "You" : nickname,
+    name: nickname || "Anonymous",
     wins: 5,
     losses: 2,
-    rank: 3
+    rank: 3,
+    players: 2
   };
 
   function handleToggleMode(mode) {
@@ -51,6 +54,7 @@ function App() {
             exact
             component={props => <About {...props} />}
           />
+
           <Route
             path="/gameroom/chat/:id"
             exact
@@ -64,7 +68,11 @@ function App() {
               />
             )}
           />
-          <Route path="/gameroom/game/:id" exact component={GameScreen} />
+          <Route
+            path="/gameroom/game/:id"
+            exact
+            component={props => <GameScreen nickname={user.name}></GameScreen>}
+          />
           <Route
             path="/select"
             exact
@@ -72,6 +80,7 @@ function App() {
               <GameSelect
                 handleToggleMode={handleToggleMode}
                 darkmode={darkmode}
+                nickname={user.name}
                 mute={mute}
                 open={open}
                 {...props}
@@ -84,7 +93,7 @@ function App() {
             component={props => (
               <NicknameInput
                 setNickname={setNickname}
-                nickname={nickname}
+                nickname={user.name}
                 {...props}
               />
             )}

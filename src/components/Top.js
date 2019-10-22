@@ -13,7 +13,6 @@ export const StyledHeader = styled.header`
   padding-left: 40px;
   padding-right: 30px;
   width: 100%;
-  height: 80px;
 `;
 
 const StyledH2 = styled.h2`
@@ -31,7 +30,7 @@ const InputFieldStyled = styled.button`
   border: none;
 `;
 
-export function TopPointer({ headline, rotate, onClick }) {
+export function TopPointer({ headline, rotate }) {
   let history = useHistory();
 
   function handleClick(destination) {

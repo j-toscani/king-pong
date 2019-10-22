@@ -55,7 +55,6 @@ function Overlay({ open, mute, darkmode, handleToggleMode, inGame }) {
       <OverlayContainer open={open}>
         <Settings
           handleToggleMode={handleToggleMode}
-          open={open}
           mute={mute}
           darkmode={darkmode}
         ></Settings>
