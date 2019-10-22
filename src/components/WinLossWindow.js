@@ -12,13 +12,20 @@ const StyledWindowSee = styled(StyledWindow)`
   opacity: 0.8;
 `;
 
-function WinLossWindow({ result, onClick }) {
+function WinLossWindow({ result, onClick, connectedTo }) {
+  console.log(connectedTo);
   if (result.winner === "opponent") {
     return (
       <StyledWindowSee>
         <Headline>{result.cheerLoss}</Headline>
 
-        <Button active onClick={onClick}>
+        <Button
+          active
+          onClick={() => {
+            connectedTo["ws"].close();
+            onClick();
+          }}
+        >
           Back to Play
         </Button>
       </StyledWindowSee>

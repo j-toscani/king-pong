@@ -29,7 +29,7 @@ const ConcedeButton = styled(Button)`
   top: -40px;
 `;
 
-export default function GameScreen({ nickname }) {
+export default function GameScreen({ nickname, connectedTo }) {
   let history = useHistory();
   const [leftPressed, togglePressedLeft] = React.useState(false);
   const [rightPressed, togglePressedRight] = React.useState(false);
@@ -46,6 +46,7 @@ export default function GameScreen({ nickname }) {
         <GameBoard
           rightPressed={rightPressed}
           leftPressed={leftPressed}
+          connectedTo={connectedTo}
         ></GameBoard>
         <InputContainer>
           <GameInput

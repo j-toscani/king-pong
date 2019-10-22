@@ -14,20 +14,27 @@ export default function GameRoom({
   let history = useHistory();
   let id = Math.random();
   const [roomId, setRoomId] = React.useState(id);
-  const [connected, setConnection] = React.useState(false);
-
-  function handleClick(destination) {
-    if (destination === "select") {
-      history.push("/select");
-    } else {
-      history.push(`${destination}`);
-    }
-  }
+  const [connectedTo, setConnectionTo] = React.useState(false);
 
   React.useEffect(() => {
+    const port = 4000;
+
+    const ws = new WebSocket("ws://localhost:4000/");
+
+    ws.onopen = function() {
+      console.log("Wbsocket Client Connected");
+      ws.send("Hi this is web client.");
+    };
+
+    ws.message = function(e) {
+      console.log("Recieved '" + e.data + "'");
+    };
+
     history.push("/gameroom/chat");
-    setConnection(true);
+    setConnectionTo({ connected: true, roomId, ws });
   }, [roomId]);
+
+  console.log(connectedTo);
 
   return (
     <>
@@ -45,7 +52,10 @@ export default function GameRoom({
           ></ChatRoom>
         </Route>
         <Route exact path="/gameroom/game">
-          <GameScreen nickname={nickname}></GameScreen>
+          <GameScreen
+            nickname={nickname}
+            connectedTo={connectedTo}
+          ></GameScreen>
         </Route>
       </Switch>
     </>

@@ -23,7 +23,7 @@ const Modal = styled.dialog`
   background: transparent;
 `;
 
-export default function GameBoard({ leftPressed, rightPressed }) {
+export default function GameBoard({ leftPressed, rightPressed, connectedTo }) {
   let history = useHistory();
 
   function handleGameEnding() {
@@ -133,6 +133,7 @@ export default function GameBoard({ leftPressed, rightPressed }) {
           onClick={() => {
             handleGameEnding();
           }}
+          connectedTo={connectedTo}
         />
       </Modal>
     </GameContainer>
