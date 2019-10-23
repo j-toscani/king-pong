@@ -37,10 +37,15 @@ const Point = styled.label`
         `};
 `;
 
-export default function SwitchButton({ id, mode, handleChange }) {
-  const [visible, setVisible] = React.useState(false);
+export default function SwitchButton({ id, mode, handleChange, handleOpen }) {
+  const [visible, setVisible] = React.useState(mode);
 
-  React.useEffect(() => setVisible(mode), [mode]);
+  React.useEffect(() => {
+    setVisible(mode);
+    if (!visible) {
+      handleOpen();
+    }
+  }, [mode]);
   return (
     <Background active={mode}>
       <Point htmlFor={id} active={!mode}></Point>

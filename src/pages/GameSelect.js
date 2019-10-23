@@ -23,18 +23,26 @@ const Background = styled.div`
   align-items: center;
 `;
 
-export default function GameSelect({ open, handleToggleMode, mute, darkmode }) {
+export default function GameSelect({ setSettings, settings }) {
+  const [open, setOpen] = React.useState(false);
+
+  function toggleOpen(open) {
+    setOpen(!open);
+  }
+
+  console.log(settings);
   let history = useHistory();
 
   function handleClick() {
-    history.push(`gameroom/`);
+    history.push(`gameroom/join`);
   }
 
   return (
     <>
       <NavTop
-        state={open ? "open" : "closed"}
-        handleToggleMode={handleToggleMode}
+        open={open}
+        setSettings={setSettings}
+        toggleOpen={toggleOpen}
         headline={"Start a Game!"}
       ></NavTop>
       <Container>
@@ -48,12 +56,13 @@ export default function GameSelect({ open, handleToggleMode, mute, darkmode }) {
             Join Game!
           </AltButton>
         </Background>
+
         <Overlay
+          toggleOpen={toggleOpen}
           open={open}
-          mute={mute}
-          darkmode={darkmode}
+          settings={settings}
           inGame={false}
-          handleToggleMode={handleToggleMode}
+          setSettings={setSettings}
         />
       </Container>
     </>

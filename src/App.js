@@ -29,14 +29,13 @@ function App() {
     darkmode: false,
     sound: true
   });
+  const [nickname, setNickname] = React.useState(false);
 
   function setSettings(name) {
     const newSettings = { ...settings };
     newSettings[name] = !settings[name];
     adjustSettings(newSettings);
   }
-
-  const [nickname, setNickname] = React.useState(false);
 
   const user = {
     name: nickname || "Anonymous",
@@ -58,7 +57,7 @@ function App() {
           />
 
           <Route
-            path="/gameroom"
+            path="/gameroom/join"
             component={props => (
               <GameRoom
                 nickname={nickname}
@@ -73,6 +72,7 @@ function App() {
             component={props => (
               <GameSelect
                 setSettings={setSettings}
+                settings={settings}
                 nickname={user.name}
                 {...props}
               />

@@ -8,7 +8,7 @@ export default function GameRoom({ nickname, setSettings, settings }) {
   let history = useHistory();
 
   const [roomId, setRoomId] = React.useState(false);
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const [connectedTo, setConnectionTo] = React.useState(false);
 
   function toggleOpen(open) {
@@ -16,21 +16,26 @@ export default function GameRoom({ nickname, setSettings, settings }) {
   }
 
   React.useEffect(() => {
+    history.push("/gameroom/join/chat");
     if (!connectedTo) {
       let id = Math.random();
       setRoomId(id);
       const ws = new WebSocket("ws://127.0.0.1:4000/");
 
       ws.onopen = function() {
-        console.log("Websocket Client Connected");
-        ws.send("Hi this is web client.");
+        ws.send("Hi, this is " + nickname || "Pal");
       };
 
-      ws.onmessage = function(e) {
-        console.log(typeof e.data, e.data);
+      ws.onmessage = function(message) {
+        console.log(typeof message.data);
+        if (JSON.parse(message.data).type === "chatmessage") {
+          console.log(JSON.parse(message.data));
+          console.log(JSON.parse(message.data).nickname);
+        } else {
+          console.log(JSON.stringify(message));
+        }
       };
-      console.log("hook executed");
-      history.push("/gameroom/chat");
+
       setConnectionTo({ connected: true, roomId, ws });
     } else {
       console.log(`ID already declared: ${roomId}`);
@@ -40,10 +45,7 @@ export default function GameRoom({ nickname, setSettings, settings }) {
   return (
     <>
       <Switch>
-        <Route exact path="/gameroom">
-          <div>connecting</div>
-        </Route>
-        <Route exact path="/gameroom/chat">
+        <Route exact path="/gameroom/join/chat">
           <ChatRoom
             connectedTo={connectedTo}
             nickname={nickname}
@@ -53,7 +55,7 @@ export default function GameRoom({ nickname, setSettings, settings }) {
             open={open}
           ></ChatRoom>
         </Route>
-        <Route exact path="/gameroom/game">
+        <Route exact path="/gameroom/join/game">
           <GameScreen
             nickname={nickname}
             connectedTo={connectedTo}

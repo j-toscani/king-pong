@@ -29,20 +29,13 @@ export default function ChatRoom({
 }) {
   let history = useHistory();
 
-  function handleClick(destination) {
-    if (destination === "select") {
-      history.push("/select");
-    } else {
-      history.push(`${destination}`);
-    }
-  }
-
   const [chatHistory, updateHistory] = React.useState([]);
 
   function handleSubmitMessage(content) {
     const newChatHistory = [...chatHistory];
 
     const newMessage = {
+      type: "chatmessage",
       p1: true,
       nickname: nickname ? nickname : "Pal",
       content: content
@@ -50,6 +43,15 @@ export default function ChatRoom({
     newChatHistory.push(newMessage);
     connectedTo["ws"].send(JSON.stringify(newMessage));
     updateHistory(newChatHistory);
+  }
+
+  function handleRoutingClick(destination) {
+    if (destination === "select") {
+      connectedTo["ws"].close(1000, "Chickened out!");
+      history.push("/select");
+    } else {
+      history.push(`${destination}`);
+    }
   }
 
   return (
@@ -65,10 +67,10 @@ export default function ChatRoom({
           handleSubmitMessage={handleSubmitMessage}
         ></ChatWindow>
         <ButtonContainer>
-          <Button onClick={() => handleClick("game")} big>
+          <Button onClick={() => handleRoutingClick("game")} big>
             Ready!
           </Button>
-          <AltButton onClick={() => handleClick("select")} big>
+          <AltButton onClick={() => handleRoutingClick("select")} big>
             Chicken out...
           </AltButton>
         </ButtonContainer>

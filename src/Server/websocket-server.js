@@ -7,6 +7,8 @@ server.listen(port, () => {
   console.log("opened server on", server.address().port);
 });
 
+const clients = [1];
+
 const wsServer = new WebSocketServer({
   httpServer: server
 });
@@ -16,9 +18,14 @@ wsServer.on("request", request => {
 
   connection.on("message", message => {
     console.log("Received Message:", message.utf8Data);
-    connection.sendUTF(message.utf8Data);
+    if (typeof message.utf8Data === String) {
+      console.log(message.utf8Data);
+    } else {
+      const utf8Message = message.utf8Data;
+      connection.sendUTF(utf8Message);
+    }
   });
   connection.on("close", (reasonCode, description) => {
-    console.log("Client has disconnected.");
+    console.log(JSON.stringify(description, reasonCode));
   });
 });

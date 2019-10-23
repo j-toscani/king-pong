@@ -54,7 +54,12 @@ function Overlay({ open, setSettings, settings, inGame, toggleOpen }) {
     <>
       <Background onClick={toggleOpen}></Background>
       <OverlayContainer open={open}>
-        <Settings setSettings={setSettings} settings={settings}></Settings>
+        <Settings
+          toggleOpen={toggleOpen}
+          setSettings={setSettings}
+          settings={settings}
+          toggleOpen={toggleOpen}
+        ></Settings>
         {!inGame && (
           <BottomContainer>
             <RetreatButton
