@@ -35,7 +35,6 @@ export default function GameScreen({ nickname, connectedTo }) {
   const [rightPressed, togglePressedRight] = React.useState(false);
 
   function handleClick() {
-    connectedTo["ws"].close(1000, "Chickened out!");
     history.push(`/select`);
   }
 

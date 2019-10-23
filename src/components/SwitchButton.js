@@ -42,9 +42,7 @@ export default function SwitchButton({ id, mode, handleChange, handleOpen }) {
 
   React.useEffect(() => {
     setVisible(mode);
-    if (!visible) {
-      handleOpen();
-    }
+    handleOpen();
   }, [mode]);
   return (
     <Background active={mode}>

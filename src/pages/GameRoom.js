@@ -20,27 +20,12 @@ export default function GameRoom({ nickname, setSettings, settings }) {
     if (!connectedTo) {
       let id = Math.random();
       setRoomId(id);
-      const ws = new WebSocket("ws://127.0.0.1:4000/");
-
-      ws.onopen = function() {
-        ws.send("Hi, this is " + nickname || "Pal");
-      };
-
-      ws.onmessage = function(message) {
-        console.log(typeof message.data);
-        if (JSON.parse(message.data).type === "chatmessage") {
-          console.log(JSON.parse(message.data));
-          console.log(JSON.parse(message.data).nickname);
-        } else {
-          console.log(JSON.stringify(message));
-        }
-      };
-
-      setConnectionTo({ connected: true, roomId, ws });
+      setConnectionTo({ connected: true, roomId });
+      setOpen(false);
     } else {
       console.log(`ID already declared: ${roomId}`);
     }
-  }, [roomId]);
+  }, [open, roomId]);
 
   return (
     <>

@@ -41,13 +41,11 @@ export default function ChatRoom({
       content: content
     };
     newChatHistory.push(newMessage);
-    connectedTo["ws"].send(JSON.stringify(newMessage));
     updateHistory(newChatHistory);
   }
 
   function handleRoutingClick(destination) {
     if (destination === "select") {
-      connectedTo["ws"].close(1000, "Chickened out!");
       history.push("/select");
     } else {
       history.push(`${destination}`);

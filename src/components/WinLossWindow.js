@@ -18,13 +18,7 @@ function WinLossWindow({ result, onClick, connectedTo }) {
       <StyledWindowSee>
         <Headline>{result.cheerLoss}</Headline>
 
-        <Button
-          active
-          onClick={() => {
-            connectedTo["ws"].close();
-            onClick();
-          }}
-        >
+        <Button active onClick={onClick}>
           Back to Play
         </Button>
       </StyledWindowSee>
