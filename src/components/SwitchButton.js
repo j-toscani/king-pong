@@ -24,32 +24,30 @@ const Point = styled.label`
   height: 25px;
   top: -4px;
   box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.3);
-  transform: all 0.5;
+
   ${props =>
     props.active
       ? css`
           position: absolute;
           transform: translateX(26px);
+          transition: all 0.5;
         `
       : css`
           left: 4px;
           position: absolute;
+          transition: all 0.5;
         `};
 `;
 
-export default function SwitchButton({ id, mode, handleChange, handleOpen }) {
-  const [visible, setVisible] = React.useState(mode);
+export default function SwitchButton({ id, mode, handleChange }) {
+  const [visible, setVisible] = React.useState(!mode);
 
-  React.useEffect(() => {
-    setVisible(mode);
-    handleOpen();
-  }, [mode]);
   return (
-    <Background active={mode}>
-      <Point htmlFor={id} active={!mode}></Point>
+    <Background active={visible}>
+      <Point htmlFor={id} active={!visible}></Point>
       <Switch
         id={id}
-        active={!mode}
+        active={!visible}
         onChange={handleChange}
         type="checkbox"
       ></Switch>

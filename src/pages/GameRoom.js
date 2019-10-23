@@ -4,16 +4,17 @@ import GameScreen from "./GameScreen";
 import { useHistory } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
 
-export default function GameRoom({ nickname, setSettings, settings }) {
+export default function GameRoom({
+  nickname,
+  setSettings,
+  settings,
+  open,
+  toggleOpen
+}) {
   let history = useHistory();
 
   const [roomId, setRoomId] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
   const [connectedTo, setConnectionTo] = React.useState(false);
-
-  function toggleOpen(open) {
-    setOpen(!open);
-  }
 
   React.useEffect(() => {
     history.push("/gameroom/join/chat");
@@ -21,7 +22,6 @@ export default function GameRoom({ nickname, setSettings, settings }) {
       let id = Math.random();
       setRoomId(id);
       setConnectionTo({ connected: true, roomId });
-      setOpen(false);
     } else {
       console.log(`ID already declared: ${roomId}`);
     }

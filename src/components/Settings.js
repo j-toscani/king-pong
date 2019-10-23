@@ -35,7 +35,6 @@ export default function Settings({ setSettings, settings, toggleOpen }) {
           handleChange={() => {
             setSettings("darkmode");
           }}
-          handleOpen={() => toggleOpen(false)}
         ></SwitchButton>
       </Option>
       <Option>
@@ -44,7 +43,6 @@ export default function Settings({ setSettings, settings, toggleOpen }) {
           id={"Sound"}
           mode={settings.sound}
           handleChange={() => setSettings("sound")}
-          handleOpen={() => toggleOpen(false)}
         ></SwitchButton>
       </Option>
     </Container>

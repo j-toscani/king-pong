@@ -6,10 +6,8 @@ import darkTheme from "./themes/dark.js";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import About from "./pages/About.js";
 import GameSelect from "./pages/GameSelect.js";
-
 import NicknameInput from "./pages/NicknameInput.js";
 import Profile from "./pages/Profile.js";
-
 import Welcome from "./pages/Welcome.js";
 import GameRoom from "./pages/GameRoom.js";
 
@@ -30,6 +28,10 @@ function App() {
     sound: true
   });
   const [nickname, setNickname] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  function toggleOpen() {
+    setOpen(!open);
+  }
 
   function setSettings(name) {
     const newSettings = { ...settings };
@@ -63,6 +65,8 @@ function App() {
                 nickname={nickname}
                 setSettings={setSettings}
                 settings={settings}
+                open={open}
+                toggleOpen={toggleOpen}
               />
             )}
           />
@@ -74,6 +78,8 @@ function App() {
                 setSettings={setSettings}
                 settings={settings}
                 nickname={user.name}
+                open={open}
+                toggleOpen={toggleOpen}
                 {...props}
               />
             )}

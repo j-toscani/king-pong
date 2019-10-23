@@ -23,13 +23,12 @@ const Background = styled.div`
   align-items: center;
 `;
 
-export default function GameSelect({ setSettings, settings }) {
-  const [open, setOpen] = React.useState(false);
-
-  function toggleOpen(open) {
-    setOpen(!open);
-  }
-
+export default function GameSelect({
+  setSettings,
+  settings,
+  toggleOpen,
+  open
+}) {
   console.log(settings);
   let history = useHistory();
 

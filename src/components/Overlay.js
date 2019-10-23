@@ -43,7 +43,7 @@ const BottomContainer = styled.div`
 function Overlay({ open, setSettings, settings, inGame, toggleOpen }) {
   let history = useHistory();
 
-  const [visible, setVisible] = React.useState(false);
+  const [visible, setVisible] = React.useState(!open);
 
   React.useEffect(() => setVisible(open), [open]);
 
@@ -53,12 +53,11 @@ function Overlay({ open, setSettings, settings, inGame, toggleOpen }) {
   return (
     <>
       <Background onClick={toggleOpen}></Background>
-      <OverlayContainer open={open}>
+      <OverlayContainer open={visible}>
         <Settings
           toggleOpen={toggleOpen}
           setSettings={setSettings}
           settings={settings}
-          toggleOpen={toggleOpen}
         ></Settings>
         {!inGame && (
           <BottomContainer>
