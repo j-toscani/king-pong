@@ -21,20 +21,11 @@ const ButtonContainer = styled.div`
 
 export default function ChatRoom({
   nickname,
-  open,
-  handleToggleMode,
-  mute,
-  darkmode
+  setSettings,
+  settings,
+  connectedTo
 }) {
   let history = useHistory();
-
-  function handleClick(destination) {
-    if (destination === "select") {
-      history.push("/select");
-    } else {
-      history.push(`${destination}`);
-    }
-  }
 
   const [chatHistory, updateHistory] = React.useState([]);
 
@@ -42,6 +33,7 @@ export default function ChatRoom({
     const newChatHistory = [...chatHistory];
 
     const newMessage = {
+      type: "chatmessage",
       p1: true,
       nickname: nickname ? nickname : "Pal",
       content: content
@@ -50,11 +42,19 @@ export default function ChatRoom({
     updateHistory(newChatHistory);
   }
 
+  function handleRoutingClick(destination) {
+    if (destination === "select") {
+      history.push("/select");
+    } else {
+      history.push(`${destination}`);
+    }
+  }
+
   return (
     <>
       <NavTop
-        state={open ? "open" : "closed"}
-        handleToggleMode={handleToggleMode}
+        open={settings["open"]}
+        toggleOpen={() => setSettings("open")}
         headline={"Chatroom"}
       ></NavTop>
       <StyledMain>
@@ -63,20 +63,14 @@ export default function ChatRoom({
           handleSubmitMessage={handleSubmitMessage}
         ></ChatWindow>
         <ButtonContainer>
-          <Button onClick={() => handleClick("game")} big>
+          <Button onClick={() => handleRoutingClick("game")} big>
             Ready!
           </Button>
-          <AltButton onClick={() => handleClick("select")} big>
+          <AltButton onClick={() => handleRoutingClick("select")} big>
             Chicken out...
           </AltButton>
         </ButtonContainer>
-        <Overlay
-          open={open}
-          mute={mute}
-          darkmode={darkmode}
-          handleToggleMode={handleToggleMode}
-          inGame={true}
-        />
+        <Overlay setSettings={setSettings} settings={settings} inGame={true} />
       </StyledMain>
     </>
   );

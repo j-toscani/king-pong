@@ -4,48 +4,39 @@ import GameScreen from "./GameScreen";
 import { useHistory } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
 
-export default function GameRoom({
-  nickname,
-  open,
-  handleToggleMode,
-  mute,
-  darkmode
-}) {
+export default function GameRoom({ nickname, setSettings, settings }) {
   let history = useHistory();
-  let id = Math.random();
-  const [roomId, setRoomId] = React.useState(id);
-  const [connected, setConnection] = React.useState(false);
 
-  function handleClick(destination) {
-    if (destination === "select") {
-      history.push("/select");
-    } else {
-      history.push(`${destination}`);
-    }
-  }
+  const [roomId, setRoomId] = React.useState(false);
+  const [connectedTo, setConnectionTo] = React.useState(false);
 
   React.useEffect(() => {
-    history.push("/gameroom/chat");
-    setConnection(true);
-  }, [roomId]);
+    history.push("/gameroom/join/chat");
+    if (!connectedTo) {
+      let id = Math.random();
+      setRoomId(id);
+      setConnectionTo({ connected: true, roomId });
+    } else {
+      console.log(`ID already declared: ${roomId}`);
+    }
+  }, [settings.open, roomId]);
 
   return (
     <>
       <Switch>
-        <Route exact path="/gameroom">
-          <div>connecting</div>
-        </Route>
-        <Route exact path="/gameroom/chat">
+        <Route exact path="/gameroom/join/chat">
           <ChatRoom
+            connectedTo={connectedTo}
             nickname={nickname}
-            handleToggleMode={handleToggleMode}
-            darkmode={darkmode}
-            mute={mute}
-            open={open}
+            setSettings={setSettings}
+            settings={settings}
           ></ChatRoom>
         </Route>
-        <Route exact path="/gameroom/game">
-          <GameScreen nickname={nickname}></GameScreen>
+        <Route exact path="/gameroom/join/game">
+          <GameScreen
+            nickname={nickname}
+            connectedTo={connectedTo}
+          ></GameScreen>
         </Route>
       </Switch>
     </>

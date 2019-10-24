@@ -1,17 +1,15 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
-import GlobalStyles from "./GlobalStyle.js";
-import defaultTheme from "./themes/default.js";
-import darkTheme from "./themes/dark.js";
+import GlobalStyles from "./GlobalStyle";
+import defaultTheme from "./themes/default";
+import darkTheme from "./themes/dark";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import About from "./pages/About.js";
-import GameSelect from "./pages/GameSelect.js";
-
-import NicknameInput from "./pages/NicknameInput.js";
-import Profile from "./pages/Profile.js";
-
-import Welcome from "./pages/Welcome.js";
-import GameRoom from "./pages/GameRoom.js";
+import About from "./pages/About";
+import GameSelect from "./pages/GameSelect";
+import NicknameInput from "./pages/NicknameInput";
+import Profile from "./pages/Profile";
+import Welcome from "./pages/Welcome";
+import GameRoom from "./pages/GameRoom";
 
 const Container = styled.div`
   margin: 0;
@@ -25,10 +23,18 @@ const Container = styled.div`
 `;
 
 function App() {
-  const [darkmode, setDarkmode] = React.useState(false);
-  const [mute, setMute] = React.useState(true);
-  const [open, setOpen] = React.useState(false);
+  const [settings, adjustSettings] = React.useState({
+    darkmode: false,
+    sound: true,
+    open: false
+  });
   const [nickname, setNickname] = React.useState(false);
+
+  function setSettings(name) {
+    const newSettings = { ...settings };
+    newSettings[name] = !settings[name];
+    adjustSettings(newSettings);
+  }
 
   const user = {
     name: nickname || "Anonymous",
@@ -38,13 +44,8 @@ function App() {
     players: 2
   };
 
-  function handleToggleMode(mode) {
-    if (mode === "darkmode") setDarkmode(!darkmode);
-    if (mode === "mute") setMute(!mute);
-    if (mode === "open") setOpen(!open);
-  }
   return (
-    <ThemeProvider theme={darkmode ? darkTheme : defaultTheme}>
+    <ThemeProvider theme={settings["darkmode"] ? darkTheme : defaultTheme}>
       <GlobalStyles />
       <Container>
         <Router>
@@ -55,14 +56,12 @@ function App() {
           />
 
           <Route
-            path="/gameroom"
+            path="/gameroom/join"
             component={props => (
               <GameRoom
                 nickname={nickname}
-                handleToggleMode={handleToggleMode}
-                darkmode={darkmode}
-                mute={mute}
-                open={open}
+                setSettings={setSettings}
+                settings={settings}
               />
             )}
           />
@@ -71,11 +70,9 @@ function App() {
             exact
             component={props => (
               <GameSelect
-                handleToggleMode={handleToggleMode}
-                darkmode={darkmode}
+                setSettings={setSettings}
+                settings={settings}
                 nickname={user.name}
-                mute={mute}
-                open={open}
                 {...props}
               />
             )}

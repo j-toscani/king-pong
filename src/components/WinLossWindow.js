@@ -12,7 +12,7 @@ const StyledWindowSee = styled(StyledWindow)`
   opacity: 0.8;
 `;
 
-function WinLossWindow({ result, onClick }) {
+function WinLossWindow({ result, onClick, connectedTo }) {
   if (result.winner === "opponent") {
     return (
       <StyledWindowSee>

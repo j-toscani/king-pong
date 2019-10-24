@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import HeartRow from "./HeartRow";
 import { useHistory } from "react-router-dom";
-import WinLossWindow from "../components/WinLossWindow";
+import WinLossWindow from "./WinLossWindow";
 import drawGameState from "../GameData/Draw";
 import createEvents, { handleEvents } from "../GameData/Events";
 
@@ -23,7 +23,7 @@ const Modal = styled.dialog`
   background: transparent;
 `;
 
-export default function GameBoard({ leftPressed, rightPressed }) {
+export default function GameBoard({ leftPressed, rightPressed, connectedTo }) {
   let history = useHistory();
 
   function handleGameEnding() {
@@ -133,6 +133,7 @@ export default function GameBoard({ leftPressed, rightPressed }) {
           onClick={() => {
             handleGameEnding();
           }}
+          connectedTo={connectedTo}
         />
       </Modal>
     </GameContainer>

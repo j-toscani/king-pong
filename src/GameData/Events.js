@@ -80,7 +80,6 @@ export default function createEvents(
       case: ball.x - 25 < opponent.x && opponent.x > 0,
       result: () => {
         opponent.x -= opponent.dx;
-        console.log(ball.x, opponent.x);
       }
     },
     {
