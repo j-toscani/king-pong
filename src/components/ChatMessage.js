@@ -11,10 +11,11 @@ const MessageContainer = styled.div`
 `;
 
 function ChatMessage({ message }) {
+  console.log(message);
   return (
-    <MessageContainer p1={message.p1}>
-      <span>{`${message.nickname} :`}</span>
-      <span>{message.content}</span>
+    <MessageContainer>
+      <span>{`Hans :`}</span>
+      <span>{message["timestamp"]}</span>
     </MessageContainer>
   );
 }
