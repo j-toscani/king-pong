@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import HeartRow from "./HeartRow";
 import { useHistory } from "react-router-dom";
-import WinLossWindow from "../components/WinLossWindow";
+import WinLossWindow from "./WinLossWindow";
 import drawGameState from "../GameData/Draw";
 import createEvents, { handleEvents } from "../GameData/Events";
 

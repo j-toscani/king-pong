@@ -1,15 +1,15 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
-import GlobalStyles from "./GlobalStyle.js";
-import defaultTheme from "./themes/default.js";
-import darkTheme from "./themes/dark.js";
+import GlobalStyles from "./GlobalStyle";
+import defaultTheme from "./themes/default";
+import darkTheme from "./themes/dark";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import About from "./pages/About.js";
-import GameSelect from "./pages/GameSelect.js";
-import NicknameInput from "./pages/NicknameInput.js";
-import Profile from "./pages/Profile.js";
-import Welcome from "./pages/Welcome.js";
-import GameRoom from "./pages/GameRoom.js";
+import About from "./pages/About";
+import GameSelect from "./pages/GameSelect";
+import NicknameInput from "./pages/NicknameInput";
+import Profile from "./pages/Profile";
+import Welcome from "./pages/Welcome";
+import GameRoom from "./pages/GameRoom";
 
 const Container = styled.div`
   margin: 0;
