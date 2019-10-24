@@ -23,12 +23,7 @@ const Background = styled.div`
   align-items: center;
 `;
 
-export default function GameSelect({
-  setSettings,
-  settings,
-  toggleOpen,
-  open
-}) {
+export default function GameSelect({ setSettings, settings }) {
   console.log(settings);
   let history = useHistory();
 
@@ -39,9 +34,8 @@ export default function GameSelect({
   return (
     <>
       <NavTop
-        open={open}
-        setSettings={setSettings}
-        toggleOpen={toggleOpen}
+        open={settings["open"]}
+        toggleOpen={() => setSettings("open")}
         headline={"Start a Game!"}
       ></NavTop>
       <Container>
@@ -56,13 +50,7 @@ export default function GameSelect({
           </AltButton>
         </Background>
 
-        <Overlay
-          toggleOpen={toggleOpen}
-          open={open}
-          settings={settings}
-          inGame={false}
-          setSettings={setSettings}
-        />
+        <Overlay settings={settings} inGame={false} setSettings={setSettings} />
       </Container>
     </>
   );

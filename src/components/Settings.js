@@ -24,7 +24,7 @@ const Container = styled.div`
   color: ${props => props.theme.brightFont};
 `;
 
-export default function Settings({ setSettings, settings, toggleOpen }) {
+export default function Settings({ setSettings, settings }) {
   return (
     <Container>
       <Option>

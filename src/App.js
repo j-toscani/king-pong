@@ -25,13 +25,10 @@ const Container = styled.div`
 function App() {
   const [settings, adjustSettings] = React.useState({
     darkmode: false,
-    sound: true
+    sound: true,
+    open: false
   });
   const [nickname, setNickname] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
-  function toggleOpen() {
-    setOpen(!open);
-  }
 
   function setSettings(name) {
     const newSettings = { ...settings };
@@ -65,8 +62,6 @@ function App() {
                 nickname={nickname}
                 setSettings={setSettings}
                 settings={settings}
-                open={open}
-                toggleOpen={toggleOpen}
               />
             )}
           />
@@ -78,8 +73,6 @@ function App() {
                 setSettings={setSettings}
                 settings={settings}
                 nickname={user.name}
-                open={open}
-                toggleOpen={toggleOpen}
                 {...props}
               />
             )}

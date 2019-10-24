@@ -23,9 +23,7 @@ export default function ChatRoom({
   nickname,
   setSettings,
   settings,
-  connectedTo,
-  toggleOpen,
-  open
+  connectedTo
 }) {
   let history = useHistory();
 
@@ -55,8 +53,8 @@ export default function ChatRoom({
   return (
     <>
       <NavTop
-        open={open}
-        toggleOpen={toggleOpen}
+        open={settings["open"]}
+        toggleOpen={() => setSettings("open")}
         headline={"Chatroom"}
       ></NavTop>
       <StyledMain>
@@ -72,13 +70,7 @@ export default function ChatRoom({
             Chicken out...
           </AltButton>
         </ButtonContainer>
-        <Overlay
-          open={open}
-          setSettings={setSettings}
-          toggleOpen={toggleOpen}
-          settings={settings}
-          inGame={true}
-        />
+        <Overlay setSettings={setSettings} settings={settings} inGame={true} />
       </StyledMain>
     </>
   );

@@ -4,13 +4,7 @@ import GameScreen from "./GameScreen";
 import { useHistory } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
 
-export default function GameRoom({
-  nickname,
-  setSettings,
-  settings,
-  open,
-  toggleOpen
-}) {
+export default function GameRoom({ nickname, setSettings, settings }) {
   let history = useHistory();
 
   const [roomId, setRoomId] = React.useState(false);
@@ -25,7 +19,7 @@ export default function GameRoom({
     } else {
       console.log(`ID already declared: ${roomId}`);
     }
-  }, [open, roomId]);
+  }, [settings.open, roomId]);
 
   return (
     <>
@@ -35,9 +29,7 @@ export default function GameRoom({
             connectedTo={connectedTo}
             nickname={nickname}
             setSettings={setSettings}
-            toggleOpen={toggleOpen}
             settings={settings}
-            open={open}
           ></ChatRoom>
         </Route>
         <Route exact path="/gameroom/join/game">

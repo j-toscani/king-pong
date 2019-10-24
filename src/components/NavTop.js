@@ -31,7 +31,7 @@ const ToggleSettings = styled.button`
 function NavTop({ open, toggleOpen, headline }) {
   return (
     <StyledHeader>
-      <ToggleSettings onClick={() => toggleOpen(open)}>
+      <ToggleSettings onClick={toggleOpen}>
         {open ? <Cross></Cross> : <Options></Options>}
       </ToggleSettings>
       <StyledH2>{headline}</StyledH2>
