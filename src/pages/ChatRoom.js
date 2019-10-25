@@ -37,9 +37,7 @@ export default function ChatRoom({
       content: content
     };
     newChatHistory.push(newMessage);
-
     socket.emit("new message", newMessage);
-
     updateHistory(newChatHistory);
   }
 
@@ -50,6 +48,16 @@ export default function ChatRoom({
       history.push(`${destination}`);
     }
   }
+
+  React.useEffect(() => {
+    const { socket } = connectedTo;
+    socket.on("new message", message => {
+      const newChatHistory = [...chatHistory];
+      const newMessage = message;
+      newChatHistory.push(newMessage);
+      updateHistory(newChatHistory);
+    });
+  }, []);
 
   return (
     <>

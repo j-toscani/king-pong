@@ -12,9 +12,9 @@ var allClients = [];
 io.on("connection", socket => {
   allClients.push(socket);
 
-  socket.on("new message", messages => {
-    console.log(messages);
-    socket.emit("new message", messages);
+  socket.on("new message", message => {
+    console.log(message);
+    socket.broadcast.emit("new message", message);
   });
 
   socket.on("connected", data => console.log(data, socket.id));
