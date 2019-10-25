@@ -48,7 +48,7 @@ export default function ChatRoom({
     const newChatHistory = [...chatHistory];
     newChatHistory.push(newMessage);
     socket.emit("new message", newChatHistory);
-    debugger;
+
     updateHistory(newChatHistory);
   }
 
