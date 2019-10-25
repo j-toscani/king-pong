@@ -10,11 +10,19 @@ const io = socketIo(server);
 var allClients = [];
 
 io.on("connection", socket => {
-  allClients.push(socket);
+  socket.emit(
+    "new message",
+    (message = [
+      {
+        nickname: "A wild",
+
+        content: "contestant joined the chat..."
+      }
+    ])
+  );
 
   socket.on("new message", message => {
-    console.log(message);
-    socket.broadcast.emit("new message", message);
+    socket.emit("new message", message);
   });
 
   socket.on("connected", data => console.log(data, socket.id));

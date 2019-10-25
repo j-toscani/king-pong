@@ -22,6 +22,7 @@ export default function GameRoom({ nickname, setSettings, settings }) {
       <Switch>
         <Route exact path="/gameroom/join/chat">
           <ChatRoom
+            setConnectionTo={setConnectionTo}
             connectedTo={connectedTo}
             nickname={nickname}
             setSettings={setSettings}

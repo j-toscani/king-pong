@@ -6,6 +6,8 @@ import NavTop from "../components/NavTop";
 import Overlay from "../components/Overlay";
 import { useHistory } from "react-router-dom";
 
+import openSocket from "socket.io-client";
+
 const StyledMain = styled.main`
   flex-direction: column;
   position: relative;
@@ -23,21 +25,30 @@ export default function ChatRoom({
   nickname,
   setSettings,
   settings,
-  connectedTo
+  connectedTo,
+  setConnectionTo
 }) {
   let history = useHistory();
-  const [chatHistory, updateHistory] = React.useState([]);
+  const [chatHistory, updateHistory] = React.useState();
+
+  if (!connectedTo) {
+    const socket = openSocket("http://127.0.0.1:5000");
+    socket.on("register", data => console.log(data));
+    setConnectionTo({ connected: true, socket });
+  }
 
   function handleSubmitMessage(content) {
-    const newChatHistory = [...chatHistory];
     const { socket } = connectedTo;
     const newMessage = {
       user: socket.id,
       nickname: nickname ? nickname : "Pal",
       content: content
     };
+
+    const newChatHistory = [...chatHistory];
     newChatHistory.push(newMessage);
-    socket.emit("new message", newMessage);
+    socket.emit("new message", newChatHistory);
+    debugger;
     updateHistory(newChatHistory);
   }
 
@@ -50,14 +61,13 @@ export default function ChatRoom({
   }
 
   React.useEffect(() => {
-    const { socket } = connectedTo;
-    socket.on("new message", message => {
-      const newChatHistory = [...chatHistory];
-      const newMessage = message;
-      newChatHistory.push(newMessage);
-      updateHistory(newChatHistory);
-    });
-  }, []);
+    if (connectedTo) {
+      const { socket } = connectedTo;
+      socket.on("new message", message => {
+        updateHistory(message);
+      });
+    }
+  }, [connectedTo]);
 
   return (
     <>

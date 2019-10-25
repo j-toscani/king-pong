@@ -11,7 +11,6 @@ const MessageContainer = styled.div`
 `;
 
 function ChatMessage({ message }) {
-  console.log(message);
   return (
     <MessageContainer>
       <span>{`${message.nickname} :`}</span>
