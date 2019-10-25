@@ -5,10 +5,15 @@ const port = process.env.PORT || 5000;
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server); // < Interesting!
+const io = socketIo(server);
+
+var allClients = [];
 
 io.on("connection", socket => {
+  allClients.push(socket);
+
   socket.on("new message", messages => {
+    console.log(messages);
     socket.emit("new message", messages);
   });
 
@@ -21,7 +26,7 @@ io.on("connection", socket => {
   socket.on("disconnect", () => {
     console.log("client disconnected...", socket.id);
   });
-
+  console.log("connected..." + socket.id);
   socket.emit("register", socket.id);
 });
 

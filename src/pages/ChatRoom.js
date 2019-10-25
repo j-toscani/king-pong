@@ -30,12 +30,16 @@ export default function ChatRoom({
 
   function handleSubmitMessage(content) {
     const newChatHistory = [...chatHistory];
+    const { socket } = connectedTo;
     const newMessage = {
-      p1: true,
+      user: socket.id,
       nickname: nickname ? nickname : "Pal",
       content: content
     };
     newChatHistory.push(newMessage);
+
+    socket.emit("new message", newMessage);
+
     updateHistory(newChatHistory);
   }
 

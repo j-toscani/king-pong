@@ -14,8 +14,8 @@ function ChatMessage({ message }) {
   console.log(message);
   return (
     <MessageContainer>
-      <span>{`Hans :`}</span>
-      <span>{message["message"]}</span>
+      <span>{`${message.nickname} :`}</span>
+      <span>{message.content}</span>
     </MessageContainer>
   );
 }
