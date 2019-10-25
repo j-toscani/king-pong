@@ -26,14 +26,11 @@ export default function ChatRoom({
   connectedTo
 }) {
   let history = useHistory();
-
   const [chatHistory, updateHistory] = React.useState([]);
 
   function handleSubmitMessage(content) {
     const newChatHistory = [...chatHistory];
-
     const newMessage = {
-      type: "chatmessage",
       p1: true,
       nickname: nickname ? nickname : "Pal",
       content: content

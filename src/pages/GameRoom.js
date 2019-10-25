@@ -4,22 +4,20 @@ import GameScreen from "./GameScreen";
 import { useHistory } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
 
+import openSocket from "socket.io-client";
+
 export default function GameRoom({ nickname, setSettings, settings }) {
   let history = useHistory();
-
-  const [roomId, setRoomId] = React.useState(false);
   const [connectedTo, setConnectionTo] = React.useState(false);
 
   React.useEffect(() => {
     history.push("/gameroom/join/chat");
-    if (!connectedTo) {
-      let id = Math.random();
-      setRoomId(id);
-      setConnectionTo({ connected: true, roomId });
-    } else {
-      console.log(`ID already declared: ${roomId}`);
-    }
-  }, [settings.open, roomId]);
+    const socket = openSocket("http://127.0.0.1:5000");
+    socket.emit("connected", "client connection established");
+    socket.on("register", data => console.log(data));
+    debugger;
+    setConnectionTo({ connected: true, socket });
+  }, []);
 
   return (
     <>

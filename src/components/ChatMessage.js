@@ -15,7 +15,7 @@ function ChatMessage({ message }) {
   return (
     <MessageContainer>
       <span>{`Hans :`}</span>
-      <span>{message["timestamp"]}</span>
+      <span>{message["message"]}</span>
     </MessageContainer>
   );
 }
