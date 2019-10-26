@@ -20,7 +20,7 @@
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -c .storybook",
-    "server": "nodemon ./src/Server/websocket-server.js"
+    "server": "npx nodemon server/socket-server.js"
   },
   "eslintConfig": {
     "extends": "react-app"

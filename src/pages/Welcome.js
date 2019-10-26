@@ -26,13 +26,14 @@ export default function Welcome() {
   function handleClick() {
     history.push("/entername");
   }
+  console.log("hello");
 
   return (
     <>
       <TopLogo headline={"KingPong"}></TopLogo>
       <StyledMain>
         <WelcomeWindow>
-          <AltButton big onClick={handleClick}>
+          <AltButton big handleClick={handleClick}>
             Tap to start!
           </AltButton>
         </WelcomeWindow>

@@ -20,6 +20,8 @@ io.on("connection", socket => {
       }
     ])
   );
+  allClients.push(socket.id);
+  console.log(allClients);
 
   socket.on("new message", message => {
     socket.emit("new message", message);

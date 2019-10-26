@@ -10,6 +10,7 @@ import NicknameInput from "./pages/NicknameInput";
 import Profile from "./pages/Profile";
 import Welcome from "./pages/Welcome";
 import GameRoom from "./pages/GameRoom";
+import { getItem } from "./ressources/scripts/storage";
 
 const Container = styled.div`
   margin: 0;
@@ -28,7 +29,9 @@ function App() {
     sound: true,
     open: false
   });
-  const [nickname, setNickname] = React.useState(false);
+  const [nickname, setNickname] = React.useState(getItem("nickname"));
+
+  console.log(nickname);
 
   function setSettings(name) {
     const newSettings = { ...settings };
