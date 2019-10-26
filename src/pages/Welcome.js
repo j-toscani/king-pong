@@ -26,7 +26,6 @@ export default function Welcome() {
   function handleClick() {
     history.push("/entername");
   }
-  console.log("hello");
 
   return (
     <>

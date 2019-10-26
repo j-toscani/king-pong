@@ -31,12 +31,6 @@ export default function ChatRoom({
   let history = useHistory();
   const [chatHistory, updateHistory] = React.useState();
 
-  if (!connectedTo) {
-    const socket = openSocket("http://127.0.0.1:5000");
-    socket.on("register", data => console.log(data));
-    setConnectionTo({ connected: true, socket });
-  }
-
   function handleSubmitMessage(content) {
     const { socket } = connectedTo;
     const newMessage = {
@@ -48,11 +42,10 @@ export default function ChatRoom({
     const newChatHistory = [...chatHistory];
     newChatHistory.push(newMessage);
     socket.emit("new message", newChatHistory);
-
     updateHistory(newChatHistory);
   }
 
-  function handleRoutingClick(destination) {
+  function routeTo(destination) {
     if (destination === "select") {
       history.push("/select");
     } else {
@@ -60,10 +53,18 @@ export default function ChatRoom({
     }
   }
 
+  if (!connectedTo) {
+    history.push("/gameroom");
+  }
+
   React.useEffect(() => {
+    if (!connectedTo) {
+      history.push("/gameroom");
+    }
     if (connectedTo) {
       const { socket } = connectedTo;
       socket.on("new message", message => {
+        console.log(message);
         updateHistory(message);
       });
     }
@@ -78,14 +79,15 @@ export default function ChatRoom({
       ></NavTop>
       <StyledMain>
         <ChatWindow
+          nickname={nickname}
           messages={chatHistory}
           handleSubmitMessage={handleSubmitMessage}
         ></ChatWindow>
         <ButtonContainer>
-          <Button onClick={() => handleRoutingClick("game")} big>
+          <Button handleClick={() => routeTo("game")} big>
             Ready!
           </Button>
-          <AltButton onClick={() => handleRoutingClick("select")} big>
+          <AltButton handleClick={() => routeTo("select")} big>
             Chicken out...
           </AltButton>
         </ButtonContainer>

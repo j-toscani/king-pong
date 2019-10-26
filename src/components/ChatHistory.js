@@ -11,13 +11,22 @@ const ChatDisplay = styled.div`
   overflow: auto;
 `;
 
-function ChatHistory({ messages }) {
-  console.log(messages);
+function ChatHistory({ messages, nickname }) {
+  console.log(messages, nickname);
+  if (messages && messages[0].nickname) {
+    console.log(messages[0].nickname);
+  }
   return (
     <ChatDisplay>
       {messages &&
         messages.map((message, index) => {
-          return <ChatMessage key={index} message={message}></ChatMessage>;
+          return (
+            <ChatMessage
+              key={index}
+              p1={nickname === message.nickname}
+              message={message}
+            ></ChatMessage>
+          );
         })}
     </ChatDisplay>
   );

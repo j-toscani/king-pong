@@ -27,7 +27,7 @@ export default function GameSelect({ setSettings, settings }) {
   console.log(settings);
   let history = useHistory();
 
-  function handleClick() {
+  function routeTo() {
     history.push(`gameroom/join`);
   }
 
@@ -40,12 +40,12 @@ export default function GameSelect({ setSettings, settings }) {
       ></NavTop>
       <Container>
         <Background>
-          <Button active big onClick={handleClick}>
+          <Button active big handleClick={routeTo}>
             Open Game!
           </Button>
         </Background>
         <Background alt="true">
-          <AltButton active big onClick={handleClick}>
+          <AltButton active big handleClick={routeTo}>
             Join Game!
           </AltButton>
         </Background>

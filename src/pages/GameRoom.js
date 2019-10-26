@@ -11,11 +11,14 @@ export default function GameRoom({ nickname, setSettings, settings }) {
   const [connectedTo, setConnectionTo] = React.useState(false);
 
   React.useEffect(() => {
-    history.push("/gameroom/join/chat");
-    const socket = openSocket("http://127.0.0.1:5000");
-    socket.on("register", data => console.log(data));
-    setConnectionTo({ connected: true, socket });
-  }, []);
+    if (!connectedTo) {
+      history.push("/gameroom/join/chat");
+      const socket = openSocket("http://127.0.0.1:5000");
+      socket.emit("setname", nickname);
+      console.log(nickname);
+      setConnectionTo({ connected: true, socket });
+    }
+  }, [connectedTo]);
 
   return (
     <>

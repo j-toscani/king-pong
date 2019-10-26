@@ -31,8 +31,6 @@ function App() {
   });
   const [nickname, setNickname] = React.useState(getItem("nickname"));
 
-  console.log(nickname);
-
   function setSettings(name) {
     const newSettings = { ...settings };
     newSettings[name] = !settings[name];
