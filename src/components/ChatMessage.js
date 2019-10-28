@@ -10,9 +10,9 @@ const MessageContainer = styled.div`
   color: ${props => (props.p1 ? props.theme.brightFont : props.theme.accent)};
 `;
 
-function ChatMessage({ message }) {
+function ChatMessage({ p1, message }) {
   return (
-    <MessageContainer>
+    <MessageContainer p1={p1}>
       <span>{`${message.nickname} :`}</span>
       <span>{message.content}</span>
     </MessageContainer>

@@ -4,6 +4,7 @@ import Button from "./Button";
 import { Input } from "./ChatBar";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
+import { getItem, setItem } from "../ressources/scripts/storage";
 
 const NameInput = styled(Input)`
   border-radius: 10px;
@@ -29,19 +30,24 @@ function GreetingWindow({ setNickname }) {
 
   let history = useHistory();
 
-  function handleClick(destination) {
+  function routeTo(destination) {
     history.push(`/${destination}`);
   }
 
+  if (getItem() !== null) {
+    routeTo("select");
+  }
+
   function submitNickname() {
-    const nickname = inputValue;
-    setNickname(nickname);
-    alert(
-      nickname
-        ? `Hello ${nickname}, let´s play Pong!`
-        : `Hello Pal, let´s play Pong!`
-    );
-    handleClick("select");
+    if (getItem() === null) {
+      const nickname = inputValue;
+      setNickname(nickname);
+      alert(`Hello ${nickname}, let´s play Pong!`);
+      setItem("nickname", nickname);
+      routeTo("select");
+    } else {
+      alert("Please enter a nicknamme.");
+    }
   }
   return (
     <StyledWindowGreeting>
@@ -52,7 +58,7 @@ function GreetingWindow({ setNickname }) {
         placeholder="Tap to enter..."
         onChange={event => setInputValue(event.target.value)}
       ></NameInput>
-      <Button big active onClick={submitNickname}>
+      <Button big active handleClick={submitNickname}>
         Start!
       </Button>
     </StyledWindowGreeting>

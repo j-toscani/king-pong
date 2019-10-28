@@ -40,13 +40,13 @@ export const AltButton = styled(Button)`
   border: ${props => props.theme.contrast};
 `;
 
-function Button({ disabled, big, onClick, className, children }) {
+function Button({ disabled, big, handleClick, className, children }) {
   return (
     <StyledButton
       disabled={disabled}
       big={big}
       className={className}
-      onClick={onClick}
+      onClick={handleClick}
       round={true}
     >
       {children}

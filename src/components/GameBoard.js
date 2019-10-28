@@ -130,7 +130,7 @@ export default function GameBoard({ leftPressed, rightPressed, connectedTo }) {
       <Modal ref={modal}>
         <WinLossWindow
           result={game["global"]}
-          onClick={() => {
+          handleClick={() => {
             handleGameEnding();
           }}
           connectedTo={connectedTo}
