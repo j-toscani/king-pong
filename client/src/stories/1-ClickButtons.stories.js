@@ -1,5 +1,5 @@
 import React from "react";
-import Button, { AltButton } from "../components/Button";
+import Button from "../components/Button";
 import SwitchButton from "../components/SwitchButton";
 
 export default {
@@ -29,9 +29,9 @@ export const DefaultInactiveBig = () => (
 );
 
 export const DefaultActiveAltBig = () => (
-  <AltButton big onClick={() => console.log("clicked")}>
+  <Button alt big onClick={() => console.log("clicked")}>
     active AltButton
-  </AltButton>
+  </Button>
 );
 
 export const Switch = () => {

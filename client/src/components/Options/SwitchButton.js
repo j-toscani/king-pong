@@ -39,7 +39,7 @@ const Point = styled.label`
         `};
 `;
 
-export default function SwitchButton({ id, mode, handleChange }) {
+export default function SwitchButton({ id, mode, onClick }) {
   const [visible, setVisible] = React.useState(!mode);
 
   return (
@@ -48,7 +48,7 @@ export default function SwitchButton({ id, mode, handleChange }) {
       <Switch
         id={id}
         active={!visible}
-        onChange={handleChange}
+        onClick={onClick}
         type="checkbox"
       ></Switch>
     </Background>

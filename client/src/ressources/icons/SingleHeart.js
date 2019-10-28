@@ -20,13 +20,11 @@ function Heart({ className }) {
   );
 }
 
-const StyledHeart = styled(Heart)`
+const SingleHeart = styled(Heart)`
   fill: ${props => (props.filled ? "#a50321" : "transparent")};
   stroke: #bf6b3b;
   stroke-linecap: round;
   stroke-linejoin: round;
 `;
 
-export default function SingleHeart({ filled }) {
-  return <StyledHeart filled={filled} />;
-}
+export default SingleHeart;

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { TopPointer } from "../components/Top";
+import HeaderPointer from "../components/Header/HeaderPointer";
 import ProfileData from "../components/ProfileData";
 
 const Container = styled.main`
@@ -20,7 +20,7 @@ const img =
 export default function Profile({ user }) {
   return (
     <>
-      <TopPointer headline={"Profile"}></TopPointer>
+      <HeaderPointer headline={"Profile"}></HeaderPointer>
       <Container>
         <Image src={img}></Image>
         <ProfileData user={user}></ProfileData>

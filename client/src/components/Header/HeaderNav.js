@@ -1,17 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { StyledHeader } from "./Top";
-import Cross from "../ressources/icons/Cross";
-import Options from "../ressources/icons/Options";
-import LogoStyled from "../ressources/icons/Logo";
-
-const StyledH2 = styled.h2`
-  color: ${props => props.theme.brightFont};
-  font-size: 24px;
-  text-align: left;
-  font-weight: 400;
-  font-style: none;
-`;
+import StyledHeader from "./StyledHeader";
+import StyledH2 from "./StyledH2";
+import LogoStyled from "../../ressources/icons/Logo";
+import Cross from "../../ressources/icons/Cross";
+import Options from "../../ressources/icons/Options";
 
 const ToggleSettings = styled.button`
   background: ${props => props.theme.contrast};
@@ -28,7 +21,7 @@ const ToggleSettings = styled.button`
   padding: 0;
 `;
 
-function NavTop({ open, toggleOpen, headline }) {
+function HeaderNav({ open, toggleOpen, headline }) {
   return (
     <StyledHeader>
       <ToggleSettings onClick={toggleOpen}>
@@ -40,4 +33,4 @@ function NavTop({ open, toggleOpen, headline }) {
   );
 }
 
-export default NavTop;
+export default HeaderNav;

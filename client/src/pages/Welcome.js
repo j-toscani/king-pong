@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { TopLogo } from "../components/Top";
-import { AltButton } from "../components/Button";
+import HeaderLogo from "../components/Header/HeaderLogo";
+import Button from "../components/Button";
 import { useHistory } from "react-router-dom";
 
 const StyledMain = styled.main`
@@ -29,12 +29,12 @@ export default function Welcome() {
 
   return (
     <>
-      <TopLogo headline={"KingPong"}></TopLogo>
+      <HeaderLogo headline={"KingPong"}></HeaderLogo>
       <StyledMain>
         <WelcomeWindow>
-          <AltButton big handleClick={handleClick}>
+          <Button alt big onClick={handleClick}>
             Tap to start!
-          </AltButton>
+          </Button>
         </WelcomeWindow>
       </StyledMain>
     </>

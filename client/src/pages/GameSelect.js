@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import NavTop from "../components/NavTop";
-import Button, { AltButton } from "../components/Button";
-import Overlay from "../components/Overlay";
+import HeaderNav from "../components/Header/HeaderNav";
+import Button from "../components/Button";
+import Overlay from "../components/Options/Overlay";
 import { useHistory } from "react-router-dom";
 
 const Container = styled.main`
@@ -33,21 +33,21 @@ export default function GameSelect({ setSettings, settings }) {
 
   return (
     <>
-      <NavTop
+      <HeaderNav
         open={settings["open"]}
         toggleOpen={() => setSettings("open")}
         headline={"Start a Game!"}
-      ></NavTop>
+      />
       <Container>
         <Background>
-          <Button active big handleClick={routeTo}>
+          <Button active big onClick={routeTo}>
             Open Game!
           </Button>
         </Background>
         <Background alt="true">
-          <AltButton active big handleClick={routeTo}>
+          <Button alt active big onClick={routeTo}>
             Join Game!
-          </AltButton>
+          </Button>
         </Background>
 
         <Overlay settings={settings} inGame={false} setSettings={setSettings} />

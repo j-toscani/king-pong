@@ -16,9 +16,9 @@ body {
 }
 
 main{
- background: ${props => props.theme.main};
-display: flex;
-border: none;
+  background: ${props => props.theme.main};
+  display: flex;
+  border: none;
   justify-content: center;
   align-items: center;
 }

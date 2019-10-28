@@ -1,11 +1,11 @@
 import React from "react";
 import GreetingWindow from "../components/GreetingWindow";
-import { TopLogo } from "../components/Top";
+import HeaderLogo from "../components/Header/HeaderLogo";
 
 export default function NicknameInput({ setNickname }) {
   return (
     <>
-      <TopLogo headline={"KingPong"}></TopLogo>
+      <HeaderLogo headline={"KingPong"}></HeaderLogo>
       <main>
         <GreetingWindow setNickname={setNickname}></GreetingWindow>
       </main>

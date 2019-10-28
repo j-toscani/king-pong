@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Pointer from "../ressources/icons/Pointer";
-
-import useWindowDimensions from "../GameData/GetWIndowDimension";
+import Pointer from "../../ressources/icons/Pointer";
+import useWindowDimensions from "../../GameData/GetWIndowDimension";
 
 const StyledInputButton = styled.button`
   box-shadow: 0px 3px 6px;
@@ -17,17 +16,19 @@ const StyledInputButton = styled.button`
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 `;
 
+function isMobile(width) {
+  return width > 420;
+}
 function GameButton({ handleTap, handleRelease, direction }) {
   const { width } = useWindowDimensions();
 
-  if (width > 420) {
+  if (isMobile(width)) {
     return (
       <StyledInputButton onMouseDown={handleTap} onMouseUp={handleRelease}>
         <Pointer rotate={direction === "left"} white />
       </StyledInputButton>
     );
-  }
-  if (width < 420) {
+  } else {
     return (
       <StyledInputButton
         onTouchStart={handleTap}

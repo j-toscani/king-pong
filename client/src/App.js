@@ -18,7 +18,6 @@ const Container = styled.div`
   display: grid;
   grid-template: 100px 1fr / 1fr;
   width: 100vw;
-
   height: 100vh;
   background: ${props => props.theme.main};
 `;
@@ -58,7 +57,7 @@ function App() {
 
           <Route
             path="/gameroom/join"
-            component={props => (
+            component={() => (
               <GameRoom
                 nickname={nickname}
                 setSettings={setSettings}

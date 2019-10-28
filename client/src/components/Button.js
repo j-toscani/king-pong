@@ -1,7 +1,6 @@
-import React from "react";
 import styled, { css } from "styled-components";
 
-const StyledButton = styled.button`
+const Button = styled.button`
   border-radius: 10px;
   ${props =>
     props.disabled
@@ -31,27 +30,15 @@ const StyledButton = styled.button`
           padding-left: 4%;
           padding-right: 4%;
         `}
+  ${props =>
+    props.alt
+      ? css`
+          background: ${props.theme.contrast};
+          color: ${props.theme.brightFont};
+          fill: ${props.theme.brightFont};
+          border: ${props.theme.contrast};
+        `
+      : ""}
 `;
-
-export const AltButton = styled(Button)`
-  background: ${props => props.theme.contrast};
-  color: ${props => props.theme.brightFont};
-  fill: ${props => props.theme.brightFont};
-  border: ${props => props.theme.contrast};
-`;
-
-function Button({ disabled, big, handleClick, className, children }) {
-  return (
-    <StyledButton
-      disabled={disabled}
-      big={big}
-      className={className}
-      onClick={handleClick}
-      round={true}
-    >
-      {children}
-    </StyledButton>
-  );
-}
 
 export default Button;

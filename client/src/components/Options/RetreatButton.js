@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import Pointer from "../ressources/icons/Pointer";
+import Pointer from "../../ressources/icons/Pointer";
 
 const RetreatStyled = styled.button`
   ${props =>
@@ -23,9 +23,9 @@ const RetreatStyled = styled.button`
         `}
 `;
 
-function RetreatButton({ handleClick, name }) {
+function RetreatButton({ onClick, name }) {
   return (
-    <RetreatStyled onClick={() => handleClick(name)} name={name}>
+    <RetreatStyled onClick={() => onClick(name)} name={name}>
       {name}
       <Pointer rotate={true} />
     </RetreatStyled>

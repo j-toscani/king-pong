@@ -11,7 +11,7 @@ const Option = styled.div`
   border: none;
 `;
 
-const Container = styled.div`
+const Container = styled.section`
   padding-left: 40px;
   padding-right: 40px;
   border: none;
@@ -31,19 +31,19 @@ export default function Settings({ setSettings, settings }) {
         Darkmode
         <SwitchButton
           id={"Darkmode"}
-          mode={settings["darkmode"]}
-          handleChange={() => {
+          mode={settings.darkmode}
+          onClick={() => {
             setSettings("darkmode");
           }}
-        ></SwitchButton>
+        />
       </Option>
       <Option>
         Sound
         <SwitchButton
           id={"Sound"}
           mode={settings.sound}
-          handleChange={() => setSettings("sound")}
-        ></SwitchButton>
+          onClick={() => setSettings("sound")}
+        />
       </Option>
     </Container>
   );

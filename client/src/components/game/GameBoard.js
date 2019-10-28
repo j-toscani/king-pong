@@ -3,8 +3,8 @@ import styled from "styled-components";
 import HeartRow from "./HeartRow";
 import { useHistory } from "react-router-dom";
 import WinLossWindow from "./WinLossWindow";
-import drawGameState from "../GameData/Draw";
-import createEvents, { handleEvents } from "../GameData/Events";
+import drawGameState from "../../GameData/Draw";
+import createEvents, { handleEvents } from "../../GameData/Events";
 
 const StyledCanvas = styled.canvas`
   background: ${props => props.theme.accent};

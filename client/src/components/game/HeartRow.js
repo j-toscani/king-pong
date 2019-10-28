@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import SingleHeart from "../ressources/icons/SingleHeart";
+import SingleHeart from "../../ressources/icons/SingleHeart";
 
 const Container = styled.div`
   background: "transparent";

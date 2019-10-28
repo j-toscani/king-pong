@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { TopLogo } from "../components/Top";
-import GameInput from "../components/GameInput";
+import HeaderLogo from "../components/Header/HeaderLogo";
+import GameInput from "../components/game/GameInput";
 import Button from "../components/Button";
-import GameBoard from "../components/GameBoard";
+import GameBoard from "../components/game/GameBoard";
 import { useHistory } from "react-router-dom";
 
 const Container = styled.main`
@@ -27,7 +27,7 @@ const ConcedeButton = styled(Button)`
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
   margin-left: auto;
   margin-right: auto;
-  top: -40px;
+  top: -20px;
 `;
 
 export default function GameScreen({ nickname, connectedTo }) {
@@ -41,7 +41,7 @@ export default function GameScreen({ nickname, connectedTo }) {
 
   return (
     <>
-      <TopLogo headline={`${nickname}'s Game`}></TopLogo>
+      <HeaderLogo headline={`${nickname}'s Game`}></HeaderLogo>
       <Container>
         <ConcedeButton onClick={handleClick}>Concede</ConcedeButton>
         <GameBoard

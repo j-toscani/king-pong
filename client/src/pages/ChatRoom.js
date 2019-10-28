@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import ChatWindow from "../components/ChatWindow";
-import Button, { AltButton } from "../components/Button";
-import NavTop from "../components/NavTop";
-import Overlay from "../components/Overlay";
+import ChatWindow from "../components/chat/ChatWindow";
+import Button from "../components/Button";
+import HeaderNav from "../components/Header/HeaderNav";
+import Overlay from "../components/Options/Overlay";
 import { useHistory } from "react-router-dom";
 
 const StyledMain = styled.main`
@@ -23,8 +23,7 @@ export default function ChatRoom({
   nickname,
   setSettings,
   settings,
-  connectedTo,
-  setConnectionTo
+  connectedTo
 }) {
   let history = useHistory();
   const [chatHistory, updateHistory] = React.useState();
@@ -51,10 +50,6 @@ export default function ChatRoom({
     }
   }
 
-  if (!connectedTo) {
-    history.push("/gameroom");
-  }
-
   React.useEffect(() => {
     if (connectedTo) {
       const { socket } = connectedTo;
@@ -66,24 +61,24 @@ export default function ChatRoom({
 
   return (
     <>
-      <NavTop
+      <HeaderNav
         open={settings["open"]}
         toggleOpen={() => setSettings("open")}
         headline={"Chatroom"}
-      ></NavTop>
+      />
       <StyledMain>
         <ChatWindow
           nickname={nickname}
           messages={chatHistory}
-          handleSubmitMessage={handleSubmitMessage}
+          onSubmitMessage={handleSubmitMessage}
         ></ChatWindow>
         <ButtonContainer>
           <Button handleClick={() => routeTo("game")} big>
             Ready!
           </Button>
-          <AltButton handleClick={() => routeTo("select")} big>
+          <Button alt handleClick={() => routeTo("select")} big>
             Chicken out...
-          </AltButton>
+          </Button>
         </ButtonContainer>
         <Overlay setSettings={setSettings} settings={settings} inGame={true} />
       </StyledMain>

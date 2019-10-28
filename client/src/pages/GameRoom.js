@@ -18,11 +18,8 @@ export default function GameRoom({ nickname, setSettings, settings }) {
     socket.emit("setname", nickname);
     console.log(nickname + " connected to the Chat");
     setConnectionTo({ connected: true, socket });
-
-    if (connectedTo) {
-      return () => socket.emit("disconnected", "bye");
-    }
-  }, [connectedTo]);
+    return () => socket.emit("disconnected", "bye");
+  }, []);
 
   return (
     <>

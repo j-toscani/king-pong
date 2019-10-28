@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import React from "react";
-import StyledWindow from "./StyledWindow";
-import Button from "./Button";
+import StyledWindow from "../StyledWindow";
+import Button from "../Button";
 
 const Headline = styled.h3`
   font-size: 20px;
@@ -12,13 +12,12 @@ const StyledWindowSee = styled(StyledWindow)`
   opacity: 0.8;
 `;
 
-function WinLossWindow({ result, handleClick, connectedTo }) {
+function WinLossWindow({ result, handleClick }) {
   if (result.winner === "opponent") {
     return (
       <StyledWindowSee>
         <Headline>{result.cheerLoss}</Headline>
-
-        <Button active handleClick={handleClick}>
+        <Button active onClick={handleClick}>
           Back to Play
         </Button>
       </StyledWindowSee>
@@ -27,8 +26,7 @@ function WinLossWindow({ result, handleClick, connectedTo }) {
     return (
       <StyledWindowSee>
         <Headline>{result.cheerWin}</Headline>
-
-        <Button active handleClick={handleClick}>
+        <Button active onClick={handleClick}>
           Back to Play
         </Button>
       </StyledWindowSee>

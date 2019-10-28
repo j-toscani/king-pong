@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { TopPointer } from "../components/Top";
+import HeaderPointer from "../components/Header/HeaderPointer";
 
 const Container = styled.main`
   background: ${props => props.theme.accent};
@@ -21,7 +21,7 @@ const GameInfo = styled.div`
 export default function About() {
   return (
     <>
-      <TopPointer headline={"About"}></TopPointer>
+      <HeaderPointer headline={"About"} />
       <Container>
         <GameInfo>
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sit, sint!

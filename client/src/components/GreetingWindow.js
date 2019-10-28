@@ -1,7 +1,7 @@
 import React from "react";
 import StyledWindow from "./StyledWindow";
 import Button from "./Button";
-import { Input } from "./ChatBar";
+import { Input } from "./chat/ChatBar";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { getItem, setItem } from "../ressources/scripts/storage";
@@ -58,7 +58,7 @@ function GreetingWindow({ setNickname }) {
         placeholder="Tap to enter..."
         onChange={event => setInputValue(event.target.value)}
       ></NameInput>
-      <Button big active handleClick={submitNickname}>
+      <Button big active onClick={submitNickname}>
         Start!
       </Button>
     </StyledWindowGreeting>

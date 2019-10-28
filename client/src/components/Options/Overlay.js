@@ -47,27 +47,21 @@ function Overlay({ setSettings, settings, inGame }) {
 
   React.useEffect(() => setVisible(settings.open), [settings.open]);
 
-  function handleClick(destination) {
+  function routeTo(destination) {
     history.push(`/${destination}`);
   }
   return (
     <>
       <Background
-        opene={visible}
+        open={visible}
         onClick={() => setSettings("open")}
       ></Background>
       <OverlayContainer open={visible}>
         <Settings setSettings={setSettings} settings={settings}></Settings>
         {!inGame && (
           <BottomContainer>
-            <RetreatButton
-              handleClick={handleClick}
-              name={"Profile"}
-            ></RetreatButton>
-            <RetreatButton
-              handleClick={handleClick}
-              name={"About"}
-            ></RetreatButton>
+            <RetreatButton onClick={routeTo} name={"Profile"}></RetreatButton>
+            <RetreatButton onClick={routeTo} name={"About"}></RetreatButton>
           </BottomContainer>
         )}
       </OverlayContainer>

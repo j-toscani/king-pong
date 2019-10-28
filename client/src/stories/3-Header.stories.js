@@ -1,21 +1,22 @@
 import React from "react";
-import { TopPointer, TopLogo } from "../components/Top";
+import HeaderPointer from "../components/Header/HeaderPointer";
+import HeaderLogo from "../components/HeaderLogo";
 
 export default {
   title: "Top"
 };
 
-export const HeaderLogo = () => <TopLogo headline={"KingPong"}></TopLogo>;
-export const HeaderPointer = () => (
-  <TopPointer
+export const LogoTop = () => <HeaderLogo headline={"KingPong"}></HeaderLogo>;
+export const PointerTop = () => (
+  <HeaderPointer
     onClick={() => console.log("retreat")}
     headline={"Some Headline"}
-  ></TopPointer>
+  ></HeaderPointer>
 );
 export const HeaderPointerReverse = () => (
-  <TopPointer
+  <HeaderPointer
     onClick={() => console.log("retreat")}
     rotate={true}
     headline={"Some other Headline"}
-  ></TopPointer>
+  ></HeaderPointer>
 );
