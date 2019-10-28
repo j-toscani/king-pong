@@ -18,7 +18,7 @@ const StyledInputButton = styled.button`
 `;
 
 function GameButton({ handleTap, handleRelease, direction }) {
-  const { height, width } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   if (width > 420) {
     return (

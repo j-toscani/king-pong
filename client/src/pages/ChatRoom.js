@@ -6,8 +6,6 @@ import NavTop from "../components/NavTop";
 import Overlay from "../components/Overlay";
 import { useHistory } from "react-router-dom";
 
-import openSocket from "socket.io-client";
-
 const StyledMain = styled.main`
   flex-direction: column;
   position: relative;
@@ -58,13 +56,9 @@ export default function ChatRoom({
   }
 
   React.useEffect(() => {
-    if (!connectedTo) {
-      history.push("/gameroom");
-    }
     if (connectedTo) {
       const { socket } = connectedTo;
       socket.on("new message", message => {
-        console.log(message);
         updateHistory(message);
       });
     }

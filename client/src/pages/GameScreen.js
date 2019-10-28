@@ -18,6 +18,7 @@ const InputContainer = styled.div`
   justify-content: space-between;
   flex-direction: row;
   width: 100%;
+  max-width: 400px;
   padding: 20px;
 `;
 

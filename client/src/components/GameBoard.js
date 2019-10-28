@@ -28,6 +28,7 @@ export default function GameBoard({ leftPressed, rightPressed, connectedTo }) {
 
   function handleGameEnding() {
     history.push(`/select`);
+    console.log("move");
   }
 
   const [play, setPlay] = React.useState(false);
@@ -130,9 +131,7 @@ export default function GameBoard({ leftPressed, rightPressed, connectedTo }) {
       <Modal ref={modal}>
         <WinLossWindow
           result={game["global"]}
-          handleClick={() => {
-            handleGameEnding();
-          }}
+          handleClick={handleGameEnding}
           connectedTo={connectedTo}
         />
       </Modal>

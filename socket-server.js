@@ -33,6 +33,7 @@ io.on("connection", socket => {
   });
   socket.on("disconnect", () => {
     console.log("client disconnected...", socket.id);
+    delete allClients[socket.id];
     console.log(allClients);
   });
   console.log("connected..." + socket.id);
