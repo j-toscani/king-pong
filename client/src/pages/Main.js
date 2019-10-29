@@ -1,12 +1,12 @@
 import React from "react";
 import ChatRoom from "./ChatRoom";
-import GameScreen from "./GameScreen";
+import GameRoom from "./GameRoom";
 import SelectRoom from "./SelectRoom";
 import { useHistory } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
 import openSocket from "socket.io-client";
 
-export default function GameSelect({ setSettings, settings, nickname }) {
+export default function Main({ setSettings, settings, nickname }) {
   const [connectedTo, setConnectionTo] = React.useState(false);
 
   const history = useHistory();
@@ -29,7 +29,7 @@ export default function GameSelect({ setSettings, settings, nickname }) {
   return (
     <>
       <Switch>
-        <Route exact path="/select">
+        <Route exact path="/main">
           <SelectRoom
             routeTo={routeTo}
             nickname={nickname}
@@ -37,7 +37,7 @@ export default function GameSelect({ setSettings, settings, nickname }) {
             settings={settings}
           ></SelectRoom>
         </Route>
-        <Route exact path="/select/chat">
+        <Route exact path="/main/chat">
           <ChatRoom
             setConnectionTo={setConnectionTo}
             connectedTo={connectedTo}
@@ -46,11 +46,8 @@ export default function GameSelect({ setSettings, settings, nickname }) {
             settings={settings}
           ></ChatRoom>
         </Route>
-        <Route exact path="/select/game">
-          <GameScreen
-            nickname={nickname}
-            connectedTo={connectedTo}
-          ></GameScreen>
+        <Route exact path="/main/game">
+          <GameRoom nickname={nickname} connectedTo={connectedTo}></GameRoom>
         </Route>
       </Switch>
     </>

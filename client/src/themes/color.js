@@ -1,4 +1,4 @@
-const defaultTheme = {
+const colorTheme = {
   main: "#95ABBF",
   contrast: "#415A8C",
   accent: "#F2B604",
@@ -6,4 +6,4 @@ const defaultTheme = {
   darkFont: "rgba(0,0,0,0.85)"
 };
 
-export default defaultTheme;
+export default colorTheme;
