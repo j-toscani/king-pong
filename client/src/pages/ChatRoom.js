@@ -76,7 +76,7 @@ export default function ChatRoom({
           <Button onClick={() => routeTo("game")} big>
             Ready!
           </Button>
-          <Button alt onClick={() => routeTo("select")} big>
+          <Button alter onClick={() => routeTo("select")} big>
             Chicken out...
           </Button>
         </ButtonContainer>

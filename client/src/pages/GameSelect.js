@@ -45,7 +45,7 @@ export default function GameSelect({ setSettings, settings }) {
           </Button>
         </Background>
         <Background alt="true">
-          <Button alt active big onClick={routeTo}>
+          <Button alter active big onClick={routeTo}>
             Join Game!
           </Button>
         </Background>

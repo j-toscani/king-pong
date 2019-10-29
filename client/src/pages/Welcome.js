@@ -32,7 +32,7 @@ export default function Welcome() {
       <HeaderLogo headline={"KingPong"}></HeaderLogo>
       <StyledMain>
         <WelcomeWindow>
-          <Button alt big onClick={handleClick}>
+          <Button alter big onClick={handleClick}>
             Tap to start!
           </Button>
         </WelcomeWindow>

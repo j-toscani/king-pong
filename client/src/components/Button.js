@@ -31,7 +31,7 @@ const Button = styled.button`
           padding-right: 4%;
         `}
   ${props =>
-    props.alt
+    props.alter
       ? css`
           background: ${props.theme.contrast};
           color: ${props.theme.brightFont};

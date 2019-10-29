@@ -17,7 +17,11 @@ export default function GameRoom({ nickname, setSettings, settings }) {
   const [connectedTo, setConnectionTo] = React.useState(false);
 
   React.useEffect(() => {
-    history.push("/gameroom/join/chat");
+    if (nickname === null) {
+      history.push("/entername");
+    } else {
+      history.push("/gameroom/join/chat");
+    }
     const socket = openSocket(
       process.env.REACT_APP_CLIENT_SOCKET_CONNECT || "http://127.0.0.1:8000"
     );

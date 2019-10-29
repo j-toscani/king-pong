@@ -29,7 +29,7 @@ export const DefaultInactiveBig = () => (
 );
 
 export const DefaultActiveAltBig = () => (
-  <Button alt big onClick={() => console.log("clicked")}>
+  <Button alter big onClick={() => console.log("clicked")}>
     active AltButton
   </Button>
 );

@@ -37,12 +37,12 @@ const InputContainer = styled.form`
   background: ${props => props.theme.accent};
 `;
 
-function ChatBar({ handleSubmitMessage }) {
+function ChatBar({ onSubmitMessage }) {
   const [message, setMessage] = React.useState(null);
 
   function handleSubmit(event) {
     event.preventDefault();
-    handleSubmitMessage(message);
+    onSubmitMessage(message);
   }
   return (
     <InputContainer
