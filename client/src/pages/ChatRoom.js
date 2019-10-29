@@ -50,6 +50,11 @@ export default function ChatRoom({
     }
   }
 
+  // Check for number of people in the Channel and toggle activation of ready button
+  // Include Feedback for whether or not the ready button is pressed
+  // --> Maybe use a little animation?
+  // --> use Checkbox
+
   React.useEffect(() => {
     if (connectedTo) {
       const { socket } = connectedTo;

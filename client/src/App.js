@@ -9,7 +9,6 @@ import GameSelect from "./pages/GameSelect";
 import NicknameInput from "./pages/NicknameInput";
 import Profile from "./pages/Profile";
 import Welcome from "./pages/Welcome";
-import GameRoom from "./pages/GameRoom";
 import { getItem } from "./ressources/scripts/storage";
 
 const Container = styled.div`
@@ -54,26 +53,13 @@ function App() {
             exact
             component={props => <About {...props} />}
           />
-
-          <Route
-            path="/gameroom/join"
-            component={() => (
-              <GameRoom
-                nickname={nickname}
-                setSettings={setSettings}
-                settings={settings}
-              />
-            )}
-          />
           <Route
             path="/select"
-            exact
-            component={props => (
+            component={() => (
               <GameSelect
                 setSettings={setSettings}
                 settings={settings}
-                nickname={user.name}
-                {...props}
+                nickname={nickname}
               />
             )}
           />
