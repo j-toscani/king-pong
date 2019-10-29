@@ -38,7 +38,7 @@ export default function GameRoom({ handleSession, connectedTo }) {
   function handleClick() {
     history.push(`/main`);
     const { socket } = connectedTo;
-    handleSession(socket, "end");
+    handleSession(socket, "leave");
   }
 
   return (

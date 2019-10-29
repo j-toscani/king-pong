@@ -27,31 +27,20 @@ export default function Main({ setSettings, settings, nickname }) {
     };
   }, [nickname]);
 
-  function enterPlaySession(io, event) {
-    const socket = io;
+  function handleSessionAction(socket, event) {
     switch (event) {
       case "join":
-        socket.emit("room", "joined room");
+        socket.emit("join room", "joined room");
         break;
       case "create":
-        socket.emit("room", "created room");
+        socket.emit("create room", "created room");
+        break;
+      case "leave":
+        socket.emit("leave room", "left room");
         break;
       default:
         alert("Dude, choose an event!");
         break;
-    }
-  }
-  function leavePlaySession(io) {
-    const socket = io;
-    socket.close();
-  }
-
-  function handleSession(io, action, event) {
-    if (action === "start") {
-      enterPlaySession(io, event);
-    }
-    if (action === "end") {
-      leavePlaySession(io);
     }
   }
 
@@ -64,7 +53,7 @@ export default function Main({ setSettings, settings, nickname }) {
             connectedTo={connectedTo}
             setSettings={setSettings}
             settings={settings}
-            handleSession={handleSession}
+            handleSession={handleSessionAction}
           ></SelectRoom>
         </Route>
         <Route exact path="/main/chat">
@@ -73,13 +62,13 @@ export default function Main({ setSettings, settings, nickname }) {
             connectedTo={connectedTo}
             setSettings={setSettings}
             settings={settings}
-            handleSession={handleSession}
+            handleSession={handleSessionAction}
           ></ChatRoom>
         </Route>
         <Route exact path="/main/game">
           <GameRoom
             connectedTo={connectedTo}
-            handleSession={handleSession}
+            handleSession={handleSessionAction}
           ></GameRoom>
         </Route>
       </Switch>

@@ -61,7 +61,7 @@ export default function ChatRoom({
     if (destination === "main") {
       history.push("/main");
       const { socket } = connectedTo;
-      handleSession(socket, "end");
+      handleSession(socket, "leave");
     } else {
       history.push(`${destination}`);
     }

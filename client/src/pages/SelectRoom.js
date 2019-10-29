@@ -51,7 +51,7 @@ export default function SelectRoom({
             onClick={() => {
               routeTo();
               const { socket } = connectedTo;
-              handleSession(socket, "start", "create");
+              handleSession(socket, "create");
             }}
           >
             Create Game!
@@ -65,7 +65,7 @@ export default function SelectRoom({
             onClick={() => {
               routeTo();
               const { socket } = connectedTo;
-              handleSession(socket, "start", "join");
+              handleSession(socket, "join");
             }}
           >
             Join Game!

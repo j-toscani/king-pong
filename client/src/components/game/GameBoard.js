@@ -34,7 +34,7 @@ export default function GameBoard({
   function handleGameEnding() {
     history.push(`/main`);
     const { socket } = connectedTo;
-    handleSession(socket, "end");
+    handleSession(socket, "leave");
   }
 
   const [play, setPlay] = React.useState(false);
