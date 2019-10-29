@@ -40,23 +40,16 @@ const BottomContainer = styled.div`
   justify-content: space-between;
 `;
 
-function Overlay({ setSettings, settings, inGame }) {
+function Overlay({ setSettings, settings, inGame, open, toggleOpen }) {
   let history = useHistory();
-
-  const [visible, setVisible] = React.useState(!settings.open);
-
-  React.useEffect(() => setVisible(settings.open), [settings.open]);
 
   function routeTo(destination) {
     history.push(`/${destination}`);
   }
   return (
     <>
-      <Background
-        open={visible}
-        onClick={() => setSettings("open")}
-      ></Background>
-      <OverlayContainer open={visible}>
+      <Background open={open} onClick={toggleOpen}></Background>
+      <OverlayContainer open={open}>
         <Settings setSettings={setSettings} settings={settings}></Settings>
         {!inGame && (
           <BottomContainer>

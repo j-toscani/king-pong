@@ -5,6 +5,7 @@ import Button from "../components/Button";
 import HeaderNav from "../components/Header/HeaderNav";
 import Overlay from "../components/Options/Overlay";
 import { useHistory } from "react-router-dom";
+import { getItem, setItem } from "../ressources/scripts/storage";
 
 const StyledMain = styled.main`
   flex-direction: column;
@@ -27,6 +28,12 @@ export default function ChatRoom({
 }) {
   let history = useHistory();
   const [chatHistory, updateHistory] = React.useState();
+  const [open, setOpen] = React.useState(false || getItem("open"));
+
+  function toggleOpen() {
+    setItem("open", !open);
+    setOpen(!open);
+  }
 
   function handleSubmitMessage(content) {
     const { socket } = connectedTo;
@@ -68,7 +75,7 @@ export default function ChatRoom({
     <>
       <HeaderNav
         open={settings["open"]}
-        toggleOpen={() => setSettings("open")}
+        toggleOpen={toggleOpen}
         headline={"Chatroom"}
       />
       <StyledMain>
@@ -85,7 +92,13 @@ export default function ChatRoom({
             Chicken out...
           </Button>
         </ButtonContainer>
-        <Overlay setSettings={setSettings} settings={settings} inGame={true} />
+        <Overlay
+          setSettings={setSettings}
+          settings={settings}
+          inGame={true}
+          toggleOpen={toggleOpen}
+          open={open}
+        />
       </StyledMain>
     </>
   );

@@ -9,7 +9,7 @@ import GameSelect from "./pages/GameSelect";
 import NicknameInput from "./pages/NicknameInput";
 import Profile from "./pages/Profile";
 import Welcome from "./pages/Welcome";
-import { getItem } from "./ressources/scripts/storage";
+import { getItem, setItem } from "./ressources/scripts/storage";
 
 const Container = styled.div`
   margin: 0;
@@ -23,15 +23,15 @@ const Container = styled.div`
 
 function App() {
   const [settings, adjustSettings] = React.useState({
-    darkmode: false,
-    sound: true,
-    open: false
+    darkmode: false || getItem("darkmode"),
+    sound: true || getItem("sound")
   });
   const [nickname, setNickname] = React.useState(getItem("nickname"));
 
   function setSettings(name) {
     const newSettings = { ...settings };
     newSettings[name] = !settings[name];
+    setItem(name, newSettings[name]);
     adjustSettings(newSettings);
   }
 
