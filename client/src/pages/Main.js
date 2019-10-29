@@ -4,7 +4,7 @@ import GameRoom from "./GameRoom";
 import SelectRoom from "./SelectRoom";
 import { useHistory } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
-import openSocket from "socket.io-client";
+import io from "socket.io-client";
 
 export default function Main({ setSettings, settings, nickname }) {
   const [connectedTo, setConnectionTo] = React.useState(false);
@@ -15,7 +15,7 @@ export default function Main({ setSettings, settings, nickname }) {
   }
 
   React.useEffect(() => {
-    const socket = openSocket(
+    const socket = io(
       process.env.REACT_APP_CLIENT_SOCKET_CONNECT || "http://127.0.0.1:8000"
     );
     socket.emit("setname", nickname);
@@ -25,6 +25,25 @@ export default function Main({ setSettings, settings, nickname }) {
       setConnectionTo(false);
     };
   }, []);
+
+  function enterPlaySession() {
+    switch (ev) {
+      case "join":
+        const socket = io("/game");
+        socket.emit("join channel", joinChannel);
+        break;
+      case "create":
+        const socket = io("/game");
+        socket.emit("create channel", createChannel);
+      default:
+        alert("Dude, choose an event!");
+        break;
+    }
+  }
+  function leavePlaySession() {
+    const socket = io("/");
+    socket.emit("leave game", handleGameLeave);
+  }
 
   return (
     <>
