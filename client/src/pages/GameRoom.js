@@ -8,6 +8,12 @@ import openSocket from "socket.io-client";
 
 export default function GameRoom({ nickname, setSettings, settings }) {
   let history = useHistory();
+
+  // Check for number of people in the Channel and toggle activation of ready button
+  // Include Feedback for whether or not the ready button is pressed
+  // --> Maybe use a little animation?
+  // --> use Checkbox
+
   const [connectedTo, setConnectionTo] = React.useState(false);
 
   React.useEffect(() => {
@@ -18,7 +24,10 @@ export default function GameRoom({ nickname, setSettings, settings }) {
     socket.emit("setname", nickname);
     console.log(nickname + " connected to the Chat");
     setConnectionTo({ connected: true, socket });
-    return () => socket.emit("disconnected", "bye");
+    return () => {
+      socket.emit("disconnected", "bye");
+      setConnectionTo(false);
+    };
   }, []);
 
   return (

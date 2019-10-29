@@ -73,10 +73,10 @@ export default function ChatRoom({
           onSubmitMessage={handleSubmitMessage}
         ></ChatWindow>
         <ButtonContainer>
-          <Button handleClick={() => routeTo("game")} big>
+          <Button onClick={() => routeTo("game")} big>
             Ready!
           </Button>
-          <Button alt handleClick={() => routeTo("select")} big>
+          <Button alt onClick={() => routeTo("select")} big>
             Chicken out...
           </Button>
         </ButtonContainer>

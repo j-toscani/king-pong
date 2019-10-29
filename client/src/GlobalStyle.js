@@ -6,7 +6,6 @@ export default createGlobalStyle`
 *:after {
   box-sizing: border-box;
 }
-
 body {
   font-size: 16px;
   margin: 0;
@@ -14,15 +13,13 @@ body {
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
 }
-
 main{
-  background: ${props => props.theme.main};
-  display: flex;
-  border: none;
+ background: ${props => props.theme.main};
+display: flex;
+border: none;
   justify-content: center;
   align-items: center;
 }
-
 button, input {
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
