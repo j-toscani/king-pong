@@ -12,10 +12,7 @@ const ChatDisplay = styled.div`
 `;
 
 function ChatHistory({ messages, nickname }) {
-  console.log(messages, nickname);
-  if (messages && messages[0].nickname) {
-    console.log(messages[0].nickname);
-  }
+  // console.log(messages, nickname);
   return (
     <ChatDisplay>
       {messages &&

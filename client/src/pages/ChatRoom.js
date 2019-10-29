@@ -25,6 +25,7 @@ export default function ChatRoom({
   setSettings,
   settings,
   connectedTo,
+  setConnectionTo,
   handleSession
 }) {
   let history = useHistory();
@@ -37,7 +38,7 @@ export default function ChatRoom({
   }
 
   function handleSubmitMessage(content) {
-    const { socket } = connectedTo;
+    const { socket, room } = connectedTo;
     const newMessage = {
       user: socket.id,
       nickname: nickname ? nickname : "Pal",
@@ -47,12 +48,12 @@ export default function ChatRoom({
     if (chatHistory) {
       const newChatHistory = [...chatHistory];
       newChatHistory.push(newMessage);
-      socket.emit("new message", newChatHistory);
+      socket.emit("new message", { newMessage, room });
       updateHistory(newChatHistory);
     } else {
       const newChatHistory = [];
       newChatHistory.push(newMessage);
-      socket.emit("new message", newChatHistory);
+      socket.emit("new message", { newMessage, room });
       updateHistory(newChatHistory);
     }
   }
@@ -73,14 +74,22 @@ export default function ChatRoom({
   // --> use Checkbox
 
   React.useEffect(() => {
-    if (connectedTo) {
-      const { socket } = connectedTo;
+    if (connectedTo.socket) {
+      const { connected, socket } = connectedTo;
+      socket.on("current room", room => {
+        setConnectionTo({ connected, socket, room });
+      });
       socket.on("new message", message => {
-        updateHistory(message);
+        if (chatHistory) {
+          updateHistory(message);
+        } else {
+          const firstMessage = [message];
+          updateHistory(firstMessage);
+        }
       });
     }
-    console.log("reload");
-  }, [connectedTo]);
+    // console.log("reload");
+  }, [connectedTo.room]);
 
   return (
     <>

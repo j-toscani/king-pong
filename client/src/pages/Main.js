@@ -19,13 +19,15 @@ export default function Main({ setSettings, settings, nickname }) {
       process.env.REACT_APP_CLIENT_SOCKET_CONNECT || "http://127.0.0.1:8000"
     );
     socket.emit("setname", nickname);
-    console.log(nickname);
     setConnectionTo({ connected: true, socket });
+    // console.log(connectedTo);
     return () => {
       socket.close();
       setConnectionTo(false);
     };
-  }, [nickname]);
+  }, [nickname, connectedTo.room]);
+
+  console.log(connectedTo);
 
   function handleSessionAction(socket, event) {
     switch (event) {
@@ -63,6 +65,7 @@ export default function Main({ setSettings, settings, nickname }) {
             setSettings={setSettings}
             settings={settings}
             handleSession={handleSessionAction}
+            setConnectionTo={setConnectionTo}
           ></ChatRoom>
         </Route>
         <Route exact path="/main/game">
