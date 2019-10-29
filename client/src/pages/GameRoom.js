@@ -30,24 +30,27 @@ const ConcedeButton = styled(Button)`
   top: -20px;
 `;
 
-export default function GameRoom({ nickname, connectedTo }) {
+export default function GameRoom({ handleSession, connectedTo }) {
   let history = useHistory();
   const [leftPressed, togglePressedLeft] = React.useState(false);
   const [rightPressed, togglePressedRight] = React.useState(false);
 
   function handleClick() {
-    history.push(`/select`);
+    history.push(`/main`);
+    const { socket } = connectedTo;
+    handleSession(socket, "end");
   }
 
   return (
     <>
-      <HeaderLogo headline={`${nickname}'s Game`}></HeaderLogo>
+      <HeaderLogo headline={`Session's Game`}></HeaderLogo>
       <Container>
         <ConcedeButton onClick={handleClick}>Concede</ConcedeButton>
         <GameBoard
           rightPressed={rightPressed}
           leftPressed={leftPressed}
           connectedTo={connectedTo}
+          handleSession={handleSession}
         ></GameBoard>
         <InputContainer>
           <GameInput

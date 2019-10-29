@@ -23,12 +23,18 @@ const Modal = styled.dialog`
   background: transparent;
 `;
 
-export default function GameBoard({ leftPressed, rightPressed, connectedTo }) {
+export default function GameBoard({
+  leftPressed,
+  rightPressed,
+  connectedTo,
+  handleSession
+}) {
   let history = useHistory();
 
   function handleGameEnding() {
-    history.push(`/select`);
-    console.log("move");
+    history.push(`/main`);
+    const { socket } = connectedTo;
+    handleSession(socket, "end");
   }
 
   const [play, setPlay] = React.useState(false);

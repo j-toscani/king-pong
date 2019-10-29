@@ -11,7 +11,7 @@ export default function Main({ setSettings, settings, nickname }) {
 
   const history = useHistory();
   function routeTo() {
-    history.push(`/select/chat`);
+    history.push(`/main/chat`);
   }
 
   React.useEffect(() => {
@@ -19,30 +19,40 @@ export default function Main({ setSettings, settings, nickname }) {
       process.env.REACT_APP_CLIENT_SOCKET_CONNECT || "http://127.0.0.1:8000"
     );
     socket.emit("setname", nickname);
+    console.log(nickname);
     setConnectionTo({ connected: true, socket });
     return () => {
       socket.close();
       setConnectionTo(false);
     };
-  }, []);
+  }, [nickname]);
 
-  function enterPlaySession() {
-    switch (ev) {
+  function enterPlaySession(io, event) {
+    const socket = io;
+    switch (event) {
       case "join":
-        const socket = io("/game");
-        socket.emit("join channel", joinChannel);
+        socket.emit("room", "joined room");
         break;
       case "create":
-        const socket = io("/game");
-        socket.emit("create channel", createChannel);
+        socket.emit("room", "created room");
+        break;
       default:
         alert("Dude, choose an event!");
         break;
     }
   }
-  function leavePlaySession() {
-    const socket = io("/");
-    socket.emit("leave game", handleGameLeave);
+  function leavePlaySession(io) {
+    const socket = io;
+    socket.close();
+  }
+
+  function handleSession(io, action, event) {
+    if (action === "start") {
+      enterPlaySession(io, event);
+    }
+    if (action === "end") {
+      leavePlaySession(io);
+    }
   }
 
   return (
@@ -51,22 +61,26 @@ export default function Main({ setSettings, settings, nickname }) {
         <Route exact path="/main">
           <SelectRoom
             routeTo={routeTo}
-            nickname={nickname}
+            connectedTo={connectedTo}
             setSettings={setSettings}
             settings={settings}
+            handleSession={handleSession}
           ></SelectRoom>
         </Route>
         <Route exact path="/main/chat">
           <ChatRoom
             setConnectionTo={setConnectionTo}
             connectedTo={connectedTo}
-            nickname={nickname}
             setSettings={setSettings}
             settings={settings}
+            handleSession={handleSession}
           ></ChatRoom>
         </Route>
         <Route exact path="/main/game">
-          <GameRoom nickname={nickname} connectedTo={connectedTo}></GameRoom>
+          <GameRoom
+            connectedTo={connectedTo}
+            handleSession={handleSession}
+          ></GameRoom>
         </Route>
       </Switch>
     </>

@@ -23,7 +23,13 @@ const Background = styled.div`
   align-items: center;
 `;
 
-export default function SelectRoom({ routeTo, settings, setSettings }) {
+export default function SelectRoom({
+  routeTo,
+  connectedTo,
+  settings,
+  setSettings,
+  handleSession
+}) {
   const [open, setOpen] = React.useState(false || getItem("open"));
 
   function toggleOpen() {
@@ -39,12 +45,29 @@ export default function SelectRoom({ routeTo, settings, setSettings }) {
       />
       <Container>
         <Background>
-          <Button active big onClick={routeTo}>
-            Open Game!
+          <Button
+            active
+            big
+            onClick={() => {
+              routeTo();
+              const { socket } = connectedTo;
+              handleSession(socket, "start", "create");
+            }}
+          >
+            Create Game!
           </Button>
         </Background>
         <Background alt="true">
-          <Button alter active big onClick={routeTo}>
+          <Button
+            alter
+            active
+            big
+            onClick={() => {
+              routeTo();
+              const { socket } = connectedTo;
+              handleSession(socket, "start", "join");
+            }}
+          >
             Join Game!
           </Button>
         </Background>

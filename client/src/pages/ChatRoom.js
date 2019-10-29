@@ -24,7 +24,8 @@ export default function ChatRoom({
   nickname,
   setSettings,
   settings,
-  connectedTo
+  connectedTo,
+  handleSession
 }) {
   let history = useHistory();
   const [chatHistory, updateHistory] = React.useState();
@@ -43,15 +44,24 @@ export default function ChatRoom({
       content: content
     };
 
-    const newChatHistory = [...chatHistory];
-    newChatHistory.push(newMessage);
-    socket.emit("new message", newChatHistory);
-    updateHistory(newChatHistory);
+    if (chatHistory) {
+      const newChatHistory = [...chatHistory];
+      newChatHistory.push(newMessage);
+      socket.emit("new message", newChatHistory);
+      updateHistory(newChatHistory);
+    } else {
+      const newChatHistory = [];
+      newChatHistory.push(newMessage);
+      socket.emit("new message", newChatHistory);
+      updateHistory(newChatHistory);
+    }
   }
 
   function routeTo(destination) {
-    if (destination === "select") {
-      history.push("/select");
+    if (destination === "main") {
+      history.push("/main");
+      const { socket } = connectedTo;
+      handleSession(socket, "end");
     } else {
       history.push(`${destination}`);
     }
@@ -69,6 +79,7 @@ export default function ChatRoom({
         updateHistory(message);
       });
     }
+    console.log("reload");
   }, [connectedTo]);
 
   return (
@@ -88,7 +99,7 @@ export default function ChatRoom({
           <Button onClick={() => routeTo("game")} big>
             Ready!
           </Button>
-          <Button alter onClick={() => routeTo("select")} big>
+          <Button alter onClick={() => routeTo("main")} big>
             Chicken out...
           </Button>
         </ButtonContainer>
