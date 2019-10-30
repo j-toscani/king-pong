@@ -46,7 +46,7 @@ export default function SelectRoom({
       <Container>
         <Background>
           <Button
-            active
+            disabled
             big
             onClick={() => {
               routeTo();

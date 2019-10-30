@@ -4,10 +4,11 @@ import GameRoom from "./GameRoom";
 import SelectRoom from "./SelectRoom";
 import { useHistory } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
+import { getItem } from "../ressources/scripts/storage";
 import io from "socket.io-client";
 
-export default function Main({ setSettings, settings, nickname }) {
-  const [connectedTo, setConnectionTo] = React.useState(false);
+export default function Main({ setSettings, settings }) {
+  const [connectedTo, setConnectionTo] = React.useState({});
 
   const history = useHistory();
   function routeTo() {
@@ -18,14 +19,13 @@ export default function Main({ setSettings, settings, nickname }) {
     const socket = io(
       process.env.REACT_APP_CLIENT_SOCKET_CONNECT || "http://127.0.0.1:8000"
     );
-    socket.emit("setname", nickname);
-    setConnectionTo({ connected: true, socket });
-    // console.log(connectedTo);
+    socket.emit("setname", getItem("nickname"));
+    setConnectionTo({ connected: true, socket, room: "ThisIsARooom" });
     return () => {
       socket.close();
       setConnectionTo(false);
     };
-  }, [nickname, connectedTo.room]);
+  }, [connectedTo.room]);
 
   console.log(connectedTo);
 
@@ -44,6 +44,14 @@ export default function Main({ setSettings, settings, nickname }) {
         alert("Dude, choose an event!");
         break;
     }
+  }
+
+  function responseAfterServermessage(socket, event) {
+    socket.on("room", room => {
+      const stateWithRoom = { ...connectedTo, room };
+      console.log(room);
+      setConnectionTo(stateWithRoom);
+    });
   }
 
   return (

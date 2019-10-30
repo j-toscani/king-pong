@@ -21,11 +21,9 @@ const ButtonContainer = styled.div`
 `;
 
 export default function ChatRoom({
-  nickname,
   setSettings,
   settings,
   connectedTo,
-  setConnectionTo,
   handleSession
 }) {
   let history = useHistory();
@@ -38,31 +36,30 @@ export default function ChatRoom({
   }
 
   function handleSubmitMessage(content) {
-    const { socket, room } = connectedTo;
+    const { socket } = connectedTo;
     const newMessage = {
       user: socket.id,
-      nickname: nickname ? nickname : "Pal",
+      nickname: getItem("nickname"),
       content: content
     };
-
     if (chatHistory) {
       const newChatHistory = [...chatHistory];
       newChatHistory.push(newMessage);
-      socket.emit("new message", { newMessage, room });
+      socket.emit("new message", newChatHistory);
       updateHistory(newChatHistory);
     } else {
       const newChatHistory = [];
       newChatHistory.push(newMessage);
-      socket.emit("new message", { newMessage, room });
+      socket.emit("new message", newChatHistory);
       updateHistory(newChatHistory);
     }
   }
 
   function routeTo(destination) {
+    const { socket } = connectedTo;
+    handleSession(socket, "leave");
     if (destination === "main") {
       history.push("/main");
-      const { socket } = connectedTo;
-      handleSession(socket, "leave");
     } else {
       history.push(`${destination}`);
     }
@@ -75,21 +72,24 @@ export default function ChatRoom({
 
   React.useEffect(() => {
     if (connectedTo.socket) {
-      const { connected, socket } = connectedTo;
-      socket.on("current room", room => {
-        setConnectionTo({ connected, socket, room });
-      });
+      const { socket } = connectedTo;
       socket.on("new message", message => {
+        updateHistory(message);
+      });
+      socket.on("new server message", message => {
+        console.log(message);
         if (chatHistory) {
-          updateHistory(message);
+          const newChatHistory = [...chatHistory];
+          newChatHistory.push(message);
+          updateHistory(newChatHistory);
         } else {
           const firstMessage = [message];
           updateHistory(firstMessage);
         }
       });
     }
-    // console.log("reload");
-  }, [connectedTo.room]);
+    return;
+  }, []);
 
   return (
     <>
@@ -100,12 +100,16 @@ export default function ChatRoom({
       />
       <StyledMain>
         <ChatWindow
-          nickname={nickname}
           messages={chatHistory}
           onSubmitMessage={handleSubmitMessage}
         ></ChatWindow>
         <ButtonContainer>
-          <Button onClick={() => routeTo("game")} big>
+          <Button
+            onClick={() => {
+              routeTo("game");
+            }}
+            big
+          >
             Ready!
           </Button>
           <Button alter onClick={() => routeTo("main")} big>

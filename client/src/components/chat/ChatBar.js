@@ -38,19 +38,29 @@ const InputContainer = styled.form`
 `;
 
 function ChatBar({ onSubmitMessage }) {
-  const [message, setMessage] = React.useState(null);
+  const [message, setMessage] = React.useState("hello");
+
+  const input = React.useRef(null);
 
   function handleSubmit(event) {
     event.preventDefault();
     onSubmitMessage(message);
+    input.current.value = "";
   }
+
   return (
     <InputContainer
-      onChange={event => setMessage(event.target.value)}
+      onChange={event => {
+        setMessage(event.target.value);
+      }}
       onSubmit={handleSubmit}
     >
       <Sender>You: </Sender>
-      <Input type="input" placeholder="Tap to start chatting!"></Input>
+      <Input
+        ref={input}
+        type="input"
+        placeholder="Tap to start chatting!"
+      ></Input>
       <SubmitButton type="submit" />
     </InputContainer>
   );

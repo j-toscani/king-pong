@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import ChatMessage from "./ChatMessage";
+import { getItem } from "../../ressources/scripts/storage";
 
 const ChatDisplay = styled.div`
   height: 100%;
@@ -20,7 +21,7 @@ function ChatHistory({ messages, nickname }) {
           return (
             <ChatMessage
               key={index}
-              p1={nickname === message.nickname}
+              p1={getItem("nickname") === message.nickname}
               message={message}
             ></ChatMessage>
           );

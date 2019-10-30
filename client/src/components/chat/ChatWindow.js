@@ -3,10 +3,10 @@ import StyledWindow from "../StyledWindow";
 import ChatHistory from "./ChatHistory";
 import ChatBar from "./ChatBar";
 
-function ChatWindow({ onSubmitMessage, messages, nickname }) {
+function ChatWindow({ onSubmitMessage, messages }) {
   return (
     <StyledWindow chat>
-      <ChatHistory nickname={nickname} messages={messages} />
+      <ChatHistory messages={messages} />
       <ChatBar onSubmitMessage={onSubmitMessage}></ChatBar>
     </StyledWindow>
   );
