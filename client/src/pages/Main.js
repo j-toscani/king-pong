@@ -20,7 +20,7 @@ export default function Main({ setSettings, settings }) {
       process.env.REACT_APP_CLIENT_SOCKET_CONNECT || "http://127.0.0.1:8000"
     );
     socket.emit("setname", getItem("nickname"));
-    setConnectionTo({ connected: true, socket, room: "ThisIsARooom" });
+    setConnectionTo({ connected: true, socket, ready: false });
     return () => {
       socket.close();
       setConnectionTo(false);
@@ -46,14 +46,6 @@ export default function Main({ setSettings, settings }) {
     }
   }
 
-  function responseAfterServermessage(socket, event) {
-    socket.on("room", room => {
-      const stateWithRoom = { ...connectedTo, room };
-      console.log(room);
-      setConnectionTo(stateWithRoom);
-    });
-  }
-
   return (
     <>
       <Switch>
@@ -73,7 +65,6 @@ export default function Main({ setSettings, settings }) {
             setSettings={setSettings}
             settings={settings}
             handleSession={handleSessionAction}
-            setConnectionTo={setConnectionTo}
           ></ChatRoom>
         </Route>
         <Route exact path="/main/game">

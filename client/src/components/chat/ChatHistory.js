@@ -12,7 +12,7 @@ const ChatDisplay = styled.div`
   overflow: auto;
 `;
 
-function ChatHistory({ messages, nickname }) {
+function ChatHistory({ messages }) {
   // console.log(messages, nickname);
   return (
     <ChatDisplay>

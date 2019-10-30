@@ -24,7 +24,8 @@ export default function ChatRoom({
   setSettings,
   settings,
   connectedTo,
-  handleSession
+  handleSession,
+  setConnectionTo
 }) {
   let history = useHistory();
   const [chatHistory, updateHistory] = React.useState();
@@ -56,8 +57,6 @@ export default function ChatRoom({
   }
 
   function routeTo(destination) {
-    const { socket } = connectedTo;
-    handleSession(socket, "leave");
     if (destination === "main") {
       history.push("/main");
     } else {
@@ -77,7 +76,6 @@ export default function ChatRoom({
         updateHistory(message);
       });
       socket.on("new server message", message => {
-        console.log(message);
         if (chatHistory) {
           const newChatHistory = [...chatHistory];
           newChatHistory.push(message);
@@ -86,6 +84,25 @@ export default function ChatRoom({
           const firstMessage = [message];
           updateHistory(firstMessage);
         }
+      });
+      socket.on("game ready", () => {
+        const { connected, socket } = connectedTo;
+        setConnectionTo({ connected, socket, ready: true });
+      });
+      socket.on("game not ready", () => {
+        const { connected, socket } = connectedTo;
+        setConnectionTo({ connected, socket, ready: false });
+      });
+
+      socket.on("game start", () => {
+        routeTo("game");
+      });
+
+      socket.on("room full", () => {
+        routeTo("main");
+        setTimeout(() => {
+          alert("Room full, please choose a different one");
+        }, 100);
       });
     }
     return;
@@ -106,13 +123,24 @@ export default function ChatRoom({
         <ButtonContainer>
           <Button
             onClick={() => {
-              routeTo("game");
+              const { socket } = connectedTo;
+              socket.emit("start game", "start");
+              console.log("start game");
             }}
+            disabled={!connectedTo.ready}
             big
           >
             Ready!
           </Button>
-          <Button alter onClick={() => routeTo("main")} big>
+          <Button
+            alter
+            onClick={() => {
+              const { socket } = connectedTo;
+              handleSession(socket, "leave");
+              routeTo("main");
+            }}
+            big
+          >
             Chicken out...
           </Button>
         </ButtonContainer>
