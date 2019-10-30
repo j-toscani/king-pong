@@ -1,6 +1,6 @@
 {
   "name": "king-pong",
-  "version": "0.1.0",
+  "version": "0.6.0",
   "private": true,
   "dependencies": {
     "express": "^4.15.2",
@@ -19,8 +19,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook -c .storybook",
-    "server": "npx nodemon server/socket-server.js"
+    "build-storybook": "build-storybook -c .storybook"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -33,8 +33,6 @@ export default function GameBoard({
 
   function handleGameEnding() {
     history.push(`/main`);
-    const { socket } = connectedTo;
-    handleSession(socket, "leave");
   }
 
   const [play, setPlay] = React.useState(false);
@@ -125,6 +123,8 @@ export default function GameBoard({
       };
     } else if (!modal.current.open) {
       modal.current.showModal();
+      const { socket } = connectedTo;
+      handleSession(socket, "leave");
     }
   }, [lifesP1, lifesP2, moveRight, moveLeft, play]);
 
@@ -135,11 +135,7 @@ export default function GameBoard({
 
       <StyledCanvas width="295" height="400" ref={canvasRef}></StyledCanvas>
       <Modal ref={modal}>
-        <WinLossWindow
-          result={game["global"]}
-          handleClick={handleGameEnding}
-          connectedTo={connectedTo}
-        />
+        <WinLossWindow result={game["global"]} handleClick={handleGameEnding} />
       </Modal>
     </GameContainer>
   );
