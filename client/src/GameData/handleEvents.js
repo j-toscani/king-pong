@@ -1,5 +1,3 @@
-import initGameState from "./initGameState";
-
 export default function createEvents(game, move, lifes, setLifes, socket) {
   const { player, opponent, global, ball } = game;
   const { moveLeft, moveRight } = move;
@@ -89,7 +87,7 @@ export default function createEvents(game, move, lifes, setLifes, socket) {
 export function handleEvents(events) {
   events.forEach(event => {
     if (event.case) {
-      console.log(` The ${event.name}-Event occured!`);
+      // console.log(` The ${event.name}-Event occured!`);
       event.result();
     }
   });

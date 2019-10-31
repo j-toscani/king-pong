@@ -13,8 +13,6 @@ const StyledWindowSee = styled(StyledWindow)`
 `;
 
 function WinLossWindow({ handleClick, lifes }) {
-  console.log(lifes);
-
   return (
     <>
       {lifes && lifes.opponent === 0 && (

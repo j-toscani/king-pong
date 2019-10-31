@@ -41,6 +41,16 @@ export default function GameRoom({ handleSession, connectedTo }) {
     handleSession(socket, "leave");
   }
 
+  React.useEffect(() => {
+    const { socket } = connectedTo;
+    socket.on("pressed button", direction => {
+      console.log("pressed ", direction);
+    });
+    socket.on("released button", direction => {
+      console.log("pressed ", direction);
+    });
+  }, []);
+
   return (
     <>
       <HeaderLogo headline={`Session's Game`}></HeaderLogo>
@@ -57,18 +67,26 @@ export default function GameRoom({ handleSession, connectedTo }) {
             direction={"left"}
             handleTap={() => {
               togglePressedLeft(true);
+              const { socket } = connectedTo;
+              socket.emit("pressed button", "left");
             }}
             handleRelease={() => {
               togglePressedLeft(false);
+              const { socket } = connectedTo;
+              socket.emit("released button", "left");
             }}
           ></GameInput>
           <GameInput
             direction={"right"}
             handleTap={() => {
               togglePressedRight(true);
+              const { socket } = connectedTo;
+              socket.emit("pressed button", "right");
             }}
             handleRelease={() => {
               togglePressedRight(false);
+              const { socket } = connectedTo;
+              socket.emit("released button", "right");
             }}
           ></GameInput>
         </InputContainer>

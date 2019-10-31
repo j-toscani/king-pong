@@ -87,14 +87,11 @@ export default function GameBoard({
       !modal.current.open &&
       (lifes.opponent === 0 || lifes.you === 0)
     ) {
-      setTimeout(() => {
-        console.log(lifes);
-        modal.current.showModal();
-        const { socket } = connectedTo;
-        handleSession(socket, "leave");
-      }, 50);
+      modal.current.showModal();
+      const { socket } = connectedTo;
+      handleSession(socket, "leave");
     }
-  }, [lifes, move, play]);
+  }, [lifes, move, play, connectedTo, handleSession]);
 
   return (
     <GameContainer>
