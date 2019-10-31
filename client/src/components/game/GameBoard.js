@@ -43,7 +43,7 @@ export default function GameBoard({
   });
 
   const [game, updateGame] = React.useState(gameStateInit);
-  const [lifes, setLifes] = React.useState({ you: 5, opponent: 5 });
+  const [lifes, setLifes] = React.useState({ you: 2, opponent: 2 });
   const canvasRef = React.useRef(null);
   const modal = React.useRef(null);
 
@@ -57,15 +57,14 @@ export default function GameBoard({
       let canvas = canvasRef.current;
       let ctx = canvas.getContext("2d");
       let requestId;
-      const draw = game => {
+      const draw = () => {
         const { ball, global, player, opponent } = game;
-
         requestId = requestAnimationFrame(() => draw(game));
         if (game) {
           drawGameState(ctx, global, ball, player, opponent);
         }
         if (play) {
-          const events = createEvents(game, move, lifes, setLifes);
+          const events = createEvents(game, move, lifes, setLifes, updateGame);
           handleEvents(events);
         }
 
@@ -75,24 +74,25 @@ export default function GameBoard({
         const state = { ball, player, global, opponent };
 
         if (lifes && !play) {
-          const { socket } = connectedTo;
-          socket.on("set winner", data => {
-            const oldState = { ...game };
-            oldState.global.winner = data;
-          });
           setPlay(true);
         }
         updateGame(state);
       };
 
-      draw(game);
+      draw(draw);
       return () => {
         cancelAnimationFrame(requestId);
       };
-    } else if (!modal.current.open) {
-      modal.current.showModal();
-      const { socket } = connectedTo;
-      handleSession(socket, "leave");
+    } else if (
+      !modal.current.open &&
+      (lifes.opponent === 0 || lifes.you === 0)
+    ) {
+      setTimeout(() => {
+        console.log(lifes);
+        modal.current.showModal();
+        const { socket } = connectedTo;
+        handleSession(socket, "leave");
+      }, 50);
     }
   }, [lifes, move, play]);
 
@@ -103,7 +103,7 @@ export default function GameBoard({
 
       <StyledCanvas width="295" height="400" ref={canvasRef}></StyledCanvas>
       <Modal ref={modal}>
-        <WinLossWindow result={game["global"]} handleClick={handleGameEnding} />
+        <WinLossWindow lifes={lifes} handleClick={handleGameEnding} />
       </Modal>
     </GameContainer>
   );

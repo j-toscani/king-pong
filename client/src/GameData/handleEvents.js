@@ -1,4 +1,6 @@
-export default function createEvents(game, move, lifes, setLifes) {
+import initGameState from "./initGameState";
+
+export default function createEvents(game, move, lifes, setLifes, socket) {
   const { player, opponent, global, ball } = game;
   const { moveLeft, moveRight } = move;
 
@@ -13,8 +15,8 @@ export default function createEvents(game, move, lifes, setLifes) {
       case: ball.y < 0,
       result: () => {
         ball.dy *= -1;
-        const previousLifes = { ...lifes };
-        const newLifes = previousLifes.you - 1;
+        const newLifes = { ...lifes };
+        newLifes.opponent -= 1;
         setLifes(newLifes);
       }
     },
@@ -23,8 +25,8 @@ export default function createEvents(game, move, lifes, setLifes) {
       case: ball.y > global.y - ball.h,
       result: () => {
         ball.dy *= -1;
-        const previousLifes = { ...lifes };
-        const newLifes = previousLifes.opponent - 1;
+        const newLifes = { ...lifes };
+        newLifes.you -= 1;
         setLifes(newLifes);
       }
     },
@@ -71,14 +73,14 @@ export default function createEvents(game, move, lifes, setLifes) {
       name: "Opponent moves to left to catch ball",
       case: ball.x - 25 < opponent.x && opponent.x > 0,
       result: () => {
-        opponent.x -= opponent.dx;
+        // opponent.x -= opponent.dx;
       }
     },
     {
       name: "Opponent moves to left to catch ball",
       case: ball.x - 25 > opponent.x && opponent.x + opponent.w < global.x,
       result: () => {
-        opponent.x += opponent.dx;
+        // opponent.x += opponent.dx;
       }
     }
   ];

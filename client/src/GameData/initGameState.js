@@ -20,9 +20,9 @@ export default function initGameState() {
     opponent: {
       x: 290 / 2 - 50,
       y: 40,
-      w: 100,
+      w: 50,
       h: 10,
-      dx: 2,
+      dx: 1,
       dy: 0
     },
     global: {
@@ -30,7 +30,7 @@ export default function initGameState() {
       y: 400,
       cheerWin: "You Won!!!",
       cheerLoss: "You Lost...",
-      winner: false
+      winner: "opponent"
     }
   };
   return game;
