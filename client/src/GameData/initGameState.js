@@ -9,8 +9,7 @@ export default function initGameState() {
       dy: 2.5,
       pdx: 2
     },
-    player1: {
-      player: true,
+    player: {
       x: 290 / 2 - 50,
       y: 350,
       w: 100,
@@ -18,8 +17,7 @@ export default function initGameState() {
       dx: 3,
       dy: 0
     },
-    player2: {
-      player: false,
+    opponent: {
       x: 290 / 2 - 50,
       y: 40,
       w: 100,
@@ -32,7 +30,7 @@ export default function initGameState() {
       y: 400,
       cheerWin: "You Won!!!",
       cheerLoss: "You Lost...",
-      winner: "opponent"
+      winner: false
     }
   };
   return game;

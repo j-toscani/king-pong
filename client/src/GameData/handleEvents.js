@@ -1,16 +1,6 @@
-export default function createEvents(
-  game,
-  moveLeft,
-  moveRight,
-  setlifesP1,
-  lifesP1,
-  setlifesP2,
-  lifesP2
-) {
-  const { player1, player2, global, ball } = game;
-
-  const player = game["player1"].player ? game["player1"] : game["player2"];
-  const opponent = game["player2"].player ? game["player1"] : game["player2"];
+export default function createEvents(game, move, lifes, setLifes) {
+  const { player, opponent, global, ball } = game;
+  const { moveLeft, moveRight } = move;
 
   return [
     {
@@ -23,8 +13,9 @@ export default function createEvents(
       case: ball.y < 0,
       result: () => {
         ball.dy *= -1;
-        const lostLife = lifesP1 - 1;
-        setlifesP1(lostLife);
+        const previousLifes = { ...lifes };
+        const newLifes = previousLifes.you - 1;
+        setLifes(newLifes);
       }
     },
     {
@@ -32,15 +23,16 @@ export default function createEvents(
       case: ball.y > global.y - ball.h,
       result: () => {
         ball.dy *= -1;
-        const lostLife = lifesP2 - 1;
-        setlifesP2(lostLife);
+        const previousLifes = { ...lifes };
+        const newLifes = previousLifes.opponent - 1;
+        setLifes(newLifes);
       }
     },
     {
-      name: "Ball and Player1",
+      name: "Ball and player",
       case:
-        ball.y > player1.y - ball.h &&
-        (ball.x > player1.x && ball.x < player1.x + player1.w),
+        ball.y > player.y - ball.h &&
+        (ball.x > player.x && ball.x < player.x + player.w),
       result: () => {
         if (ball.dy > 0) {
           ball.dy *= -1;
@@ -49,10 +41,10 @@ export default function createEvents(
       }
     },
     {
-      name: "Ball and player2",
+      name: "Ball and opponent",
       case:
-        ball.y < player2.y + 10 &&
-        (ball.x > player2.x && ball.x < player2.x + player2.w),
+        ball.y < opponent.y + 10 &&
+        (ball.x > opponent.x && ball.x < opponent.x + opponent.w),
       result: () => {
         if (ball.dy < 0) {
           ball.dy -= 0.2;
