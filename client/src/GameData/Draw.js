@@ -1,5 +1,3 @@
-// draw Loop:
-
 function drawBall(canvas, ball) {
   canvas.fillStyle = ball.style;
   canvas.fillRect(ball.x, ball.y, ball.w, ball.h);

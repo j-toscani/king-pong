@@ -27,8 +27,6 @@ export default function Main({ setSettings, settings }) {
     };
   }, [connectedTo.room]);
 
-  console.log(connectedTo);
-
   function handleSessionAction(socket, event) {
     switch (event) {
       case "join":

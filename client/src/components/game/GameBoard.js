@@ -3,8 +3,9 @@ import styled from "styled-components";
 import HeartRow from "./HeartRow";
 import { useHistory } from "react-router-dom";
 import WinLossWindow from "./WinLossWindow";
-import drawGameState from "../../GameData/Draw";
-import createEvents, { handleEvents } from "../../GameData/Events";
+import drawGameState from "../../GameData/draw";
+import createEvents, { handleEvents } from "../../GameData/handleEvents";
+import gameStateInit from "../../GameData/initGameState";
 
 const StyledCanvas = styled.canvas`
   background: ${props => props.theme.accent};
@@ -38,42 +39,7 @@ export default function GameBoard({
   const [play, setPlay] = React.useState(false);
   const [moveLeft, toggleMovementLeft] = React.useState(false);
   const [moveRight, toggleMovementRight] = React.useState(false);
-  const [game, updateGame] = React.useState({
-    ball: {
-      x: 100,
-      y: 150,
-      w: 10,
-      h: 10,
-      dx: 1.5,
-      dy: 2.5,
-      pdx: 2
-    },
-    player1: {
-      player: true,
-      x: 290 / 2 - 50,
-      y: 350,
-      w: 100,
-      h: 10,
-      dx: 3,
-      dy: 0
-    },
-    player2: {
-      player: false,
-      x: 290 / 2 - 50,
-      y: 40,
-      w: 100,
-      h: 10,
-      dx: 2,
-      dy: 0
-    },
-    global: {
-      x: 295,
-      y: 400,
-      cheerWin: "You Won!!!",
-      cheerLoss: "You Lost...",
-      winner: "opponent"
-    }
-  });
+  const [game, updateGame] = React.useState(gameStateInit);
   const [lifesP1, setlifesP1] = React.useState(5);
   const [lifesP2, setlifesP2] = React.useState(1);
   const canvasRef = React.useRef(null);
