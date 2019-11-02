@@ -25,8 +25,8 @@ const Modal = styled.dialog`
 `;
 
 export default function GameBoard({
-  leftPressed,
-  rightPressed,
+  opponentPressed,
+  playerPressed,
   connectedTo,
   handleSession
 }) {
@@ -38,8 +38,10 @@ export default function GameBoard({
 
   const [play, setPlay] = React.useState(false);
   const [move, toggleMovement] = React.useState({
-    moveLeft: false,
-    moveRight: false
+    movePLayerLeft: false,
+    movePlayerRight: false,
+    moveOpponentLeft: false,
+    moveOpponentRight: false
   });
 
   const [game, updateGame] = React.useState(gameStateInit);
@@ -47,10 +49,15 @@ export default function GameBoard({
   const canvasRef = React.useRef(null);
   const modal = React.useRef(null);
 
-  React.useEffect(
-    () => toggleMovement({ moveLeft: leftPressed, moveRight: rightPressed }),
-    [leftPressed, rightPressed]
-  );
+  React.useEffect(() => {
+    toggleMovement({
+      movePlayerLeft: playerPressed.left,
+      movePlayerRight: playerPressed.right,
+      moveOpponentLeft: opponentPressed.left,
+      moveOpponentRight: opponentPressed.right
+    });
+    console.log(opponentPressed);
+  }, [playerPressed, opponentPressed]);
 
   React.useEffect(() => {
     if (game && lifes.you > 0 && lifes.opponent > 0) {
@@ -64,7 +71,7 @@ export default function GameBoard({
           drawGameState(ctx, global, ball, player, opponent);
         }
         if (play) {
-          const events = createEvents(game, move, lifes, setLifes, updateGame);
+          const events = createEvents(game, move, lifes, setLifes);
           handleEvents(events);
         }
 

@@ -5,8 +5,8 @@ export default function initGameState() {
       y: 150,
       w: 10,
       h: 10,
-      dx: 0.5,
-      dy: 0.5,
+      dx: 0,
+      dy: 0,
       pdx: 2
     },
     player: {
@@ -22,7 +22,7 @@ export default function initGameState() {
       y: 40,
       w: 50,
       h: 10,
-      dx: 1,
+      dx: 3,
       dy: 0
     },
     global: {

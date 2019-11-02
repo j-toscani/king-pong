@@ -1,6 +1,11 @@
-export default function createEvents(game, move, lifes, setLifes, socket) {
+export default function createEvents(game, move, lifes, setLifes) {
   const { player, opponent, global, ball } = game;
-  const { moveLeft, moveRight } = move;
+  const {
+    movePlayerLeft,
+    movePlayerRight,
+    moveOpponentLeft,
+    moveOpponentRight
+  } = move;
 
   return [
     {
@@ -55,30 +60,30 @@ export default function createEvents(game, move, lifes, setLifes, socket) {
     },
     {
       name: "Player moving Paddle left",
-      case: moveLeft && player.x > 0,
+      case: movePlayerLeft && player.x > 0,
       result: () => {
         player.x -= player.dx;
       }
     },
     {
       name: "Player moving Paddle right",
-      case: moveRight && player.x < global.x - player.w,
+      case: movePlayerRight && player.x < global.x - player.w,
       result: () => {
         player.x += player.dx;
       }
     },
     {
-      name: "Opponent moves to left to catch ball",
-      case: ball.x - 25 < opponent.x && opponent.x > 0,
+      name: "Opponent moving Paddle left",
+      case: moveOpponentLeft && opponent.x > 0,
       result: () => {
-        // opponent.x -= opponent.dx;
+        opponent.x -= opponent.dx;
       }
     },
     {
-      name: "Opponent moves to left to catch ball",
-      case: ball.x - 25 > opponent.x && opponent.x + opponent.w < global.x,
+      name: "Opponent moving Paddle right",
+      case: moveOpponentRight && opponent.x < global.x - opponent.w,
       result: () => {
-        // opponent.x += opponent.dx;
+        opponent.x += opponent.dx;
       }
     }
   ];
