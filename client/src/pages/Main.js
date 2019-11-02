@@ -20,7 +20,7 @@ export default function Main({ setSettings, settings }) {
       process.env.REACT_APP_CLIENT_SOCKET_CONNECT || "http://127.0.0.1:8000"
     );
     socket.emit("setname", getItem("nickname"));
-    setConnectionTo({ connected: true, socket, ready: false });
+    setConnectionTo({ connected: true, socket, opponent: false, ready: false });
     return () => {
       socket.close();
       setConnectionTo(false);

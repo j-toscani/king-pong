@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import WinLossWindow from "./WinLossWindow";
 import drawGameState from "../../GameData/draw";
 import createEvents, { handleEvents } from "../../GameData/handleEvents";
-import gameStateInit from "../../GameData/initGameState";
+import initGameState from "../../GameData/initGameState";
 
 const StyledCanvas = styled.canvas`
   background: ${props => props.theme.accent};
@@ -44,7 +44,10 @@ export default function GameBoard({
     moveOpponentRight: false
   });
 
-  const [game, updateGame] = React.useState(gameStateInit);
+  const [game, updateGame] = React.useState(() =>
+    initGameState(connectedTo.opponent)
+  );
+  debugger;
   const [lifes, setLifes] = React.useState({ you: 2, opponent: 2 });
   const canvasRef = React.useRef(null);
   const modal = React.useRef(null);
@@ -56,7 +59,6 @@ export default function GameBoard({
       moveOpponentLeft: opponentPressed.left,
       moveOpponentRight: opponentPressed.right
     });
-    console.log(opponentPressed);
   }, [playerPressed, opponentPressed]);
 
   React.useEffect(() => {

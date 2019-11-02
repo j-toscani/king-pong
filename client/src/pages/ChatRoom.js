@@ -80,17 +80,23 @@ export default function ChatRoom({
           updateHistory(firstMessage);
         }
       });
-      socket.on("game ready", () => {
+      socket.on("set player", () => {
         const { connected, socket } = connectedTo;
-        setConnectionTo({ connected, socket, ready: true });
+        setConnectionTo({ connected, opponent: false, socket, ready: true });
       });
-      socket.on("game not ready", () => {
+      socket.on("set opponent", () => {
         const { connected, socket } = connectedTo;
-        setConnectionTo({ connected, socket, ready: false });
+        setConnectionTo({ connected, opponent: true, socket, ready: true });
+      });
+
+      socket.on("game not ready", () => {
+        const { connected, socket, opponent } = connectedTo;
+        setConnectionTo({ connected, socket, opponent, ready: false });
       });
 
       socket.on("game start", () => {
         routeTo("game");
+        console.log(connectedTo);
       });
 
       socket.on("room full", () => {

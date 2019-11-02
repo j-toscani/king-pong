@@ -52,7 +52,6 @@ export default function createEvents(game, move, lifes, setLifes) {
         (ball.x > opponent.x && ball.x < opponent.x + opponent.w),
       result: () => {
         if (ball.dy < 0) {
-          ball.dy -= 0.2;
           ball.dy *= -1;
         } else {
         }

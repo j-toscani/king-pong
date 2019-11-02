@@ -86,6 +86,8 @@ export default function GameRoom({
     };
   }, []);
 
+  console.log(connectedTo);
+
   return (
     <>
       <HeaderLogo headline={`Session's Game`}></HeaderLogo>
