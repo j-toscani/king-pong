@@ -68,6 +68,7 @@ export default function Main({ setSettings, settings }) {
         <Route exact path="/main/game">
           <GameRoom
             connectedTo={connectedTo}
+            setConnectionTo={setConnectionTo}
             handleSession={handleSessionAction}
           ></GameRoom>
         </Route>

@@ -18,6 +18,7 @@ function WinLossWindow({ handleClick, lifes }) {
       {lifes && lifes.opponent === 0 && (
         <StyledWindowSee>
           <Headline>You won!</Headline>
+          <p>Your opponent either condeded or lost all lifes!</p>
           <Button active onClick={handleClick}>
             Back to Play
           </Button>

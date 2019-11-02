@@ -74,6 +74,12 @@ export default function GameBoard({
         const state = { ball, player, global, opponent };
 
         if (lifes && !play) {
+          const { socket } = connectedTo;
+          socket.on("opponent conceded", () => {
+            const state = { ...lifes };
+            state.opponent = 0;
+            setLifes(state);
+          });
           setPlay(true);
         }
         updateGame(state);

@@ -5,8 +5,8 @@ export default function initGameState() {
       y: 150,
       w: 10,
       h: 10,
-      dx: 1.5,
-      dy: 2.5,
+      dx: 0.5,
+      dy: 0.5,
       pdx: 2
     },
     player: {

@@ -105,7 +105,10 @@ export default function ChatRoom({
         }, 100);
       });
     }
-    return;
+    return () => {
+      const { socket } = connectedTo;
+      socket.removeAllListeners();
+    };
   }, []);
 
   return (
