@@ -6,9 +6,11 @@ socket.emit("create-room", "Nickname" + Math.Random);
 
 //Stopping to play
 // -by disconnecting
-socket.emit("disconnect");
+socket.close();
 // -by going back to the select-screen
 // -by losing/winning the game (chicken out... , concede, game end)
+
+// build a new namespace "playing" that are active if you are in a room. By leaving chat or the game, you will leave the namespace
 
 //Interacting
 //-by joining a chat

@@ -8,23 +8,23 @@ const Container = styled.div`
   ${props =>
     props.p1
       ? css`
-          left: 10px;
-          top: 10px;
-        `
-      : css`
           right: 10px;
           bottom: 10px;
+        `
+      : css`
+          left: 10px;
+          top: 10px;
         `}
 `;
 
 function HeartRow({ lifes, p1 }) {
   return (
     <Container p1={p1}>
-      <SingleHeart filled={p1 ? lifes >= 1 : lifes >= 5} />
-      <SingleHeart filled={p1 ? lifes >= 2 : lifes >= 4} />
-      <SingleHeart filled={p1 ? lifes >= 3 : lifes >= 3} />
-      <SingleHeart filled={p1 ? lifes >= 4 : lifes >= 2} />
       <SingleHeart filled={p1 ? lifes >= 5 : lifes >= 1} />
+      <SingleHeart filled={p1 ? lifes >= 4 : lifes >= 2} />
+      <SingleHeart filled={p1 ? lifes >= 3 : lifes >= 3} />
+      <SingleHeart filled={p1 ? lifes >= 2 : lifes >= 4} />
+      <SingleHeart filled={p1 ? lifes >= 1 : lifes >= 5} />
     </Container>
   );
 }

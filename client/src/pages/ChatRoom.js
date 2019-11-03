@@ -21,10 +21,11 @@ const ButtonContainer = styled.div`
 `;
 
 export default function ChatRoom({
-  nickname,
   setSettings,
   settings,
-  connectedTo
+  connectedTo,
+  handleSession,
+  setConnectionTo
 }) {
   let history = useHistory();
   const [chatHistory, updateHistory] = React.useState();
@@ -39,37 +40,77 @@ export default function ChatRoom({
     const { socket } = connectedTo;
     const newMessage = {
       user: socket.id,
-      nickname: nickname ? nickname : "Pal",
+      nickname: getItem("nickname"),
       content: content
     };
-
-    const newChatHistory = [...chatHistory];
-    newChatHistory.push(newMessage);
-    socket.emit("new message", newChatHistory);
-    updateHistory(newChatHistory);
+    if (chatHistory) {
+      const newChatHistory = [...chatHistory];
+      newChatHistory.push(newMessage);
+      socket.emit("new message", newChatHistory);
+      updateHistory(newChatHistory);
+    } else {
+      const newChatHistory = [];
+      newChatHistory.push(newMessage);
+      socket.emit("new message", newChatHistory);
+      updateHistory(newChatHistory);
+    }
   }
 
   function routeTo(destination) {
-    if (destination === "select") {
-      history.push("/select");
+    if (destination === "main") {
+      history.push("/main");
     } else {
       history.push(`${destination}`);
     }
   }
 
-  // Check for number of people in the Channel and toggle activation of ready button
-  // Include Feedback for whether or not the ready button is pressed
-  // --> Maybe use a little animation?
-  // --> use Checkbox
-
   React.useEffect(() => {
-    if (connectedTo) {
+    if (connectedTo.socket) {
       const { socket } = connectedTo;
       socket.on("new message", message => {
         updateHistory(message);
       });
+      socket.on("new server message", message => {
+        if (chatHistory) {
+          const newChatHistory = [...chatHistory];
+          newChatHistory.push(message);
+          updateHistory(newChatHistory);
+        } else {
+          const firstMessage = [message];
+          updateHistory(firstMessage);
+        }
+      });
+      socket.on("set player", () => {
+        const { connected, socket } = connectedTo;
+        setConnectionTo({ connected, opponent: false, socket, ready: true });
+      });
+      socket.on("set opponent", () => {
+        const { connected, socket } = connectedTo;
+        setConnectionTo({ connected, opponent: true, socket, ready: true });
+      });
+
+      socket.on("game not ready", () => {
+        const { connected, socket, opponent } = connectedTo;
+        setConnectionTo({ connected, socket, opponent, ready: false });
+      });
+
+      socket.on("game start", () => {
+        routeTo("game");
+        console.log(connectedTo);
+      });
+
+      socket.on("room full", () => {
+        routeTo("main");
+        setTimeout(() => {
+          alert("Room full, please choose a different one");
+        }, 100);
+      });
     }
-  }, [connectedTo]);
+    return () => {
+      const { socket } = connectedTo;
+      socket.removeAllListeners();
+    };
+  }, []);
 
   return (
     <>
@@ -80,15 +121,30 @@ export default function ChatRoom({
       />
       <StyledMain>
         <ChatWindow
-          nickname={nickname}
           messages={chatHistory}
           onSubmitMessage={handleSubmitMessage}
         ></ChatWindow>
         <ButtonContainer>
-          <Button onClick={() => routeTo("game")} big>
+          <Button
+            onClick={() => {
+              const { socket } = connectedTo;
+              socket.emit("start game", "start");
+              console.log("start game");
+            }}
+            disabled={!connectedTo.ready}
+            big
+          >
             Ready!
           </Button>
-          <Button alter onClick={() => routeTo("select")} big>
+          <Button
+            alter
+            onClick={() => {
+              const { socket } = connectedTo;
+              handleSession(socket, "leave");
+              routeTo("main");
+            }}
+            big
+          >
             Chicken out...
           </Button>
         </ButtonContainer>

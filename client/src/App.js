@@ -1,11 +1,11 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 import GlobalStyles from "./GlobalStyle";
-import defaultTheme from "./themes/default";
+import colorTheme from "./themes/color";
 import darkTheme from "./themes/dark";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import About from "./pages/About";
-import GameSelect from "./pages/GameSelect";
+import Main from "./pages/Main";
 import NicknameInput from "./pages/NicknameInput";
 import Profile from "./pages/Profile";
 import Welcome from "./pages/Welcome";
@@ -44,7 +44,7 @@ function App() {
   };
 
   return (
-    <ThemeProvider theme={settings["darkmode"] ? darkTheme : defaultTheme}>
+    <ThemeProvider theme={settings.darkmode ? darkTheme : colorTheme}>
       <GlobalStyles />
       <Container>
         <Router>
@@ -54,9 +54,9 @@ function App() {
             component={props => <About {...props} />}
           />
           <Route
-            path="/select"
+            path="/main"
             component={() => (
-              <GameSelect
+              <Main
                 setSettings={setSettings}
                 settings={settings}
                 nickname={nickname}
