@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import HeartRow from "./HeartRow";
 import { useHistory } from "react-router-dom";
+import draw from "../../gameData/draw";
 import WinLossWindow from "./WinLossWindow";
-import drawGameState from "../../GameData/draw";
-import createEvents, { handleEvents } from "../../GameData/handleEvents";
-import initGameState from "../../GameData/initGameState";
+
+import initGameState from "../../gameData/initGameState";
 
 const StyledCanvas = styled.canvas`
   background: ${props => props.theme.accent};
@@ -66,34 +66,18 @@ export default function GameBoard({
     if (game && lifes.you > 0 && lifes.opponent > 0) {
       let canvas = canvasRef.current;
       let ctx = canvas.getContext("2d");
-      let requestId;
-      const draw = () => {
-        const { ball, global, player, opponent } = game;
-        requestId = requestAnimationFrame(() => draw(game));
-        if (game) {
-          drawGameState(ctx, global, ball, player, opponent);
-        }
-        if (play) {
-          const events = createEvents(game, move, lifes, setLifes);
-          handleEvents(events);
-        }
+      let currentFrame;
 
-        ball.x += ball.dx;
-        ball.y += ball.dy;
+      if (lifes && !play) {
+        connectedTo.socket.on("opponent conceded", () => {
+          const state = { ...lifes };
+          state.opponent = 0;
+          setLifes(state);
+        });
+        setPlay(true);
+      }
 
-        if (lifes && !play) {
-          connectedTo.socket.on("opponent conceded", () => {
-            const state = { ...lifes };
-            state.opponent = 0;
-            setLifes(state);
-          });
-          setPlay(true);
-        }
-        const state = { ball, player, global, opponent };
-        updateGame(state);
-      };
-
-      draw();
+      draw(ctx, game, play, updateGame, currentFrame);
       return () => {
         cancelAnimationFrame(requestId);
       };
