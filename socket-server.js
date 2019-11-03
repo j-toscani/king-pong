@@ -10,6 +10,6 @@ const port = process.env.PORT || 8000;
 const app = express();
 const server = http.createServer(app);
 
-initSocket(server);
-
-server.listen(port, () => console.log(`Listening on port ${port}`));
+initSocket(server).then(() =>
+  server.listen(port, () => console.log(`Listening on port ${port}`))
+);

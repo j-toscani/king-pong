@@ -1,34 +1,12 @@
 import React from "react";
-import styled from "styled-components";
+import GameRoomContainer, {
+  InputContainer
+} from "../components/game/GameRoomContainer";
 import HeaderLogo from "../components/Header/HeaderLogo";
 import GameInput from "../components/game/GameInput";
-import Button from "../components/Button";
+import ConcedeButton from "../components/game/ConcedeButton";
 import GameBoard from "../components/game/GameBoard";
 import { useHistory } from "react-router-dom";
-
-const Container = styled.main`
-  height: 100%;
-  width: 100%;
-  flex-direction: column;
-  position: relative;
-`;
-
-const InputContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  width: 100%;
-  max-width: 400px;
-  padding: 20px;
-`;
-
-const ConcedeButton = styled(Button)`
-  position: absolute;
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
-  margin-left: auto;
-  margin-right: auto;
-  top: -20px;
-`;
 
 export default function GameRoom({
   handleSession,
@@ -86,12 +64,10 @@ export default function GameRoom({
     };
   }, []);
 
-  console.log(connectedTo);
-
   return (
     <>
       <HeaderLogo headline={`Session's Game`}></HeaderLogo>
-      <Container>
+      <GameRoomContainer>
         <ConcedeButton onClick={handleConcede}>Concede</ConcedeButton>
         <GameBoard
           opponentPressed={opponentPressed}
@@ -119,7 +95,7 @@ export default function GameRoom({
             }}
           ></GameInput>
         </InputContainer>
-      </Container>
+      </GameRoomContainer>
     </>
   );
 }

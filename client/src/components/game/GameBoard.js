@@ -2,13 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import HeartRow from "./HeartRow";
 import { useHistory } from "react-router-dom";
+import draw from "../../gameData/draw";
 import WinLossWindow from "./WinLossWindow";
-import drawGameState from "../../GameData/draw";
-import createEvents, { handleEvents } from "../../GameData/handleEvents";
-import initGameState from "../../GameData/initGameState";
+
+import initGameState from "../../gameData/initGameState";
 
 const StyledCanvas = styled.canvas`
   background: ${props => props.theme.accent};
+  width: 300px;
+  height: 400px;
 `;
 
 const GameContainer = styled.section`
@@ -47,7 +49,6 @@ export default function GameBoard({
   const [game, updateGame] = React.useState(() =>
     initGameState(connectedTo.opponent)
   );
-  debugger;
   const [lifes, setLifes] = React.useState({ you: 2, opponent: 2 });
   const canvasRef = React.useRef(null);
   const modal = React.useRef(null);
@@ -65,36 +66,18 @@ export default function GameBoard({
     if (game && lifes.you > 0 && lifes.opponent > 0) {
       let canvas = canvasRef.current;
       let ctx = canvas.getContext("2d");
-      let requestId;
-      const draw = () => {
-        const { ball, global, player, opponent } = game;
-        requestId = requestAnimationFrame(() => draw(game));
-        if (game) {
-          drawGameState(ctx, global, ball, player, opponent);
-        }
-        if (play) {
-          const events = createEvents(game, move, lifes, setLifes);
-          handleEvents(events);
-        }
+      let currentFrame;
 
-        ball.x += ball.dx;
-        ball.y += ball.dy;
+      if (lifes && !play) {
+        connectedTo.socket.on("opponent conceded", () => {
+          const state = { ...lifes };
+          state.opponent = 0;
+          setLifes(state);
+        });
+        setPlay(true);
+      }
 
-        const state = { ball, player, global, opponent };
-
-        if (lifes && !play) {
-          const { socket } = connectedTo;
-          socket.on("opponent conceded", () => {
-            const state = { ...lifes };
-            state.opponent = 0;
-            setLifes(state);
-          });
-          setPlay(true);
-        }
-        updateGame(state);
-      };
-
-      draw(draw);
+      draw(ctx, game, play, updateGame, currentFrame);
       return () => {
         cancelAnimationFrame(requestId);
       };
@@ -113,7 +96,7 @@ export default function GameBoard({
       <HeartRow p1 lifes={lifes.you}></HeartRow>
       <HeartRow p1={false} lifes={lifes.opponent}></HeartRow>
 
-      <StyledCanvas width="295" height="400" ref={canvasRef}></StyledCanvas>
+      <StyledCanvas width="300" height="400" ref={canvasRef}></StyledCanvas>
       <Modal ref={modal}>
         <WinLossWindow lifes={lifes} handleClick={handleGameEnding} />
       </Modal>

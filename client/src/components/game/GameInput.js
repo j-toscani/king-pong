@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Pointer from "../../ressources/icons/Pointer";
-import useWindowDimensions from "../../GameData/getWindowDimensions";
+import useWindowDimensions from "../../gameData/getWindowDimensions";
 
 const StyledInputButton = styled.button`
   box-shadow: 0px 3px 6px;
