@@ -8,14 +8,14 @@ import { useHistory } from "react-router-dom";
 export default function HeaderPointer({ headline, rotate }) {
   let history = useHistory();
 
-  function handleClick(destination) {
+  function routeTo(destination) {
     history.push(`/${destination}`);
   }
 
   return (
     <StyledHeader>
       <StyledH2>{headline}</StyledH2>
-      <InputFieldStyled onClick={() => handleClick("select")}>
+      <InputFieldStyled onClick={() => routeTo("main")}>
         <Pointer rotate={rotate}></Pointer>
       </InputFieldStyled>
     </StyledHeader>

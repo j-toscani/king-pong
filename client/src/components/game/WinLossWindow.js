@@ -12,26 +12,28 @@ const StyledWindowSee = styled(StyledWindow)`
   opacity: 0.8;
 `;
 
-function WinLossWindow({ result, handleClick }) {
-  if (result.winner === "opponent") {
-    return (
-      <StyledWindowSee>
-        <Headline>{result.cheerLoss}</Headline>
-        <Button active onClick={handleClick}>
-          Back to Play
-        </Button>
-      </StyledWindowSee>
-    );
-  } else if (result.winner === "player") {
-    return (
-      <StyledWindowSee>
-        <Headline>{result.cheerWin}</Headline>
-        <Button active onClick={handleClick}>
-          Back to Play
-        </Button>
-      </StyledWindowSee>
-    );
-  }
+function WinLossWindow({ handleClick, lifes }) {
+  return (
+    <>
+      {lifes && lifes.opponent === 0 && (
+        <StyledWindowSee>
+          <Headline>You won!</Headline>
+          <p>Your opponent either condeded or lost all lifes!</p>
+          <Button active onClick={handleClick}>
+            Back to Play
+          </Button>
+        </StyledWindowSee>
+      )}
+      {lifes && lifes.you === 0 && (
+        <StyledWindowSee>
+          <Headline>You lost!</Headline>
+          <Button active onClick={handleClick}>
+            Back to Play
+          </Button>
+        </StyledWindowSee>
+      )}
+    </>
+  );
 }
 
 export default WinLossWindow;

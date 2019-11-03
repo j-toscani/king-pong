@@ -3,8 +3,9 @@ import styled from "styled-components";
 import HeartRow from "./HeartRow";
 import { useHistory } from "react-router-dom";
 import WinLossWindow from "./WinLossWindow";
-import drawGameState from "../../GameData/Draw";
-import createEvents, { handleEvents } from "../../GameData/Events";
+import drawGameState from "../../GameData/draw";
+import createEvents, { handleEvents } from "../../GameData/handleEvents";
+import initGameState from "../../GameData/initGameState";
 
 const StyledCanvas = styled.canvas`
   background: ${props => props.theme.accent};
@@ -23,117 +24,98 @@ const Modal = styled.dialog`
   background: transparent;
 `;
 
-export default function GameBoard({ leftPressed, rightPressed, connectedTo }) {
+export default function GameBoard({
+  opponentPressed,
+  playerPressed,
+  connectedTo,
+  handleSession
+}) {
   let history = useHistory();
 
   function handleGameEnding() {
-    history.push(`/select`);
-    console.log("move");
+    history.push(`/main`);
   }
 
   const [play, setPlay] = React.useState(false);
-  const [moveLeft, toggleMovementLeft] = React.useState(false);
-  const [moveRight, toggleMovementRight] = React.useState(false);
-  const [game, updateGame] = React.useState({
-    ball: {
-      x: 100,
-      y: 150,
-      w: 10,
-      h: 10,
-      dx: 1.5,
-      dy: 2.5,
-      pdx: 2
-    },
-    player1: {
-      player: true,
-      x: 290 / 2 - 50,
-      y: 350,
-      w: 100,
-      h: 10,
-      dx: 3,
-      dy: 0
-    },
-    player2: {
-      player: false,
-      x: 290 / 2 - 50,
-      y: 40,
-      w: 100,
-      h: 10,
-      dx: 2,
-      dy: 0
-    },
-    global: {
-      x: 295,
-      y: 400,
-      cheerWin: "You Won!!!",
-      cheerLoss: "You Lost...",
-      winner: "opponent"
-    }
+  const [move, toggleMovement] = React.useState({
+    movePLayerLeft: false,
+    movePlayerRight: false,
+    moveOpponentLeft: false,
+    moveOpponentRight: false
   });
-  const [lifesP1, setlifesP1] = React.useState(5);
-  const [lifesP2, setlifesP2] = React.useState(1);
+
+  const [game, updateGame] = React.useState(() =>
+    initGameState(connectedTo.opponent)
+  );
+  debugger;
+  const [lifes, setLifes] = React.useState({ you: 2, opponent: 2 });
   const canvasRef = React.useRef(null);
   const modal = React.useRef(null);
 
-  React.useEffect(() => toggleMovementLeft(leftPressed), [leftPressed]);
-  React.useEffect(() => toggleMovementRight(rightPressed), [rightPressed]);
   React.useEffect(() => {
-    if (game && lifesP1 > 0 && lifesP2 > 0) {
+    toggleMovement({
+      movePlayerLeft: playerPressed.left,
+      movePlayerRight: playerPressed.right,
+      moveOpponentLeft: opponentPressed.left,
+      moveOpponentRight: opponentPressed.right
+    });
+  }, [playerPressed, opponentPressed]);
+
+  React.useEffect(() => {
+    if (game && lifes.you > 0 && lifes.opponent > 0) {
       let canvas = canvasRef.current;
       let ctx = canvas.getContext("2d");
       let requestId;
-      const draw = game => {
-        const { ball, global, player1, player2 } = game;
-
+      const draw = () => {
+        const { ball, global, player, opponent } = game;
         requestId = requestAnimationFrame(() => draw(game));
         if (game) {
-          drawGameState(ctx, global, ball, player1, player2);
+          drawGameState(ctx, global, ball, player, opponent);
         }
         if (play) {
-          const events = createEvents(
-            game,
-            moveLeft,
-            moveRight,
-            setlifesP1,
-            lifesP1,
-            setlifesP2,
-            lifesP2
-          );
+          const events = createEvents(game, move, lifes, setLifes);
           handleEvents(events);
         }
 
         ball.x += ball.dx;
         ball.y += ball.dy;
 
-        const state = { ball, player1, global, player2 };
+        const state = { ball, player, global, opponent };
 
-        if (lifesP1 && lifesP2 && !play) {
+        if (lifes && !play) {
+          const { socket } = connectedTo;
+          socket.on("opponent conceded", () => {
+            const state = { ...lifes };
+            state.opponent = 0;
+            setLifes(state);
+          });
           setPlay(true);
         }
         updateGame(state);
       };
 
-      draw(game);
+      draw(draw);
       return () => {
         cancelAnimationFrame(requestId);
       };
-    } else if (!modal.current.open) {
+    } else if (
+      !modal.current.open &&
+      (lifes.opponent === 0 || lifes.you === 0)
+    ) {
       modal.current.showModal();
+      const { socket } = connectedTo;
+      handleSession(socket, "leave");
     }
-  }, [lifesP1, lifesP2, moveRight, moveLeft, play]);
+  }, [lifes, move, play, connectedTo, handleSession]);
 
   return (
     <GameContainer>
-      <HeartRow p1 lifes={lifesP1}></HeartRow>
-      <HeartRow p1={false} lifes={lifesP2}></HeartRow>
+      <HeartRow p1 lifes={lifes.you}></HeartRow>
+      <HeartRow p1={false} lifes={lifes.opponent}></HeartRow>
 
       <StyledCanvas width="295" height="400" ref={canvasRef}></StyledCanvas>
       <Modal ref={modal}>
-        <WinLossWindow
-          result={game["global"]}
-          handleClick={handleGameEnding}
-          connectedTo={connectedTo}
-        />
+        <WinLossWindow lifes={lifes} handleClick={handleGameEnding} />
       </Modal>
     </GameContainer>
   );

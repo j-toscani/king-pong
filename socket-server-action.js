@@ -28,17 +28,22 @@ const roomname = createrName + Math.random() + socketID;
 
 //Send Information that alters client View and results into action for Userfeedback
 // -> If two Users are in a room, enable "readyness"
-socket.broadcast.emit("ready", setRoomReady);
-// -> If a user Leaves the Room, disable readyness
-socket.broadcast.emit("user-left", updateUserInRoom);
-socket.broadcast.emit("new message", () => sendServerChatMessage("leave"));
-// -> send "..." joined message
-socket.broadcast.emit("user-joined", updateUserInRoom);
-socket.broadcast.emit("new message", () => sendServerChatMessage("join"));
-// -> send "..." room created
-socket.broadcast.emit("new message", () => sendServerChatMessage("create"));
-// -> send "game start in ... s" message
-socket.broadcast.emit("new message", startGameCountdown);
+socket.to(room).broadcast.emit("ready", setRoomReady);
+
+socket.to(room).broadcast.emit("user-left", updateUserInRoom);
+socket
+  .to(room)
+  .broadcast.emit("new message", () => sendServerChatMessage("leave"));
+
+socket.to(room).broadcast.emit("user-joined", updateUserInRoom);
+socket
+  .to(room)
+  .broadcast.emit("new message", () => sendServerChatMessage("join"));
+
+socket
+  .to(room)
+  .broadcast.emit("new message", () => sendServerChatMessage("create"));
+socket.to(room).broadcast.emit("new message", startGameCountdown);
 // -> send message information to User
 function sendServerChatMessage(type) {
   const sender = allClients[socket.id];
@@ -62,6 +67,8 @@ function sendServerChatMessage(type) {
 // Send clients to game
 socket.to(room).broadcast.emit("start", "start Game");
 // -> Send messages to clients
+socket.to(room).broadcast.emit("new message", message);
+
 // -> Send Info to clients on connection/disconnection from chat
 // -> Send Info to clients on connection/disconnection from game
 // -> Send the information that both clients are ready to start the Game and start Countdown

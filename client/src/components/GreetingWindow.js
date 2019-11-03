@@ -35,7 +35,7 @@ function GreetingWindow({ setNickname }) {
   }
 
   if (getItem() !== null) {
-    routeTo("select");
+    routeTo("main");
   }
 
   function submitNickname() {
@@ -44,7 +44,7 @@ function GreetingWindow({ setNickname }) {
       setNickname(nickname);
       alert(`Hello ${nickname}, let´s play Pong!`);
       setItem("nickname", nickname);
-      routeTo("select");
+      routeTo("main");
     } else {
       alert("Please enter a nicknamme.");
     }
