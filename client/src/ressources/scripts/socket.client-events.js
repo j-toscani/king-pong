@@ -1,21 +1,41 @@
-//Starting to play
-//-by joining a room
-socket.emit("join-room", "Nickname");
-//-by creating a room
-socket.emit("create-room", "Nickname" + Math.Random);
+export default function initChatListeners(
+  connection,
+  chatHistory,
+  updateHistory,
+  setConnection,
+  routeTo
+) {
+  const { socket } = connection;
+  socket.on("new message", message => {
+    updateHistory(message);
+  });
+  socket.on("new server message", message => {
+    const newChatHistory = [...chatHistory];
+    newChatHistory.push(message);
+    updateHistory(newChatHistory);
+  });
+  socket.on("set player", () => {
+    const { connected, socket } = connection;
+    setConnection({ connected, opponent: false, socket, ready: true });
+  });
+  socket.on("set opponent", () => {
+    const { connected, socket } = connection;
+    setConnection({ connected, opponent: true, socket, ready: true });
+  });
 
-//Stopping to play
-// -by disconnecting
-socket.close();
-// -by going back to the select-screen
-// -by losing/winning the game (chicken out... , concede, game end)
+  socket.on("game not ready", () => {
+    const { connected, socket, opponent } = connection;
+    setConnection({ connected, socket, opponent, ready: false });
+  });
 
-// build a new namespace "playing" that are active if you are in a room. By leaving chat or the game, you will leave the namespace
+  socket.on("game start", () => {
+    routeTo("game");
+  });
 
-//Interacting
-//-by joining a chat
-//-by leaving a chat
-//-by being ready to play
-//-by using the input buttons
-
-//Handle Server actions
+  socket.on("room full", () => {
+    routeTo("main");
+    setTimeout(() => {
+      alert("Room full, please choose a different one");
+    }, 100);
+  });
+}

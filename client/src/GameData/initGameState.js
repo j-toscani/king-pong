@@ -1,16 +1,15 @@
 export default function initGameState(state) {
   const game = {
     ball: {
-      x: 200,
-      y: 145,
+      x: 145,
+      y: 195,
       w: 10,
       h: 10,
       dx: -1,
-      dy: -1,
-      pdx: 2
+      dy: -1
     },
     player: {
-      x: 290 / 2 - 50,
+      x: 300 / 2 - 50,
       y: 350,
       w: 100,
       h: 10,
@@ -18,8 +17,8 @@ export default function initGameState(state) {
       dy: 0
     },
     opponent: {
-      x: 290 / 2 - 50,
-      y: 40,
+      x: 300 / 2 - 50,
+      y: 50,
       w: 100,
       h: 10,
       dx: 3,
@@ -35,7 +34,6 @@ export default function initGameState(state) {
   };
   if (state) {
     game.ball.dy *= -1;
-    debugger;
   }
   return game;
 }

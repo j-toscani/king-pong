@@ -13,11 +13,11 @@ const ChatDisplay = styled.div`
 `;
 
 function ChatHistory({ messages }) {
-  // console.log(messages, nickname);
+  console.log(messages);
   return (
     <ChatDisplay>
       {messages &&
-        messages.map((message, index) => {
+        messages.reverse().map((message, index) => {
           return (
             <ChatMessage
               key={index}

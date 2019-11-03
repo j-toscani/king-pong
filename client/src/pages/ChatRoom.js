@@ -6,6 +6,7 @@ import HeaderNav from "../components/Header/HeaderNav";
 import Overlay from "../components/Options/Overlay";
 import { useHistory } from "react-router-dom";
 import { getItem, setItem } from "../ressources/scripts/storage";
+import initChatListeners from "../ressources/scripts/socket.client-events";
 
 const StyledMain = styled.main`
   flex-direction: column;
@@ -27,8 +28,8 @@ export default function ChatRoom({
   handleSession,
   setConnectionTo
 }) {
-  let history = useHistory();
-  const [chatHistory, updateHistory] = React.useState();
+  const history = useHistory();
+  const [chatHistory, updateHistory] = React.useState([]);
   const [open, setOpen] = React.useState(false || getItem("open"));
 
   function toggleOpen() {
@@ -37,23 +38,15 @@ export default function ChatRoom({
   }
 
   function handleSubmitMessage(content) {
-    const { socket } = connectedTo;
     const newMessage = {
-      user: socket.id,
+      user: connectedTo.socket.id,
       nickname: getItem("nickname"),
       content: content
     };
-    if (chatHistory) {
-      const newChatHistory = [...chatHistory];
-      newChatHistory.push(newMessage);
-      socket.emit("new message", newChatHistory);
-      updateHistory(newChatHistory);
-    } else {
-      const newChatHistory = [];
-      newChatHistory.push(newMessage);
-      socket.emit("new message", newChatHistory);
-      updateHistory(newChatHistory);
-    }
+    const newChatHistory = [...chatHistory];
+    newChatHistory.push(newMessage);
+    connectedTo.socket.emit("new message", newChatHistory);
+    updateHistory(newChatHistory);
   }
 
   function routeTo(destination) {
@@ -66,56 +59,25 @@ export default function ChatRoom({
 
   React.useEffect(() => {
     if (connectedTo.socket) {
-      const { socket } = connectedTo;
-      socket.on("new message", message => {
-        updateHistory(message);
-      });
-      socket.on("new server message", message => {
-        if (chatHistory) {
-          const newChatHistory = [...chatHistory];
-          newChatHistory.push(message);
-          updateHistory(newChatHistory);
-        } else {
-          const firstMessage = [message];
-          updateHistory(firstMessage);
-        }
-      });
-      socket.on("set player", () => {
-        const { connected, socket } = connectedTo;
-        setConnectionTo({ connected, opponent: false, socket, ready: true });
-      });
-      socket.on("set opponent", () => {
-        const { connected, socket } = connectedTo;
-        setConnectionTo({ connected, opponent: true, socket, ready: true });
-      });
-
-      socket.on("game not ready", () => {
-        const { connected, socket, opponent } = connectedTo;
-        setConnectionTo({ connected, socket, opponent, ready: false });
-      });
-
-      socket.on("game start", () => {
-        routeTo("game");
-        console.log(connectedTo);
-      });
-
-      socket.on("room full", () => {
-        routeTo("main");
-        setTimeout(() => {
-          alert("Room full, please choose a different one");
-        }, 100);
-      });
+      initChatListeners(
+        connectedTo,
+        chatHistory,
+        updateHistory,
+        setConnectionTo,
+        routeTo
+      );
     }
     return () => {
-      const { socket } = connectedTo;
-      socket.removeAllListeners();
+      if (connectedTo.socket) {
+        connectedTo.socket.removeAllListeners();
+      }
     };
   }, []);
 
   return (
     <>
       <HeaderNav
-        open={settings["open"]}
+        open={settings.open}
         toggleOpen={toggleOpen}
         headline={"Chatroom"}
       />
@@ -127,9 +89,7 @@ export default function ChatRoom({
         <ButtonContainer>
           <Button
             onClick={() => {
-              const { socket } = connectedTo;
-              socket.emit("start game", "start");
-              console.log("start game");
+              connectedTo.socket.emit("start game", "start");
             }}
             disabled={!connectedTo.ready}
             big
@@ -139,8 +99,7 @@ export default function ChatRoom({
           <Button
             alter
             onClick={() => {
-              const { socket } = connectedTo;
-              handleSession(socket, "leave");
+              handleSession(connectedTo.socket, "leave");
               routeTo("main");
             }}
             big

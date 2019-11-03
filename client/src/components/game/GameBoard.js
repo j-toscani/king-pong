@@ -9,6 +9,8 @@ import initGameState from "../../GameData/initGameState";
 
 const StyledCanvas = styled.canvas`
   background: ${props => props.theme.accent};
+  width: 300px;
+  height: 400px;
 `;
 
 const GameContainer = styled.section`
@@ -47,7 +49,6 @@ export default function GameBoard({
   const [game, updateGame] = React.useState(() =>
     initGameState(connectedTo.opponent)
   );
-  debugger;
   const [lifes, setLifes] = React.useState({ you: 2, opponent: 2 });
   const canvasRef = React.useRef(null);
   const modal = React.useRef(null);
@@ -80,21 +81,19 @@ export default function GameBoard({
         ball.x += ball.dx;
         ball.y += ball.dy;
 
-        const state = { ball, player, global, opponent };
-
         if (lifes && !play) {
-          const { socket } = connectedTo;
-          socket.on("opponent conceded", () => {
+          connectedTo.socket.on("opponent conceded", () => {
             const state = { ...lifes };
             state.opponent = 0;
             setLifes(state);
           });
           setPlay(true);
         }
+        const state = { ball, player, global, opponent };
         updateGame(state);
       };
 
-      draw(draw);
+      draw();
       return () => {
         cancelAnimationFrame(requestId);
       };
@@ -113,7 +112,7 @@ export default function GameBoard({
       <HeartRow p1 lifes={lifes.you}></HeartRow>
       <HeartRow p1={false} lifes={lifes.opponent}></HeartRow>
 
-      <StyledCanvas width="295" height="400" ref={canvasRef}></StyledCanvas>
+      <StyledCanvas width="300" height="400" ref={canvasRef}></StyledCanvas>
       <Modal ref={modal}>
         <WinLossWindow lifes={lifes} handleClick={handleGameEnding} />
       </Modal>
