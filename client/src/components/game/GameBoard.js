@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import HeartRow from "./HeartRow";
 import { useHistory } from "react-router-dom";
-import draw from "../../gameData/draw";
+import drawGameState from "../../gameData/draw";
+import createEvents, { handleEvents } from "../../gameData/handleEvents";
 import WinLossWindow from "./WinLossWindow";
 import initGameState from "../../gameData/initGameState";
 
@@ -67,6 +68,31 @@ export default function GameBoard({
       let ctx = canvas.getContext("2d");
       let currentFrame;
 
+      const draw = () => {
+        const { ball, global, player, opponent } = game;
+        currentFrame = requestAnimationFrame(() => draw(game));
+        if (game) {
+          drawGameState(ctx, global, ball, player, opponent);
+        }
+        if (play) {
+          const events = createEvents(game, move, lifes, setLifes);
+          handleEvents(events);
+        }
+
+        ball.x += ball.dx;
+        ball.y += ball.dy;
+
+        if (lifes && !play) {
+          connectedTo.socket.on("opponent conceded", () => {
+            const state = { ...lifes };
+            state.opponent = 0;
+            setLifes(state);
+          });
+          setPlay(true);
+        }
+        const state = { ball, player, global, opponent };
+        updateGame(state);
+      };
       if (lifes && !play) {
         connectedTo.socket.on("opponent conceded", () => {
           const state = { ...lifes };
@@ -76,7 +102,7 @@ export default function GameBoard({
         setPlay(true);
       }
 
-      draw(ctx, game, play, updateGame, currentFrame, move, lifes, setLifes);
+      draw();
       return () => {
         cancelAnimationFrame(currentFrame);
       };
@@ -89,6 +115,8 @@ export default function GameBoard({
       handleSession(socket, "leave");
     }
   }, [lifes, move, play, connectedTo, handleSession]);
+
+  console.log("rerender");
 
   return (
     <GameContainer>

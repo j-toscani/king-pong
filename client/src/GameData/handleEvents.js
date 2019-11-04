@@ -6,7 +6,6 @@ export default function createEvents(game, move, lifes, setLifes) {
     moveOpponentLeft,
     moveOpponentRight
   } = move;
-
   return [
     {
       name: "Ball and the Wall left and right",
