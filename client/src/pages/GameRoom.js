@@ -2,7 +2,7 @@ import React from "react";
 import GameRoomContainer, {
   InputContainer
 } from "../components/game/GameRoomContainer";
-import HeaderLogo from "../components/Header/HeaderLogo";
+import HeaderLogo from "../components/header/HeaderLogo";
 import GameInput from "../components/game/GameInput";
 import ConcedeButton from "../components/game/ConcedeButton";
 import GameBoard from "../components/game/GameBoard";

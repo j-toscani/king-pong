@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import HeaderLogo from "../components/Header/HeaderLogo";
+import HeaderLogo from "../components/header/HeaderLogo";
 import Button from "../components/Button";
 import { useHistory } from "react-router-dom";
 

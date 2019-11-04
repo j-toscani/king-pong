@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import HeaderPointer from "../components/Header/HeaderPointer";
+import HeaderPointer from "../components/header/HeaderPointer";
 
 const Container = styled.main`
   background: ${props => props.theme.accent};

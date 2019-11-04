@@ -4,7 +4,6 @@ import HeartRow from "./HeartRow";
 import { useHistory } from "react-router-dom";
 import draw from "../../gameData/draw";
 import WinLossWindow from "./WinLossWindow";
-
 import initGameState from "../../gameData/initGameState";
 
 const StyledCanvas = styled.canvas`

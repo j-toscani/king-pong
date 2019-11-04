@@ -1,6 +1,6 @@
 import React from "react";
 import GreetingWindow from "../components/GreetingWindow";
-import HeaderLogo from "../components/Header/HeaderLogo";
+import HeaderLogo from "../components/header/HeaderLogo";
 
 export default function NicknameInput({ setNickname }) {
   return (

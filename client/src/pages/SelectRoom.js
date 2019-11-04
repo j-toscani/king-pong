@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import HeaderNav from "../components/Header/HeaderNav";
+import HeaderNav from "../components/header/HeaderNav";
 import Button from "../components/Button";
-import Overlay from "../components/Options/Overlay";
+import Overlay from "../components/options/Overlay";
 import { getItem, setItem } from "../ressources/scripts/storage";
 
 const Container = styled.main`
