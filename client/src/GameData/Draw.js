@@ -1,4 +1,4 @@
-import createEvents, { handleEvents } from "../../gameData/handleEvents";
+import createEvents, { handleEvents } from "./handleEvents";
 
 function drawBall(canvas, ball) {
   canvas.fillStyle = ball.style;
@@ -19,7 +19,16 @@ function drawGameState(canvas, board, ball, player1, player2) {
   }
 }
 
-export default function draw(canvas, game, play, updateGame, currentFrame) {
+export default function draw(
+  canvas,
+  game,
+  play,
+  updateGame,
+  currentFrame,
+  move,
+  lifes,
+  setLifes
+) {
   const { ball, global, player, opponent } = game;
   currentFrame = requestAnimationFrame(() =>
     draw(canvas, game, play, updateGame, currentFrame)

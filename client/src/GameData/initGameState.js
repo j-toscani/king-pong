@@ -9,17 +9,17 @@ export default function initGameState(state) {
       dy: -1
     },
     player: {
-      x: 300 / 2 - 50,
+      x: 300 / 2 - 25,
       y: 350,
-      w: 100,
+      w: 50,
       h: 10,
       dx: 3,
       dy: 0
     },
     opponent: {
-      x: 300 / 2 - 50,
+      x: 300 / 2 - 25,
       y: 50,
-      w: 100,
+      w: 50,
       h: 10,
       dx: 3,
       dy: 0
