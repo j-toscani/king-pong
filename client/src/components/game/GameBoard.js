@@ -3,10 +3,10 @@ import styled from "styled-components";
 import HeartRow from "./HeartRow";
 import { useHistory } from "react-router-dom";
 import drawGameState from "../../gameData/draw";
-import createEvents, { handleEvents } from "../../gameData/handleEvents";
 import WinLossWindow from "./WinLossWindow";
 import initGameState from "../../gameData/initGameState";
 import { getItem, setItem } from "../../ressources/scripts/storage";
+import { handleEvents, createEvents } from "../../gameData/handleEvents";
 
 const StyledCanvas = styled.canvas`
   background: ${props => props.theme.accent};
@@ -39,17 +39,14 @@ export default function GameBoard({
     history.push(`/main`);
   }
 
-  const [play, setPlay] = React.useState(false);
+  const [game, updateGame] = React.useState(false);
+
   const [move, toggleMovement] = React.useState({
     movePLayerLeft: false,
     movePlayerRight: false,
     moveOpponentLeft: false,
     moveOpponentRight: false
   });
-
-  const [game, updateGame] = React.useState(() =>
-    initGameState(connectedTo.opponent)
-  );
   const [lifes, setLifes] = React.useState({ you: 2, opponent: 2 });
   const canvasRef = React.useRef(null);
   const modal = React.useRef(null);
@@ -62,65 +59,49 @@ export default function GameBoard({
       moveOpponentRight: opponentPressed.right
     });
   }, [playerPressed, opponentPressed]);
+  // const [play, setPlay] = React.useState(false);
+
+  function saveWinLossData(result) {
+    let count = getItem(result) || 0;
+    count += 1;
+    setItem(result, count);
+  }
 
   React.useEffect(() => {
-    if (game && lifes.you > 0 && lifes.opponent > 0) {
-      let canvas = canvasRef.current;
-      let ctx = canvas.getContext("2d");
-      let currentFrame;
+    let canvas = canvasRef.current;
+    let ctx = canvas.getContext("2d");
+    // let currentFrame;
+    // if (play && game) {
+    //   const drawGame = game => {
+    //     const { global, ball, player, player2 } = game;
+    //     drawGameState(ctx, global, ball, player, player2);
+    //     const events = createEvents(game);
+    //     handleEvents(events);
+    //     const newFrame = { global, ball, player, player2 };
+    //     requestAnimationFrame(() => drawGame(newFrame));
+    //   };
+    //   drawGame(game);
+    // }
 
-      const draw = () => {
-        const { ball, global, player, opponent } = game;
-        currentFrame = requestAnimationFrame(() => draw(game));
-        if (game) {
-          drawGameState(ctx, global, ball, player, opponent);
-        }
-        if (play) {
-          const events = createEvents(
-            game,
-            move,
-            lifes,
-            setLifes,
-            connectedTo.socket
-          );
-          handleEvents(events);
-        }
+    const { socket } = connectedTo;
+    socket.on("new frame", frame => {
+      const { global, ball, player, player2 } = frame;
+      drawGameState(ctx, global, ball, player, player2);
+      updateGame(frame);
+    });
+    socket.on("opponent conceded", () => {
+      const state = { ...lifes };
+      state.opponent = 0;
+      setLifes(state);
+    });
+    socket.emit("first frame", "first frame");
+    socket.emit("subscribe to game", "subscribe");
 
-        ball.x += ball.dx;
-        ball.y += ball.dy;
-
-        if (lifes && !play) {
-          connectedTo.socket.on("opponent conceded", () => {
-            const state = { ...lifes };
-            state.opponent = 0;
-            setLifes(state);
-          });
-          connectedTo.socket.on("reset game", () =>
-            initGameState(connectedTo.opponent)
-          );
-          setPlay(true);
-        }
-        const state = { ball, player, global, opponent };
-        updateGame(state);
-      };
-      draw();
-      return () => {
-        cancelAnimationFrame(currentFrame);
-      };
-    } else if (!modal.current.open && lifes.you === 0) {
-      modal.current.showModal();
-      let losses = getItem("lost") || 0;
-      losses += 1;
-      setItem("lost", losses);
-      handleSession(connectedTo.socket, "leave");
-    } else if (!modal.current.open && lifes.opponent === 0) {
-      modal.current.showModal();
-      let wins = getItem("won") || 0;
-      wins += 1;
-      setItem("won", wins);
-      handleSession(connectedTo.socket, "leave");
-    }
-  }, [lifes, move, play, connectedTo, handleSession]);
+    return () => {
+      // cancelAnimationFrame(currentFrame);
+      connectedTo.socket.removeAllListeners();
+    };
+  }, []);
 
   return (
     <GameContainer>

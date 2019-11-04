@@ -17,7 +17,7 @@ function ChatHistory({ messages }) {
   return (
     <ChatDisplay>
       {messages &&
-        messages.reverse().map((message, index) => {
+        messages.map((message, index) => {
           return (
             <ChatMessage
               key={index}
