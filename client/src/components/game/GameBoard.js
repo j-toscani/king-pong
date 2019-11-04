@@ -77,9 +77,9 @@ export default function GameBoard({
         setPlay(true);
       }
 
-      draw(ctx, game, play, updateGame, currentFrame);
+      draw(ctx, game, play, updateGame, currentFrame, move, lifes, setLifes);
       return () => {
-        cancelAnimationFrame(requestId);
+        cancelAnimationFrame(currentFrame);
       };
     } else if (
       !modal.current.open &&
