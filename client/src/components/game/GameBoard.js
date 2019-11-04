@@ -6,6 +6,7 @@ import drawGameState from "../../gameData/draw";
 import createEvents, { handleEvents } from "../../gameData/handleEvents";
 import WinLossWindow from "./WinLossWindow";
 import initGameState from "../../gameData/initGameState";
+import { getItem, setItem } from "../../ressources/scripts/storage";
 
 const StyledCanvas = styled.canvas`
   background: ${props => props.theme.accent};
@@ -75,7 +76,13 @@ export default function GameBoard({
           drawGameState(ctx, global, ball, player, opponent);
         }
         if (play) {
-          const events = createEvents(game, move, lifes, setLifes);
+          const events = createEvents(
+            game,
+            move,
+            lifes,
+            setLifes,
+            connectedTo.socket
+          );
           handleEvents(events);
         }
 
@@ -88,35 +95,32 @@ export default function GameBoard({
             state.opponent = 0;
             setLifes(state);
           });
+          connectedTo.socket.on("reset game", () =>
+            initGameState(connectedTo.opponent)
+          );
           setPlay(true);
         }
         const state = { ball, player, global, opponent };
         updateGame(state);
       };
-      if (lifes && !play) {
-        connectedTo.socket.on("opponent conceded", () => {
-          const state = { ...lifes };
-          state.opponent = 0;
-          setLifes(state);
-        });
-        setPlay(true);
-      }
-
       draw();
       return () => {
         cancelAnimationFrame(currentFrame);
       };
-    } else if (
-      !modal.current.open &&
-      (lifes.opponent === 0 || lifes.you === 0)
-    ) {
+    } else if (!modal.current.open && lifes.you === 0) {
       modal.current.showModal();
-      const { socket } = connectedTo;
-      handleSession(socket, "leave");
+      let losses = getItem("lost") || 0;
+      losses += 1;
+      setItem("lost", losses);
+      handleSession(connectedTo.socket, "leave");
+    } else if (!modal.current.open && lifes.opponent === 0) {
+      modal.current.showModal();
+      let wins = getItem("won") || 0;
+      wins += 1;
+      setItem("won", wins);
+      handleSession(connectedTo.socket, "leave");
     }
   }, [lifes, move, play, connectedTo, handleSession]);
-
-  console.log("rerender");
 
   return (
     <GameContainer>

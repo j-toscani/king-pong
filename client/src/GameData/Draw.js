@@ -16,32 +16,3 @@ export default function drawGameState(canvas, board, ball, player1, player2) {
     drawPaddle(canvas, player2);
   }
 }
-
-// export function draw(
-//   canvas,
-//   game,
-//   play,
-//   updateGame,
-//   currentFrame,
-//   move,
-//   lifes,
-//   setLifes
-// ) {
-//   const { ball, global, player, opponent } = game;
-//   currentFrame = requestAnimationFrame(() =>
-//     draw(canvas, game, play, updateGame, currentFrame, move, lifes, setLifes)
-//   );
-//   if (game) {
-//     drawGameState(canvas, global, ball, player, opponent);
-//   }
-//   if (play) {
-//     const events = createEvents(game, move, lifes, setLifes);
-//     handleEvents(events);
-//   }
-
-//   ball.x += ball.dx;
-//   ball.y += ball.dy;
-
-//   const state = { ball, player, global, opponent };
-//   updateGame(state);
-// }

@@ -1,4 +1,4 @@
-export default function createEvents(game, move, lifes, setLifes) {
+export default function createEvents(game, move, lifes, setLifes, socket) {
   const { player, opponent, global, ball } = game;
   const {
     movePlayerLeft,
@@ -9,8 +9,21 @@ export default function createEvents(game, move, lifes, setLifes) {
   return [
     {
       name: "Ball and the Wall left and right",
-      case: ball.x > global.x - ball.w || ball.x < 0,
-      result: () => (ball.dx *= -1)
+      case: ball.x > global.x - ball.w,
+      result: () => {
+        if (ball.dx > 0) {
+          ball.dx *= -1;
+        }
+      }
+    },
+    {
+      name: "Ball and the Wall left and right",
+      case: ball.x < 0,
+      result: () => {
+        if (ball.dx < 0) {
+          ball.dx *= -1;
+        }
+      }
     },
     {
       name: "Ball and the Wall top",
@@ -29,28 +42,42 @@ export default function createEvents(game, move, lifes, setLifes) {
         ball.dy *= -1;
         const newLifes = { ...lifes };
         newLifes.you -= 1;
+        socket.emit("reset ball", "reset ball");
         setLifes(newLifes);
       }
     },
     {
       name: "Ball and player",
       case:
-        ball.y > player.y - ball.h &&
+        ball.y + ball.h > player.y &&
+        ball.y < player.y + player.h &&
         (ball.x > player.x && ball.x < player.x + player.w),
       result: () => {
-        if (ball.dy > 0) {
+        if (ball.dy > 0 && ball.dx > 0) {
+          ball.dy += 0.2;
+          ball.dx += 0.2;
           ball.dy *= -1;
-        } else {
+        } else if (ball.dy > 0) {
+          ball.dy += 0.2;
+          ball.dx -= 0.2;
+          ball.dy *= -1;
         }
       }
     },
     {
       name: "Ball and opponent",
       case:
-        ball.y < opponent.y + 10 &&
+        ball.y < opponent.y + opponent.h &&
+        ball.y + ball.h > opponent.y &&
         (ball.x > opponent.x && ball.x < opponent.x + opponent.w),
       result: () => {
-        if (ball.dy < 0) {
+        if (ball.dy < 0 && ball.dx > 0) {
+          ball.dy -= 0.2;
+          ball.dx += 0.2;
+          ball.dy *= -1;
+        } else if (ball.dy < 0) {
+          ball.dy -= 0.2;
+          ball.dx -= 0.2;
           ball.dy *= -1;
         } else {
         }
