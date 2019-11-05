@@ -4,9 +4,8 @@ import HeartRow from "./HeartRow";
 import { useHistory } from "react-router-dom";
 import drawGameState from "../../gameData/draw";
 import WinLossWindow from "./WinLossWindow";
-import initGameState from "../../gameData/initGameState";
 import { getItem, setItem } from "../../ressources/scripts/storage";
-import { handleEvents, createEvents } from "../../gameData/handleEvents";
+import handleEvents, { createEvents } from "../../gameData/handleEvents";
 
 const StyledCanvas = styled.canvas`
   background: ${props => props.theme.accent};
@@ -59,7 +58,8 @@ export default function GameBoard({
       moveOpponentRight: opponentPressed.right
     });
   }, [playerPressed, opponentPressed]);
-  // const [play, setPlay] = React.useState(false);
+
+  const [play, startPlay] = React.useState(false);
 
   function saveWinLossData(result) {
     let count = getItem(result) || 0;
@@ -68,40 +68,51 @@ export default function GameBoard({
   }
 
   React.useEffect(() => {
-    let canvas = canvasRef.current;
-    let ctx = canvas.getContext("2d");
-    // let currentFrame;
-    // if (play && game) {
-    //   const drawGame = game => {
-    //     const { global, ball, player, player2 } = game;
-    //     drawGameState(ctx, global, ball, player, player2);
-    //     const events = createEvents(game);
-    //     handleEvents(events);
-    //     const newFrame = { global, ball, player, player2 };
-    //     requestAnimationFrame(() => drawGame(newFrame));
-    //   };
-    //   drawGame(game);
-    // }
-
     const { socket } = connectedTo;
     socket.on("new frame", frame => {
-      const { global, ball, player, player2 } = frame;
-      drawGameState(ctx, global, ball, player, player2);
       updateGame(frame);
     });
     socket.on("opponent conceded", () => {
       const state = { ...lifes };
-      state.opponent = 0;
       setLifes(state);
     });
     socket.emit("first frame", "first frame");
-    socket.emit("subscribe to game", "subscribe");
-
+    startPlay(true);
     return () => {
-      // cancelAnimationFrame(currentFrame);
       connectedTo.socket.removeAllListeners();
     };
   }, []);
+
+  React.useEffect(() => {
+    let currentFrame;
+    let canvas = canvasRef.current;
+    let ctx = canvas.getContext("2d");
+    if (game) {
+      const drawLoop = game => {
+        const { ball, player, player2, global } = game;
+        const now = Date.now();
+        const timeSinceLastDraw = game.global.lastDraw
+          ? now - game.global.lastDraw
+          : 0;
+        game.global.lastDraw = now;
+        const events = createEvents(game, timeSinceLastDraw);
+        handleEvents(events);
+        drawGameState(ctx, global, ball, player, player2);
+        const state = { ball, player, player2, global };
+        if (game.global.play) {
+          currentFrame = requestAnimationFrame(() => drawLoop(game));
+        }
+      };
+      drawLoop(game);
+    }
+    return () => cancelAnimationFrame(currentFrame);
+  }, [game]);
+
+  // React.useEffect(() => {
+  //   if (game) {
+  //     const { global, ball, player, player2 } = game;
+  //   }
+  // }, [game]);
 
   return (
     <GameContainer>

@@ -1,4 +1,4 @@
-function createEvents(game) {
+export function createEvents(game) {
   const { player, player2, global, ball } = game;
   const fraction = global.lastDraw / 1000;
   return [
@@ -115,13 +115,10 @@ function createEvents(game) {
   ];
 }
 
-function handleEvents(events) {
+export default function handleEvents(events) {
   events.forEach(event => {
     if (event.case) {
       event.result();
     }
   });
 }
-
-exports.handleEvents = handleEvents;
-exports.createEvents = createEvents;
