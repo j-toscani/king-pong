@@ -44,12 +44,12 @@ export function createEvents(game, timeSinceLastDraw) {
         (ball.x > player.x && ball.x < player.x + player.w),
       result: () => {
         if (ball.dy > 0 && ball.dx > 0) {
-          ball.dy += 0.2;
-          ball.dx += 0.2;
+          ball.dy += 2;
+          ball.dx += 2;
           ball.dy *= -1;
         } else if (ball.dy > 0) {
-          ball.dy += 0.2;
-          ball.dx -= 0.2;
+          ball.dy += 2;
+          ball.dx -= 2;
           ball.dy *= -1;
         }
       }
