@@ -46,7 +46,7 @@ export default function GameBoard({
     moveOpponentLeft: false,
     moveOpponentRight: false
   });
-  const [lifes, setLifes] = React.useState({ you: 2, opponent: 2 });
+  const [lifes, setLifes] = React.useState({ you: 4, opponent: 2 });
   const canvasRef = React.useRef(null);
   const modal = React.useRef(null);
 
@@ -58,8 +58,6 @@ export default function GameBoard({
       moveOpponentRight: opponentPressed.right
     });
   }, [playerPressed, opponentPressed]);
-
-  const [play, startPlay] = React.useState(false);
 
   function saveWinLossData(result) {
     let count = getItem(result) || 0;
@@ -74,10 +72,12 @@ export default function GameBoard({
     });
     socket.on("opponent conceded", () => {
       const state = { ...lifes };
+      state["you"] = 0;
+      handleSession(socket, "leave");
       setLifes(state);
     });
     socket.emit("first frame", "first frame");
-    startPlay(true);
+
     return () => {
       connectedTo.socket.removeAllListeners();
     };
@@ -94,9 +94,11 @@ export default function GameBoard({
         const timeSinceLastDraw = game.global.lastDraw
           ? now - game.global.lastDraw
           : 0;
+
         game.global.lastDraw = now;
         const events = createEvents(game, timeSinceLastDraw);
         handleEvents(events);
+
         drawGameState(ctx, global, ball, player, player2);
         const state = { ball, player, player2, global };
         if (game.global.play) {
@@ -107,12 +109,6 @@ export default function GameBoard({
     }
     return () => cancelAnimationFrame(currentFrame);
   }, [game]);
-
-  // React.useEffect(() => {
-  //   if (game) {
-  //     const { global, ball, player, player2 } = game;
-  //   }
-  // }, [game]);
 
   return (
     <GameContainer>

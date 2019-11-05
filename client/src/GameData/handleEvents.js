@@ -1,6 +1,6 @@
-export function createEvents(game) {
+export function createEvents(game, timeSinceLastDraw) {
   const { player, player2, global, ball } = game;
-  const fraction = global.lastDraw / 1000;
+  const fraction = timeSinceLastDraw / 1000;
   return [
     {
       name: "Ball and the Wall left and right",
