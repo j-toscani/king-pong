@@ -110,6 +110,8 @@ export default function GameBoard({
     return () => cancelAnimationFrame(currentFrame);
   }, [game]);
 
+  console.log("the game: ", game);
+
   return (
     <GameContainer>
       <HeartRow p1 lifes={lifes.you}></HeartRow>
