@@ -1,5 +1,5 @@
 import React from "react";
-import HeaderPointer from "../components/Header/HeaderPointer";
+import HeaderPointer from "../components/header/HeaderPointer";
 import HeaderLogo from "../components/HeaderLogo";
 
 export default {

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import HeaderPointer from "../components/Header/HeaderPointer";
+import HeaderPointer from "../components/header/HeaderPointer";
 import ProfileData from "../components/ProfileData";
 
 const Container = styled.main`
