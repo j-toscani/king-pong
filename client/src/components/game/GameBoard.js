@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import HeartRow from "./HeartRow";
 import { useHistory } from "react-router-dom";
 import drawGameState from "../../gameData/draw";
@@ -21,13 +21,6 @@ const GameContainer = styled.section`
   position: relative;
 `;
 
-const Modal = styled.dialog`
-  border: none;
-  padding: 0;
-  margin: auto;
-  background: transparent;
-`;
-
 export default function GameBoard({ connectedTo, handleSession }) {
   let history = useHistory();
 
@@ -39,7 +32,6 @@ export default function GameBoard({ connectedTo, handleSession }) {
 
   const [lifes, setLifes] = React.useState({ playerOne: 5, playerTwo: 5 });
   const canvasRef = React.useRef(null);
-  const modal = React.useRef(null);
 
   function saveWinLossData(result) {
     let count = getItem(result) || 0;
@@ -53,22 +45,23 @@ export default function GameBoard({ connectedTo, handleSession }) {
       updateGame(frame);
     });
     socket.on("playerTwo lost a life", newLifes => {
+      console.log(newLifes);
       setLifes(newLifes);
     });
     socket.on("playerOne lost a life", newLifes => {
+      console.log(newLifes);
       setLifes(newLifes);
     });
 
-    socket.on("game ended", () => console.log("ended"));
-    socket.on("opponent conceded", () => {
-      handleSession(socket, "leave");
+    socket.on("opponent conceded", user => {
+      console.log(user, " conceded");
     });
     socket.emit("first frame", "first frame");
 
     return () => {
       connectedTo.socket.removeAllListeners();
     };
-  }, []);
+  }, [lifes]);
 
   React.useEffect(() => {
     let currentFrame;
@@ -113,10 +106,14 @@ export default function GameBoard({ connectedTo, handleSession }) {
         ref={canvasRef}
         width="300"
         height="400"
-      ></StyledCanvas>
-      <Modal ref={modal}>
-        <WinLossWindow lifes={lifes} handleClick={handleGameEnding} />
-      </Modal>
+      >
+        {(lifes.playerTwo === 0 && (
+          <WinLossWindow lifes={lifes} handleClick={handleGameEnding} />
+        )) ||
+          (lifes.playerOne === 0 && (
+            <WinLossWindow lifes={lifes} handleClick={handleGameEnding} />
+          ))}
+      </StyledCanvas>
     </GameContainer>
   );
 }

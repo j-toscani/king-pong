@@ -38,6 +38,7 @@ export default function GameRoom({
     return () => {
       const { connected, socket, player } = { ...connectedTo };
       setConnectionTo({ connected, socket, player, ready: false });
+      socket.removeAllListeners();
       handleSession(socket, "leave");
     };
   }, []);

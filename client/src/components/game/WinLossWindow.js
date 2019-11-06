@@ -10,12 +10,15 @@ const Headline = styled.h3`
 
 const StyledWindowSee = styled(StyledWindow)`
   opacity: 0.8;
+  z-index: 15;
+  position: absolute;
 `;
 
 function WinLossWindow({ handleClick, lifes }) {
+  console.log(lifes);
   return (
     <>
-      {lifes && lifes.playerTwo === 0 && (
+      {lifes.playerTwo === 0 && (
         <StyledWindowSee>
           <Headline>You won!</Headline>
           <p>Your opponent either condeded or lost all lifes!</p>
@@ -24,7 +27,7 @@ function WinLossWindow({ handleClick, lifes }) {
           </Button>
         </StyledWindowSee>
       )}
-      {lifes && lifes.playerOne === 0 && (
+      {lifes.playerOne === 0 && (
         <StyledWindowSee>
           <Headline>You lost!</Headline>
           <Button active onClick={handleClick}>

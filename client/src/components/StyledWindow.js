@@ -2,7 +2,6 @@ import styled, { css } from "styled-components";
 
 const StyledWindow = styled.div`
   display: flex;
-
   border-radius: 0 0 10px 10px;
   background: ${props => props.theme.contrast};
   height: 250px;
