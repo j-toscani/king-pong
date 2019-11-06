@@ -30,13 +30,13 @@ export default function Main({ setSettings, settings }) {
   function handleSessionAction(socket, event) {
     switch (event) {
       case "join":
-        socket.emit("join room", "joined room");
+        socket.emit("join room", getItem("nickname"));
         break;
       case "create":
-        socket.emit("create room", "created room");
+        socket.emit("create room", getItem("nickname"));
         break;
       case "leave":
-        socket.emit("leave room", "left room");
+        socket.emit("leave room", getItem("nickname"));
         break;
       default:
         alert("Dude, choose an event!");
