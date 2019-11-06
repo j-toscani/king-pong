@@ -30,14 +30,17 @@ export default function GameRoom({
   }
 
   function togglePressedPlayer(direction, action) {
-    const state = { ...playerPressed };
-    state[direction] = !state[direction];
-    setPlayerPressed(state);
+    // const state = { ...playerPressed };
+    // state[direction] = !state[direction];
+    // setPlayerPressed(state);
+    const infoToServer = { player: connectedTo.player, direction };
     const { socket } = connectedTo;
     if (action === "release") {
-      socket.emit("release button", direction);
-    } else if (action === "tap") socket.emit("tap button", direction);
+      socket.emit("release button", infoToServer);
+    } else if (action === "tap") socket.emit("tap button", infoToServer);
   }
+
+  console.log(connectedTo);
 
   function togglePressedOpponent(direction, action) {
     const state = { ...opponentPressed };
@@ -51,6 +54,10 @@ export default function GameRoom({
 
   React.useEffect(() => {
     const { socket } = connectedTo;
+    socket.on("set player", number => {
+      const { connected, socket } = { ...connectedTo };
+      setConnectionTo({ connected, player: number, socket, ready: true });
+    });
     socket.on("release button", direction => {
       togglePressedOpponent(direction, "release");
     });
@@ -58,8 +65,8 @@ export default function GameRoom({
       togglePressedOpponent(direction, "tap");
     });
     return () => {
-      const { connected, socket } = connectedTo;
-      setConnectionTo({ connected, socket, ready: false });
+      const { connected, socket, player } = { ...connectedTo };
+      setConnectionTo({ connected, socket, player, ready: false });
       handleSession(socket, "leave");
     };
   }, []);

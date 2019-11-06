@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import HeartRow from "./HeartRow";
 import { useHistory } from "react-router-dom";
 import drawGameState from "../../gameData/draw";
@@ -9,6 +9,7 @@ import handleEvents, { createEvents } from "../../gameData/handleEvents";
 
 const StyledCanvas = styled.canvas`
   background: ${props => props.theme.accent};
+  transform: ${props => (props.rotate ? "rotate(180deg)" : "none")};
   width: 300px;
   height: 400px;
 `;
@@ -89,7 +90,7 @@ export default function GameBoard({
     let ctx = canvas.getContext("2d");
     if (game) {
       const drawLoop = game => {
-        const { ball, player, player2, global } = game;
+        const { ball, player1, player2, global } = game;
         const now = Date.now();
         const timeSinceLastDraw = game.global.lastDraw
           ? now - game.global.lastDraw
@@ -99,8 +100,8 @@ export default function GameBoard({
         const events = createEvents(game, timeSinceLastDraw);
         handleEvents(events);
 
-        drawGameState(ctx, global, ball, player, player2);
-        const state = { ball, player, player2, global };
+        drawGameState(ctx, global, ball, player1, player2);
+
         if (game.global.play) {
           currentFrame = requestAnimationFrame(() => drawLoop(game));
         }
@@ -110,14 +111,19 @@ export default function GameBoard({
     return () => cancelAnimationFrame(currentFrame);
   }, [game]);
 
-  console.log("the game: ", game);
+  console.log(connectedTo.player === "2");
 
   return (
     <GameContainer>
       <HeartRow p1 lifes={lifes.you}></HeartRow>
       <HeartRow p1={false} lifes={lifes.opponent}></HeartRow>
 
-      <StyledCanvas width="300" height="400" ref={canvasRef}></StyledCanvas>
+      <StyledCanvas
+        rotate={connectedTo.player === "2"}
+        ref={canvasRef}
+        width="300"
+        height="400"
+      ></StyledCanvas>
       <Modal ref={modal}>
         <WinLossWindow lifes={lifes} handleClick={handleGameEnding} />
       </Modal>
