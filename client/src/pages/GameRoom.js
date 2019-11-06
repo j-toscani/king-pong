@@ -14,25 +14,14 @@ export default function GameRoom({
   setConnectionTo
 }) {
   let history = useHistory();
-  const [playerPressed, setPlayerPressed] = React.useState({
-    left: false,
-    right: false
-  });
-  const [opponentPressed, setOpponentPressed] = React.useState({
-    left: false,
-    right: false
-  });
 
   function handleConcede() {
     history.push(`/main`);
-    const { socket } = connectedTo;
-    socket.emit("conceded", "condeded");
+    const { socket, player } = connectedTo;
+    socket.emit("conceded", player);
   }
 
-  function togglePressedPlayer(direction, action) {
-    // const state = { ...playerPressed };
-    // state[direction] = !state[direction];
-    // setPlayerPressed(state);
+  function togglePressed(direction, action) {
     const infoToServer = { player: connectedTo.player, direction };
     const { socket } = connectedTo;
     if (action === "release") {
@@ -40,29 +29,11 @@ export default function GameRoom({
     } else if (action === "tap") socket.emit("tap button", infoToServer);
   }
 
-  console.log(connectedTo);
-
-  function togglePressedOpponent(direction, action) {
-    const state = { ...opponentPressed };
-    if (action === "tap") {
-      state[direction] = true;
-    } else if (action === "release") {
-      state[direction] = false;
-    }
-    setOpponentPressed(state);
-  }
-
   React.useEffect(() => {
     const { socket } = connectedTo;
     socket.on("set player", number => {
       const { connected, socket } = { ...connectedTo };
       setConnectionTo({ connected, player: number, socket, ready: true });
-    });
-    socket.on("release button", direction => {
-      togglePressedOpponent(direction, "release");
-    });
-    socket.on("tap button", direction => {
-      togglePressedOpponent(direction, "tap");
     });
     return () => {
       const { connected, socket, player } = { ...connectedTo };
@@ -77,8 +48,6 @@ export default function GameRoom({
       <GameRoomContainer>
         <ConcedeButton onClick={handleConcede}>Concede</ConcedeButton>
         <GameBoard
-          opponentPressed={opponentPressed}
-          playerPressed={playerPressed}
           connectedTo={connectedTo}
           handleSession={handleSession}
         ></GameBoard>
@@ -86,19 +55,19 @@ export default function GameRoom({
           <GameInput
             direction={"left"}
             handleTap={() => {
-              togglePressedPlayer("left", "tap");
+              togglePressed("left", "tap");
             }}
             handleRelease={() => {
-              togglePressedPlayer("left", "release");
+              togglePressed("left", "release");
             }}
           ></GameInput>
           <GameInput
             direction={"right"}
             handleTap={() => {
-              togglePressedPlayer("right", "tap");
+              togglePressed("right", "tap");
             }}
             handleRelease={() => {
-              togglePressedPlayer("right", "release");
+              togglePressed("right", "release");
             }}
           ></GameInput>
         </InputContainer>

@@ -9,9 +9,10 @@ import handleEvents, { createEvents } from "../../gameData/handleEvents";
 
 const StyledCanvas = styled.canvas`
   background: ${props => props.theme.accent};
-  transform: ${props => (props.rotate ? "rotate(180deg)" : "none")};
   width: 300px;
   height: 400px;
+
+  transform: ${props => (props.player2View ? "rotate(180deg)" : "none")};
 `;
 
 const GameContainer = styled.section`
@@ -27,12 +28,7 @@ const Modal = styled.dialog`
   background: transparent;
 `;
 
-export default function GameBoard({
-  opponentPressed,
-  playerPressed,
-  connectedTo,
-  handleSession
-}) {
+export default function GameBoard({ connectedTo, handleSession }) {
   let history = useHistory();
 
   function handleGameEnding() {
@@ -41,24 +37,9 @@ export default function GameBoard({
 
   const [game, updateGame] = React.useState(false);
 
-  const [move, toggleMovement] = React.useState({
-    movePLayerLeft: false,
-    movePlayerRight: false,
-    moveOpponentLeft: false,
-    moveOpponentRight: false
-  });
-  const [lifes, setLifes] = React.useState({ you: 4, opponent: 2 });
+  const [lifes, setLifes] = React.useState({ playerOne: 5, playerTwo: 5 });
   const canvasRef = React.useRef(null);
   const modal = React.useRef(null);
-
-  React.useEffect(() => {
-    toggleMovement({
-      movePlayerLeft: playerPressed.left,
-      movePlayerRight: playerPressed.right,
-      moveOpponentLeft: opponentPressed.left,
-      moveOpponentRight: opponentPressed.right
-    });
-  }, [playerPressed, opponentPressed]);
 
   function saveWinLossData(result) {
     let count = getItem(result) || 0;
@@ -71,11 +52,16 @@ export default function GameBoard({
     socket.on("new frame", frame => {
       updateGame(frame);
     });
+    socket.on("playerTwo lost a life", newLifes => {
+      setLifes(newLifes);
+    });
+    socket.on("playerOne lost a life", newLifes => {
+      setLifes(newLifes);
+    });
+
+    socket.on("game ended", () => console.log("ended"));
     socket.on("opponent conceded", () => {
-      const state = { ...lifes };
-      state["you"] = 0;
       handleSession(socket, "leave");
-      setLifes(state);
     });
     socket.emit("first frame", "first frame");
 
@@ -111,15 +97,19 @@ export default function GameBoard({
     return () => cancelAnimationFrame(currentFrame);
   }, [game]);
 
-  console.log(connectedTo.player === "2");
-
   return (
     <GameContainer>
-      <HeartRow p1 lifes={lifes.you}></HeartRow>
-      <HeartRow p1={false} lifes={lifes.opponent}></HeartRow>
+      <HeartRow
+        p1={Number(connectedTo.player) === 2}
+        lifes={lifes.playerTwo}
+      ></HeartRow>
+      <HeartRow
+        p1={Number(connectedTo.player) === 1}
+        lifes={lifes.playerOne}
+      ></HeartRow>
 
       <StyledCanvas
-        rotate={connectedTo.player === "2"}
+        player2View={Number(connectedTo.player) === 2}
         ref={canvasRef}
         width="300"
         height="400"
