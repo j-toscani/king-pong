@@ -28,6 +28,11 @@ export default function initChatListeners(
     setConnection({ connected, socket, opponent, ready: false });
   });
 
+  socket.on("start countdown", () => {
+    const { connected, socket, opponent } = connection;
+    setConnection({ connected, socket, opponent, ready: false });
+  });
+
   socket.on("game start", () => {
     routeTo("game");
   });

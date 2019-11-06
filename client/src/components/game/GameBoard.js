@@ -2,9 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import HeartRow from "./HeartRow";
 import { useHistory } from "react-router-dom";
-import draw from "../../gameData/draw";
+import drawGameState from "../../gameData/draw";
 import WinLossWindow from "./WinLossWindow";
-import initGameState from "../../gameData/initGameState";
+import { getItem, setItem } from "../../ressources/scripts/storage";
+import handleEvents, { createEvents } from "../../gameData/handleEvents";
 
 const StyledCanvas = styled.canvas`
   background: ${props => props.theme.accent};
@@ -37,18 +38,15 @@ export default function GameBoard({
     history.push(`/main`);
   }
 
-  const [play, setPlay] = React.useState(false);
+  const [game, updateGame] = React.useState(false);
+
   const [move, toggleMovement] = React.useState({
     movePLayerLeft: false,
     movePlayerRight: false,
     moveOpponentLeft: false,
     moveOpponentRight: false
   });
-
-  const [game, updateGame] = React.useState(() =>
-    initGameState(connectedTo.opponent)
-  );
-  const [lifes, setLifes] = React.useState({ you: 2, opponent: 2 });
+  const [lifes, setLifes] = React.useState({ you: 4, opponent: 2 });
   const canvasRef = React.useRef(null);
   const modal = React.useRef(null);
 
@@ -61,34 +59,58 @@ export default function GameBoard({
     });
   }, [playerPressed, opponentPressed]);
 
+  function saveWinLossData(result) {
+    let count = getItem(result) || 0;
+    count += 1;
+    setItem(result, count);
+  }
+
   React.useEffect(() => {
-    if (game && lifes.you > 0 && lifes.opponent > 0) {
-      let canvas = canvasRef.current;
-      let ctx = canvas.getContext("2d");
-      let currentFrame;
-
-      if (lifes && !play) {
-        connectedTo.socket.on("opponent conceded", () => {
-          const state = { ...lifes };
-          state.opponent = 0;
-          setLifes(state);
-        });
-        setPlay(true);
-      }
-
-      draw(ctx, game, play, updateGame, currentFrame, move, lifes, setLifes);
-      return () => {
-        cancelAnimationFrame(currentFrame);
-      };
-    } else if (
-      !modal.current.open &&
-      (lifes.opponent === 0 || lifes.you === 0)
-    ) {
-      modal.current.showModal();
-      const { socket } = connectedTo;
+    const { socket } = connectedTo;
+    socket.on("new frame", frame => {
+      updateGame(frame);
+    });
+    socket.on("opponent conceded", () => {
+      const state = { ...lifes };
+      state["you"] = 0;
       handleSession(socket, "leave");
+      setLifes(state);
+    });
+    socket.emit("first frame", "first frame");
+
+    return () => {
+      connectedTo.socket.removeAllListeners();
+    };
+  }, []);
+
+  React.useEffect(() => {
+    let currentFrame;
+    let canvas = canvasRef.current;
+    let ctx = canvas.getContext("2d");
+    if (game) {
+      const drawLoop = game => {
+        const { ball, player, player2, global } = game;
+        const now = Date.now();
+        const timeSinceLastDraw = game.global.lastDraw
+          ? now - game.global.lastDraw
+          : 0;
+
+        game.global.lastDraw = now;
+        const events = createEvents(game, timeSinceLastDraw);
+        handleEvents(events);
+
+        drawGameState(ctx, global, ball, player, player2);
+        const state = { ball, player, player2, global };
+        if (game.global.play) {
+          currentFrame = requestAnimationFrame(() => drawLoop(game));
+        }
+      };
+      drawLoop(game);
     }
-  }, [lifes, move, play, connectedTo, handleSession]);
+    return () => cancelAnimationFrame(currentFrame);
+  }, [game]);
+
+  console.log("the game: ", game);
 
   return (
     <GameContainer>
