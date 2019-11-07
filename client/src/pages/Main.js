@@ -16,9 +16,7 @@ export default function Main({ setSettings, settings }) {
   }
 
   React.useEffect(() => {
-    const socket = REACT_APP_CLIENT_SOCKET_CONNECT
-      ? io(REACT_APP_CLIENT_SOCKET_CONNECT)
-      : io();
+    const socket = io();
     socket.emit("setname", getItem("nickname"));
     setConnectionTo({ connected: true, socket, player: false });
     return () => {
