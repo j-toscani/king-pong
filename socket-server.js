@@ -1,25 +1,22 @@
 const express = require("express");
 const path = require("path");
-const http = require("http");
 const dotenv = require("dotenv");
 const { initSocket } = require("./lib/socket");
 
 dotenv.config();
 
-const port = process.env.PORT || 8000;
+const express = require("express");
+const socketIO = require("socket.io");
+const path = require("path");
 
-const app = express();
+const PORT = process.env.PORT || 3000;
+const INDEX = path.join(__dirname, "index.html");
 
-if (process.env.NODE_ENV === "production") {
-  // Serve any static files
-  app.use(express.static(path.join(__dirname, "client/build")));
-  // Handle React routing, return all requests to React app
-  app.get("*", function(req, res) {
-    res.sendFile(path.join(__dirname, "client/build", "index.html"));
-  });
-}
+const server = express()
+  .use((req, res) => res.sendFile(INDEX))
+  .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
-const server = http.createServer(app);
+const io = socketIO(server);
 
 initSocket(server).then(() =>
   server.listen(port, () => console.log(`Listening on port ${port}`))
