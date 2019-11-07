@@ -8,11 +8,13 @@ const path = require("path");
 
 const PORT = process.env.PORT || 3000;
 
-const server = express()
-  .use(path.join(__dirname, "client/build"))
-  .get("*", function(req, res) {
-    res.sendFile(path.join(__dirname, "client/build", "index.html"));
-  })
-  .listen(PORT, () => console.log(`Listening on ${PORT}`));
+const app = express();
+
+app.use(express.static(path.join(__dirname, "client/build")));
+app.get("*", function(req, res) {
+  res.sendFile(path.join(__dirname, "client/build", "index.html"));
+});
+
+const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 initSocket(server);
