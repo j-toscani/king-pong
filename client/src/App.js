@@ -39,7 +39,7 @@ function App() {
     name: nickname || "Anonymous",
     wins: getItem("won") || 0,
     losses: getItem("lost") || 0,
-    rank: "#1"
+    rank: 1
   };
 
   return (
