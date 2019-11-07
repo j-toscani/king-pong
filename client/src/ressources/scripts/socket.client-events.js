@@ -14,23 +14,21 @@ export default function initChatListeners(
     newChatHistory.push(message);
     updateHistory(newChatHistory);
   });
-  socket.on("set player", () => {
-    const { connected, socket } = connection;
-    setConnection({ connected, opponent: false, socket, ready: true });
-  });
-  socket.on("set opponent", () => {
-    const { connected, socket } = connection;
-    setConnection({ connected, opponent: true, socket, ready: true });
+
+  socket.on("game ready", () => {
+    const { connected, socket, player } = connection;
+    setConnection({ connected, socket, player, ready: true });
   });
 
   socket.on("game not ready", () => {
-    const { connected, socket, opponent } = connection;
-    setConnection({ connected, socket, opponent, ready: false });
+    const { connected, socket, player } = connection;
+    setConnection({ connected, socket, player, ready: false });
   });
 
   socket.on("start countdown", () => {
-    const { connected, socket, opponent } = connection;
-    setConnection({ connected, socket, opponent, ready: false });
+    const { connected, socket, player } = connection;
+
+    setConnection({ connected, socket, player, ready: false });
   });
 
   socket.on("game start", () => {

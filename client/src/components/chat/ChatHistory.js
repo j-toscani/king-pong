@@ -13,7 +13,6 @@ const ChatDisplay = styled.div`
 `;
 
 function ChatHistory({ messages }) {
-  console.log(messages);
   return (
     <ChatDisplay>
       {messages &&

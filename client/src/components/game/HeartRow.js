@@ -5,6 +5,7 @@ import SingleHeart from "../../ressources/icons/SingleHeart";
 const Container = styled.div`
   background: "transparent";
   position: absolute;
+  z-index: 10;
   ${props =>
     props.p1
       ? css`

@@ -6,6 +6,7 @@ import HeaderLogo from "../components/header/HeaderLogo";
 import GameInput from "../components/game/GameInput";
 import ConcedeButton from "../components/game/ConcedeButton";
 import GameBoard from "../components/game/GameBoard";
+import { getItem, setItem } from "../ressources/scripts/storage";
 import { useHistory } from "react-router-dom";
 
 export default function GameRoom({
@@ -14,52 +15,41 @@ export default function GameRoom({
   setConnectionTo
 }) {
   let history = useHistory();
-  const [playerPressed, setPlayerPressed] = React.useState({
-    left: false,
-    right: false
-  });
-  const [opponentPressed, setOpponentPressed] = React.useState({
-    left: false,
-    right: false
-  });
+
+  function saveWinLossData(ending) {
+    const result = ending ? "win" : "lost";
+    let count = getItem(result) || 0;
+    count += 1;
+    setItem(result, count);
+  }
 
   function handleConcede() {
     history.push(`/main`);
-    const { socket } = connectedTo;
-    socket.emit("conceded", "condeded");
+    const { socket, player } = connectedTo;
+    const lost = !true;
+    saveWinLossData(lost);
+    socket.emit("conceded", player);
   }
 
-  function togglePressedPlayer(direction, action) {
-    const state = { ...playerPressed };
-    state[direction] = !state[direction];
-    setPlayerPressed(state);
+  function togglePressed(direction, action) {
+    const infoToServer = { player: connectedTo.player, direction };
     const { socket } = connectedTo;
     if (action === "release") {
-      socket.emit("release button", direction);
-    } else if (action === "tap") socket.emit("tap button", direction);
-  }
-
-  function togglePressedOpponent(direction, action) {
-    const state = { ...opponentPressed };
-    if (action === "tap") {
-      state[direction] = true;
-    } else if (action === "release") {
-      state[direction] = false;
-    }
-    setOpponentPressed(state);
+      socket.emit("release button", infoToServer);
+    } else if (action === "tap") socket.emit("tap button", infoToServer);
   }
 
   React.useEffect(() => {
     const { socket } = connectedTo;
-    socket.on("release button", direction => {
-      togglePressedOpponent(direction, "release");
+    socket.on("set player", number => {
+      const { connected, socket } = { ...connectedTo };
+      setConnectionTo({ connected, player: number, socket, ready: true });
     });
-    socket.on("tap button", direction => {
-      togglePressedOpponent(direction, "tap");
-    });
+
     return () => {
-      const { connected, socket } = connectedTo;
-      setConnectionTo({ connected, socket, ready: false });
+      const { connected, socket, player } = { ...connectedTo };
+      setConnectionTo({ connected, socket, player, ready: false });
+      socket.removeAllListeners();
       handleSession(socket, "leave");
     };
   }, []);
@@ -70,28 +60,27 @@ export default function GameRoom({
       <GameRoomContainer>
         <ConcedeButton onClick={handleConcede}>Concede</ConcedeButton>
         <GameBoard
-          opponentPressed={opponentPressed}
-          playerPressed={playerPressed}
           connectedTo={connectedTo}
           handleSession={handleSession}
+          saveWinLossData={saveWinLossData}
         ></GameBoard>
         <InputContainer>
           <GameInput
             direction={"left"}
             handleTap={() => {
-              togglePressedPlayer("left", "tap");
+              togglePressed("left", "tap");
             }}
             handleRelease={() => {
-              togglePressedPlayer("left", "release");
+              togglePressed("left", "release");
             }}
           ></GameInput>
           <GameInput
             direction={"right"}
             handleTap={() => {
-              togglePressedPlayer("right", "tap");
+              togglePressed("right", "tap");
             }}
             handleRelease={() => {
-              togglePressedPlayer("right", "release");
+              togglePressed("right", "release");
             }}
           ></GameInput>
         </InputContainer>

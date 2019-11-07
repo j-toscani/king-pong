@@ -1,5 +1,5 @@
 export function createEvents(game, timeSinceLastDraw) {
-  const { player, player2, global, ball } = game;
+  const { player1, player2, global, ball } = game;
   const fraction = timeSinceLastDraw / 1000;
   return [
     {
@@ -33,15 +33,15 @@ export function createEvents(game, timeSinceLastDraw) {
       case: ball.y > global.y - ball.h,
       result: () => {
         ball.dy *= -1;
-        player.lifes -= 1;
+        player1.lifes -= 1;
       }
     },
     {
       name: "Ball and player",
       case:
-        ball.y + ball.h > player.y &&
-        ball.y < player.y + player.h &&
-        (ball.x > player.x && ball.x < player.x + player.w),
+        ball.y + ball.h > player1.y &&
+        ball.y < player1.y + player1.h &&
+        (ball.x > player1.x && ball.x < player1.x + player1.w),
       result: () => {
         if (ball.dy > 0 && ball.dx > 0) {
           ball.dy += 2;
@@ -103,13 +103,13 @@ export function createEvents(game, timeSinceLastDraw) {
     },
     {
       name: "progression Loop",
-      case: player.lifes > 0 && player2.lifes > 0,
+      case: player1.lifes > 0 && player2.lifes > 0,
       result: () => {
         ball.x += ball.dx * fraction;
         ball.y += ball.dy * fraction;
 
-        player.x += player.dx * fraction;
-        player.x += player.dx * fraction;
+        player1.x += player1.dx * fraction;
+        player2.x += player2.dx * fraction;
       }
     }
   ];
