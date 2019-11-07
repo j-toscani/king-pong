@@ -37,10 +37,9 @@ function App() {
 
   const user = {
     name: nickname || "Anonymous",
-    wins: 5,
-    losses: 2,
-    rank: 3,
-    players: 2
+    wins: getItem("won") || 0,
+    losses: getItem("lost") || 0,
+    rank: "#1"
   };
 
   return (

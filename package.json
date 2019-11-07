@@ -1,5 +1,5 @@
 {
-  "name": "example-create-react-app-express",
+  "name": "kingpong-socket-server",
   "version": "1.0.0",
   "scripts": {
     "start": "node socket-server.js",
@@ -9,7 +9,6 @@
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
   "dependencies": {
-    "body-parser": "^1.18.3",
     "dotenv": "^8.2.0",
     "express": "^4.16.4",
     "socket.io": "^2.3.0"
