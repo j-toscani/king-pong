@@ -35,6 +35,7 @@ export default function GameRoom({
       const { connected, socket } = { ...connectedTo };
       setConnectionTo({ connected, player: number, socket, ready: true });
     });
+
     return () => {
       const { connected, socket, player } = { ...connectedTo };
       setConnectionTo({ connected, socket, player, ready: false });

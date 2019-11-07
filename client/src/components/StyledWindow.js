@@ -5,7 +5,7 @@ const StyledWindow = styled.div`
   border-radius: 0 0 10px 10px;
   background: ${props => props.theme.contrast};
   height: 250px;
-  width: 290px;
+  width: 280px;
   ${props =>
     props.chat
       ? css`

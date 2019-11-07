@@ -11,7 +11,6 @@ const StyledCanvas = styled.canvas`
   background: ${props => props.theme.accent};
   width: 300px;
   height: 400px;
-
   transform: ${props => (props.player2View ? "rotate(180deg)" : "none")};
 `;
 
@@ -21,14 +20,14 @@ const GameContainer = styled.section`
   position: relative;
 `;
 
-export default function GameBoard({ connectedTo, handleSession }) {
+export default function GameBoard({ connectedTo }) {
   let history = useHistory();
 
   function handleGameEnding() {
     history.push(`/main`);
   }
 
-  const [game, updateGame] = React.useState(false);
+  const [game, updateGame] = React.useState();
 
   const [lifes, setLifes] = React.useState({ playerOne: 5, playerTwo: 5 });
   const canvasRef = React.useRef(null);
@@ -45,46 +44,45 @@ export default function GameBoard({ connectedTo, handleSession }) {
       updateGame(frame);
     });
     socket.on("playerTwo lost a life", newLifes => {
-      console.log(newLifes);
       setLifes(newLifes);
     });
+    socket.on("game ended", game => {
+      game.global.play = "ended";
+      updateGame(game);
+    });
     socket.on("playerOne lost a life", newLifes => {
-      console.log(newLifes);
       setLifes(newLifes);
     });
 
-    socket.on("opponent conceded", user => {
-      console.log(user, " conceded");
-    });
     socket.emit("first frame", "first frame");
 
     return () => {
       connectedTo.socket.removeAllListeners();
     };
-  }, [lifes]);
+  }, []);
 
   React.useEffect(() => {
     let currentFrame;
     let canvas = canvasRef.current;
     let ctx = canvas.getContext("2d");
-    if (game) {
-      const drawLoop = game => {
-        const { ball, player1, player2, global } = game;
-        const now = Date.now();
-        const timeSinceLastDraw = game.global.lastDraw
-          ? now - game.global.lastDraw
-          : 0;
 
-        game.global.lastDraw = now;
-        const events = createEvents(game, timeSinceLastDraw);
-        handleEvents(events);
+    const drawLoop = game => {
+      const { ball, player1, player2, global } = game;
+      const now = Date.now();
+      const timeSinceLastDraw = game.global.lastDraw
+        ? now - game.global.lastDraw
+        : 0;
 
-        drawGameState(ctx, global, ball, player1, player2);
+      game.global.lastDraw = now;
+      const events = createEvents(game, timeSinceLastDraw);
+      handleEvents(events);
 
-        if (game.global.play) {
-          currentFrame = requestAnimationFrame(() => drawLoop(game));
-        }
-      };
+      drawGameState(ctx, global, ball, player1, player2);
+      if (game.global.play) {
+        currentFrame = requestAnimationFrame(() => drawLoop(game));
+      }
+    };
+    if (game && game.global.play !== "ended") {
       drawLoop(game);
     }
     return () => cancelAnimationFrame(currentFrame);
@@ -100,20 +98,18 @@ export default function GameBoard({ connectedTo, handleSession }) {
         p1={Number(connectedTo.player) === 1}
         lifes={lifes.playerOne}
       ></HeartRow>
-
       <StyledCanvas
         player2View={Number(connectedTo.player) === 2}
         ref={canvasRef}
         width="300"
         height="400"
-      >
-        {(lifes.playerTwo === 0 && (
-          <WinLossWindow lifes={lifes} handleClick={handleGameEnding} />
-        )) ||
-          (lifes.playerOne === 0 && (
-            <WinLossWindow lifes={lifes} handleClick={handleGameEnding} />
-          ))}
-      </StyledCanvas>
+      ></StyledCanvas>
+      {game && game.global.play === "ended" && (
+        <WinLossWindow
+          result={game.global.winner}
+          handleClick={handleGameEnding}
+        />
+      )}
     </GameContainer>
   );
 }
