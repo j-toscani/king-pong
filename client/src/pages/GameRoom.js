@@ -6,6 +6,7 @@ import HeaderLogo from "../components/header/HeaderLogo";
 import GameInput from "../components/game/GameInput";
 import ConcedeButton from "../components/game/ConcedeButton";
 import GameBoard from "../components/game/GameBoard";
+import { getItem, setItem } from "../ressources/scripts/storage";
 import { useHistory } from "react-router-dom";
 
 export default function GameRoom({
@@ -15,9 +16,18 @@ export default function GameRoom({
 }) {
   let history = useHistory();
 
+  function saveWinLossData(ending) {
+    const result = ending ? "win" : "lost";
+    let count = getItem(result) || 0;
+    count += 1;
+    setItem(result, count);
+  }
+
   function handleConcede() {
     history.push(`/main`);
     const { socket, player } = connectedTo;
+    const lost = !true;
+    saveWinLossData(lost);
     socket.emit("conceded", player);
   }
 
@@ -52,6 +62,7 @@ export default function GameRoom({
         <GameBoard
           connectedTo={connectedTo}
           handleSession={handleSession}
+          saveWinLossData={saveWinLossData}
         ></GameBoard>
         <InputContainer>
           <GameInput

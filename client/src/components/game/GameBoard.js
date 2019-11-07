@@ -4,7 +4,7 @@ import HeartRow from "./HeartRow";
 import { useHistory } from "react-router-dom";
 import drawGameState from "../../gameData/draw";
 import WinLossWindow from "./WinLossWindow";
-import { getItem, setItem } from "../../ressources/scripts/storage";
+
 import handleEvents, { createEvents } from "../../gameData/handleEvents";
 
 const StyledCanvas = styled.canvas`
@@ -20,7 +20,7 @@ const GameContainer = styled.section`
   position: relative;
 `;
 
-export default function GameBoard({ connectedTo }) {
+export default function GameBoard({ connectedTo, saveWinLossData }) {
   let history = useHistory();
 
   function handleGameEnding() {
@@ -32,12 +32,6 @@ export default function GameBoard({ connectedTo }) {
   const [lifes, setLifes] = React.useState({ playerOne: 5, playerTwo: 5 });
   const canvasRef = React.useRef(null);
 
-  function saveWinLossData(result) {
-    let count = getItem(result) || 0;
-    count += 1;
-    setItem(result, count);
-  }
-
   React.useEffect(() => {
     const { socket } = connectedTo;
     socket.on("new frame", frame => {
@@ -48,6 +42,7 @@ export default function GameBoard({ connectedTo }) {
     });
     socket.on("game ended", game => {
       game.global.play = "ended";
+      saveWinLossData(game.global.winner);
       updateGame(game);
     });
     socket.on("playerOne lost a life", newLifes => {

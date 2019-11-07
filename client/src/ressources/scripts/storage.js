@@ -1,4 +1,4 @@
-const storage = sessionStorage;
+const storage = localStorage;
 
 export function getItem(key) {
   const jsonValue = storage.getItem(key);
