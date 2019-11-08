@@ -1,15 +1,21 @@
-const express = require("express");
-const http = require("http");
 const dotenv = require("dotenv");
 const { initSocket } = require("./lib/socket");
 
 dotenv.config();
 
-const port = process.env.PORT || 8000;
+const express = require("express");
+const path = require("path");
+
+const PORT = process.env.PORT;
+console.log(PORT);
 
 const app = express();
-const server = http.createServer(app);
 
-initSocket(server).then(() =>
-  server.listen(port, () => console.log(`Listening on port ${port}`))
-);
+app.use(express.static(path.join(__dirname, "client/build")));
+app.get("*", function(req, res) {
+  res.sendFile(path.join(__dirname, "client/build", "index.html"));
+});
+
+const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
+
+initSocket(server);

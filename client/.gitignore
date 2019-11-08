@@ -8,9 +8,6 @@ node_modules
 # testing
 /coverage
 
-# production
-/build
-
 # misc
 .DS_Store
 .env.local
@@ -23,3 +20,4 @@ yarn-debug.log*
 yarn-error.log*
 
 storybook-static
+build

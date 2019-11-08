@@ -16,9 +16,7 @@ export default function Main({ setSettings, settings }) {
   }
 
   React.useEffect(() => {
-    const socket = io(
-      process.env.REACT_APP_CLIENT_SOCKET_CONNECT || "http://127.0.0.1:8000"
-    );
+    const socket = io();
     socket.emit("setname", getItem("nickname"));
     setConnectionTo({ connected: true, socket, player: false });
     return () => {

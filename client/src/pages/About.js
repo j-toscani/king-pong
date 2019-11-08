@@ -25,11 +25,11 @@ export default function About() {
       <Container>
         <GameInfo>
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sit, sint!
-          Perspiciatis impedit quibusdam esse necessitatibus labore? Quae error
-          iusto explicabo sequi accusamus accusantium! Ad, quos aut quaerat
-          neque corrupti dolorem.Neque voluptatem, fugiat aperiam autem,
-          accusamus ipsam, provident ea tempora similique esse omnis voluptatum
-          dicta delectus! Et, nulla. Aut quia accusamus asperiores expedita iste
+          Perspiciatis impedit quibusdam necessitatibus labore? Quae error iusto
+          explicabo sequi accusamus accusantium! Ad, quos aut quaerat neque
+          corrupti dolorem.Neque voluptatem, fugiat aperiam autem, accusamus
+          ipsam, provident ea tempora similique esse omnis voluptatum dicta
+          delectus! Et, nulla. Aut quia accusamus asperiores expedita iste
           molestias, obcaecati assumenda quisquam ipsum saepe?
         </GameInfo>
         <GameInfo>
