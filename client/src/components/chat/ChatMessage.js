@@ -24,6 +24,5 @@ export default ChatMessage;
 
 ChatMessage.propTypes = {
   message: PropTypes.object,
-  p1 = PropTypes.bool
-}
-
+  p1: PropTypes.bool
+};

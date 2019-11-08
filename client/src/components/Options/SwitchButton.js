@@ -50,7 +50,7 @@ export default function SwitchButton({ id, mode, onClick }) {
 }
 
 SwitchButton.propTypes = {
-  id = PropTypes.string,
-  mode = PropTypes.bool,
-  onClick = PropTypes.func
-}
+  id: PropTypes.string,
+  mode: PropTypes.bool,
+  onClick: PropTypes.func
+};

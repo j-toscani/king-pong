@@ -46,5 +46,5 @@ function ProfileData({ user }) {
 export default ProfileData;
 
 ProfileData.propTypes = {
-  user = PropTypes.object
-}
+  user: PropTypes.object
+};

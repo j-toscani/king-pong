@@ -60,7 +60,7 @@ function GreetingWindow({ setNickname }) {
         onChange={event => setInputValue(event.target.value)}
       ></NameInput>
       <Button big active onClick={submitNickname}>
-        Start!
+        Click to set Name.
       </Button>
     </StyledWindowGreeting>
   );

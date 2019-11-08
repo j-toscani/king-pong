@@ -4,7 +4,7 @@ import SwitchButton from "./SwitchButton";
 import PropTypes from "prop-types";
 
 const Option = styled.div`
-  font-size: 24px;
+  font-size: 22px;
   width: 100%;
   display: flex;
   justify-content: space-between;

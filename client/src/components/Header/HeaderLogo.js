@@ -14,5 +14,5 @@ export default function HeaderLogo({ headline }) {
 }
 
 HeaderLogo.propTypes = {
-  headline = PropTypes.string
-}
+  headline: PropTypes.string
+};

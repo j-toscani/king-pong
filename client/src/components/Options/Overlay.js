@@ -12,7 +12,7 @@ const OverlayContainer = styled.section`
   width: 75vw;
   max-width: 360px;
   height: 100%;
-  min-height: 550px;
+  min-height: 450px;
   z-index: 2;
   display: flex;
   flex-direction: column;

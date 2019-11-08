@@ -17,7 +17,7 @@ const Sender = styled.label`
   color: ${props => props.theme.darkFont};
 `;
 
-const SubmitButton = styled.input`
+const SubmitButton = styled.button`
   height: 30px;
   border: none;
   outline: none;
@@ -62,7 +62,7 @@ function ChatBar({ onSubmitMessage }) {
         type="input"
         placeholder="Tap to start chatting!"
       ></Input>
-      <SubmitButton type="submit" />
+      <SubmitButton type="submit"></SubmitButton>
     </InputContainer>
   );
 }

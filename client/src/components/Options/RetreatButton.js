@@ -15,7 +15,7 @@ const RetreatStyled = styled.button`
           font-size: 24px;
           padding-left: 35px;
           padding-right: 10px;
-          width: 260px;
+          width: 100%;
           height: 55px;
           display: flex;
           align-items: center;

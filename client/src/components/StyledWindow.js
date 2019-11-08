@@ -25,5 +25,5 @@ const StyledWindow = styled.div`
 export default StyledWindow;
 
 StyledWindow.propTypes = {
-  chat = propTypes.bool
-}
+  chat: PropTypes.bool
+};

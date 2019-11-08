@@ -45,7 +45,7 @@ const Button = styled.button`
 export default Button;
 
 Button.propTypes = {
-  alter = PropTypes.bool,
-  big = PropTypes.bool,
-  disabled = PropTypes.bool
-}
+  alter: PropTypes.bool,
+  big: PropTypes.bool,
+  disabled: PropTypes.bool
+};
