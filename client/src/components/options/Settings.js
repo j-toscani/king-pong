@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import SwitchButton from "./SwitchButton";
+import PropTypes from "prop-types";
 
 const Option = styled.div`
-  font-size: 24px;
+  font-size: 22px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -48,3 +49,8 @@ export default function Settings({ setSettings, settings }) {
     </Container>
   );
 }
+
+Settings.propTypes = {
+  setSettings: PropTypes.func,
+  settings: PropTypes.object
+};

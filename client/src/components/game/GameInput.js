@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Pointer from "../../ressources/icons/Pointer";
 import useWindowDimensions from "../../gameData/getWindowDimensions";
+import PropTypes from "prop-types";
 
 const StyledInputButton = styled.button`
   box-shadow: 0px 3px 6px;
@@ -42,3 +43,9 @@ function GameButton({ handleTap, handleRelease, direction }) {
 }
 
 export default GameButton;
+
+GameButton.propTypes = {
+  handleRelease: PropTypes.func,
+  handleTap: PropTypes.func,
+  direction: PropTypes.string
+};

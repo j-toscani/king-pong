@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import PropTypes from "prop-types";
 
 const Background = styled.div`
   display: inline-block;
@@ -47,3 +48,9 @@ export default function SwitchButton({ id, mode, onClick }) {
     </Background>
   );
 }
+
+SwitchButton.propTypes = {
+  id: PropTypes.string,
+  mode: PropTypes.bool,
+  onClick: PropTypes.func
+};

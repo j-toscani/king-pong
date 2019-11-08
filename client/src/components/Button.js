@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import PropTypes from "prop-types";
 
 const Button = styled.button`
   border-radius: 10px;
@@ -42,3 +43,9 @@ const Button = styled.button`
 `;
 
 export default Button;
+
+Button.propTypes = {
+  alter: PropTypes.bool,
+  big: PropTypes.bool,
+  disabled: PropTypes.bool
+};

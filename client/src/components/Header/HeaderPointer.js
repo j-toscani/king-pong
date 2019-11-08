@@ -4,6 +4,7 @@ import StyledHeader from "./StyledHeader";
 import StyledH2 from "./StyledH2";
 import InputFieldStyled from "./InputFieldStyled";
 import { useHistory } from "react-router-dom";
+import PropTypes from "prop-types";
 
 export default function HeaderPointer({ headline, rotate }) {
   let history = useHistory();
@@ -21,3 +22,8 @@ export default function HeaderPointer({ headline, rotate }) {
     </StyledHeader>
   );
 }
+
+HeaderPointer.propTypes = {
+  headline: PropTypes.string,
+  rotate: PropTypes.string
+};

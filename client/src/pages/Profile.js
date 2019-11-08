@@ -8,18 +8,11 @@ const Container = styled.main`
   flex-direction: column;
 `;
 
-const Image = styled.img`
-  max-width: 250px;
-  max-height: 250px;
-  margin-bottom: 100px;
-`;
-
 export default function Profile({ user }) {
   return (
     <>
       <HeaderPointer headline={"Profile"}></HeaderPointer>
       <Container>
-        {/* <Image src={img}></Image> */}
         <ProfileData user={user}></ProfileData>
       </Container>
     </>

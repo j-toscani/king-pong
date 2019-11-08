@@ -5,6 +5,7 @@ import { Input } from "./chat/ChatBar";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { getItem, setItem } from "../ressources/scripts/storage";
+import PropTypes from "prop-types";
 
 const NameInput = styled(Input)`
   border-radius: 10px;
@@ -39,14 +40,14 @@ function GreetingWindow({ setNickname }) {
   }
 
   function submitNickname() {
-    if (getItem() === null) {
+    if (getItem() === null && inputValue) {
       const nickname = inputValue;
       setNickname(nickname);
       alert(`Hello ${nickname}, let´s play Pong!`);
       setItem("nickname", nickname);
       routeTo("main");
-    } else {
-      alert("Please enter a nicknamme.");
+    } else if (!inputValue) {
+      alert("Please enter a new nicknamme.");
     }
   }
   return (
@@ -59,10 +60,14 @@ function GreetingWindow({ setNickname }) {
         onChange={event => setInputValue(event.target.value)}
       ></NameInput>
       <Button big active onClick={submitNickname}>
-        Start!
+        Click to set Name.
       </Button>
     </StyledWindowGreeting>
   );
 }
 
 export default GreetingWindow;
+
+GreetingWindow.propTypes = {
+  setNickname: PropTypes.func
+};

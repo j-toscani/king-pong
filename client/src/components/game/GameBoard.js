@@ -4,6 +4,7 @@ import HeartRow from "./HeartRow";
 import { useHistory } from "react-router-dom";
 import drawGameState from "../../gameData/draw";
 import WinLossWindow from "./WinLossWindow";
+import PropTypes from "prop-types";
 
 import handleEvents, { createEvents } from "../../gameData/handleEvents";
 
@@ -108,3 +109,8 @@ export default function GameBoard({ connectedTo, saveWinLossData }) {
     </GameContainer>
   );
 }
+
+GameBoard.propTypes = {
+  connectedTo: PropTypes.object,
+  saveWinLossData: PropTypes.func
+};

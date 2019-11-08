@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import SingleHeart from "../../ressources/icons/SingleHeart";
+import PropTypes from "prop-types";
 
 const Container = styled.div`
   background: "transparent";
@@ -31,3 +32,8 @@ function HeartRow({ lifes, p1 }) {
 }
 
 export default HeartRow;
+
+HeartRow.propTypes = {
+  p1: PropTypes.bool,
+  lifes: PropTypes.number
+};

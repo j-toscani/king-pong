@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 const MessageContainer = styled.div`
   display: grid;
@@ -20,3 +21,8 @@ function ChatMessage({ p1, message }) {
 }
 
 export default ChatMessage;
+
+ChatMessage.propTypes = {
+  message: PropTypes.object,
+  p1: PropTypes.bool
+};

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Settings from "./Settings";
 import RetreatButton from "./RetreatButton";
 import { useHistory } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const OverlayContainer = styled.section`
   transform: ${props => (props.open ? "translateX(0)" : "translateX(-100%)")};
@@ -11,7 +12,7 @@ const OverlayContainer = styled.section`
   width: 75vw;
   max-width: 360px;
   height: 100%;
-  min-height: 550px;
+  min-height: 450px;
   z-index: 2;
   display: flex;
   flex-direction: column;
@@ -63,3 +64,11 @@ function Overlay({ setSettings, settings, inGame, open, toggleOpen }) {
 }
 
 export default Overlay;
+
+Overlay.propTypes = {
+  setSettings: PropTypes.func,
+  settings: PropTypes.object,
+  inGame: PropTypes.bool,
+  open: PropTypes.bool,
+  toggleOpen: PropTypes.func
+};

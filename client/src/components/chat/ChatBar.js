@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 export const Input = styled.input`
   height: 30px;
@@ -16,7 +17,7 @@ const Sender = styled.label`
   color: ${props => props.theme.darkFont};
 `;
 
-const SubmitButton = styled.input`
+const SubmitButton = styled.button`
   height: 30px;
   border: none;
   outline: none;
@@ -61,9 +62,13 @@ function ChatBar({ onSubmitMessage }) {
         type="input"
         placeholder="Tap to start chatting!"
       ></Input>
-      <SubmitButton type="submit" />
+      <SubmitButton type="submit"></SubmitButton>
     </InputContainer>
   );
 }
 
 export default ChatBar;
+
+ChatBar.propTypes = {
+  onSubmitMessage: PropTypes.func
+};
