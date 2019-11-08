@@ -2,6 +2,7 @@ import styled from "styled-components";
 import React from "react";
 import StyledWindow from "../StyledWindow";
 import Button from "../Button";
+import PropTypes from "prop-types";
 
 const Headline = styled.h3`
   font-size: 20px;
@@ -17,7 +18,6 @@ const StyledWindowSee = styled(StyledWindow)`
 `;
 
 function WinLossWindow({ handleClick, result }) {
-  console.log(result);
   return (
     <StyledWindowSee>
       <Headline>{result ? "You Won" : "You Lost"}</Headline>
@@ -34,3 +34,8 @@ function WinLossWindow({ handleClick, result }) {
 }
 
 export default WinLossWindow;
+
+WinLossWindow.propTypes = {
+  result: PropTypes.bool,
+  handleClick: PropTypes.func
+};

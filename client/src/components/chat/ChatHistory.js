@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import ChatMessage from "./ChatMessage";
 import { getItem } from "../../ressources/scripts/storage";
+import PropTypes from "prop-types";
 
 const ChatDisplay = styled.div`
   height: 100%;
@@ -30,3 +31,7 @@ function ChatHistory({ messages }) {
 }
 
 export default ChatHistory;
+
+ChatHistory.propTypes = {
+  messages: PropTypes.array
+};

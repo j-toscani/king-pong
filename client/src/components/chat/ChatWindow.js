@@ -2,6 +2,7 @@ import React from "react";
 import StyledWindow from "../StyledWindow";
 import ChatHistory from "./ChatHistory";
 import ChatBar from "./ChatBar";
+import PropTypes from "prop-types";
 
 function ChatWindow({ onSubmitMessage, messages }) {
   return (
@@ -13,3 +14,8 @@ function ChatWindow({ onSubmitMessage, messages }) {
 }
 
 export default ChatWindow;
+
+ChatWindow.propTypes = {
+  messages: PropTypes.array,
+  onSubmitMessage: PropTypes.func
+};

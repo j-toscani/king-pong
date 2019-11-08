@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 export const Input = styled.input`
   height: 30px;
@@ -67,3 +68,7 @@ function ChatBar({ onSubmitMessage }) {
 }
 
 export default ChatBar;
+
+ChatBar.propTypes = {
+  onSubmitMessage: PropTypes.func
+};

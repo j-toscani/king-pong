@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import PropTypes from "prop-types";
 
 const StyledWindow = styled.div`
   display: flex;
@@ -22,3 +23,7 @@ const StyledWindow = styled.div`
 `;
 
 export default StyledWindow;
+
+StyledWindow.propTypes = {
+  chat = propTypes.bool
+}

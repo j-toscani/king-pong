@@ -5,6 +5,7 @@ import StyledH2 from "./StyledH2";
 import LogoStyled from "../../ressources/icons/Logo";
 import Cross from "../../ressources/icons/Cross";
 import Options from "../../ressources/icons/Options";
+import PropTypes from "prop-types";
 
 const ToggleSettings = styled.button`
   background: ${props => props.theme.contrast};
@@ -34,3 +35,9 @@ function HeaderNav({ open, toggleOpen, headline }) {
 }
 
 export default HeaderNav;
+
+HeaderNav.propTypes = {
+  open: PropTypes.bool,
+  toggleOpen: PropTypes.func,
+  headline: PropTypes.string
+};

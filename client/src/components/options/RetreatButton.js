@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import Pointer from "../../ressources/icons/Pointer";
+import PropTypes from "prop-types";
 
 const RetreatStyled = styled.button`
   ${props =>
@@ -33,3 +34,8 @@ function RetreatButton({ onClick, name }) {
 }
 
 export default RetreatButton;
+
+RetreatButton.propTypes = {
+  onClick: PropTypes.func,
+  name: PropTypes.string
+};
