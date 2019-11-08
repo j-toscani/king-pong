@@ -1,10 +1,10 @@
-import React from "react";
+import React from "./node_modules/react";
 import Pointer from "../../ressources/icons/Pointer";
 import StyledHeader from "./StyledHeader";
 import StyledH2 from "./StyledH2";
 import InputFieldStyled from "./InputFieldStyled";
-import { useHistory } from "react-router-dom";
-import PropTypes from "prop-types";
+import { useHistory } from "./node_modules/react-router-dom";
+import PropTypes from "./node_modules/prop-types";
 
 export default function HeaderPointer({ headline, rotate }) {
   let history = useHistory();

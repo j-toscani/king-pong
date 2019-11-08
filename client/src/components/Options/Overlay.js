@@ -1,9 +1,9 @@
-import React from "react";
-import styled from "styled-components";
+import React from "./node_modules/react";
+import styled from "./node_modules/styled-components";
 import Settings from "./Settings";
 import RetreatButton from "./RetreatButton";
-import { useHistory } from "react-router-dom";
-import PropTypes from "prop-types";
+import { useHistory } from "./node_modules/react-router-dom";
+import PropTypes from "./node_modules/prop-types";
 
 const OverlayContainer = styled.section`
   transform: ${props => (props.open ? "translateX(0)" : "translateX(-100%)")};
