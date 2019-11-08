@@ -62,7 +62,7 @@ function ChatBar({ onSubmitMessage }) {
         type="input"
         placeholder="Tap to start chatting!"
       ></Input>
-      <SubmitButton type="submit"></SubmitButton>
+      <SubmitButton type="submit">send...</SubmitButton>
     </InputContainer>
   );
 }

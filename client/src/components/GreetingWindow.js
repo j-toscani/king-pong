@@ -47,7 +47,7 @@ function GreetingWindow({ setNickname }) {
       setItem("nickname", nickname);
       routeTo("main");
     } else if (!inputValue) {
-      alert("Please enter a new nicknamme.");
+      alert("Please enter a new nickname.");
     }
   }
   return (
