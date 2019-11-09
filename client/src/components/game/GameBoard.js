@@ -58,10 +58,12 @@ export default function GameBoard({ connectedTo, saveWinLossData }) {
   }, []);
 
   React.useEffect(() => {
-    let canvas = canvasRef.current;
-    let ctx = canvas.getContext("2d");
-    const { ball, player1, player2, global } = game;
-    drawGameState(ctx, global, ball, player1, player2);
+    if (game) {
+      let canvas = canvasRef.current;
+      let ctx = canvas.getContext("2d");
+      const { ball, player1, player2, global } = game;
+      drawGameState(ctx, global, ball, player1, player2);
+    }
   }, [game]);
 
   return (
