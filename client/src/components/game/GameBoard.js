@@ -6,7 +6,7 @@ import drawGameState from "../../gameData/draw";
 import WinLossWindow from "./WinLossWindow";
 import PropTypes from "prop-types";
 
-import calculateNewGameStateClient from "../../gameData/calculateNewGameStateClient";
+// import calculateNewGameStateClient from "../../gameData/calculateNewGameStateClient";
 
 const StyledCanvas = styled.canvas`
   background: ${props => props.theme.accent};
@@ -58,29 +58,12 @@ export default function GameBoard({ connectedTo, saveWinLossData }) {
   }, []);
 
   React.useEffect(() => {
-    let currentFrame;
     let canvas = canvasRef.current;
     let ctx = canvas.getContext("2d");
-    const drawLoop = () => {
-      const now = Date.now();
-      const timeSinceLastDraw = game.global.lastDraw
-        ? now - game.global.lastDraw
-        : 0;
-      game.global.lastDraw = now;
 
-      const newGameState = calculateNewGameStateClient(game, timeSinceLastDraw);
-      const { ball, player1, player2, global } = newGameState;
+    const { ball, player1, player2, global } = newGameState;
 
-      drawGameState(ctx, global, ball, player1, player2);
-
-      if (game.global.play) {
-        currentFrame = requestAnimationFrame(() => drawLoop());
-      }
-    };
-    if (game && game.global.play !== "ended") {
-      drawLoop();
-    }
-    return () => cancelAnimationFrame(currentFrame);
+    drawGameState(ctx, global, ball, player1, player2);
   }, [game]);
 
   return (
