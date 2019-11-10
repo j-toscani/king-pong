@@ -32,14 +32,8 @@ function GameButton({ handleTap, handleRelease, direction }) {
   } else {
     return (
       <StyledInputButton
-        onTouchStart={e => {
-          e.preventDefault();
-          handleTap();
-        }}
-        onTouchEnd={e => {
-          e.preventDefault();
-          handleRelease();
-        }}
+        onTouchStart={handleTap}
+        onTouchEnd={handleRelease}
         onContextMenu={e => e.preventDefault()}
       >
         <Pointer rotate={direction === "left"} white />

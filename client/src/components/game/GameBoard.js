@@ -21,7 +21,12 @@ const GameContainer = styled.section`
   position: relative;
 `;
 
-export default function GameBoard({ connectedTo, saveWinLossData }) {
+export default function GameBoard({
+  connectedTo,
+  setConnectionTo,
+  saveWinLossData,
+  handleSession
+}) {
   let history = useHistory();
 
   function handleGameEnding() {
@@ -49,12 +54,18 @@ export default function GameBoard({ connectedTo, saveWinLossData }) {
     socket.on("playerOne lost a life", newLifes => {
       setLifes(newLifes);
     });
-    if (Number(connectedTo.player) === 1) {
-      socket.emit("first frame", "first frame");
-    }
+    socket.on("set player", number => {
+      const { connected, socket } = { ...connectedTo };
+      setConnectionTo({ connected, player: number, socket, ready: true });
+    });
+
+    socket.emit("first frame", "first frame");
 
     return () => {
-      connectedTo.socket.removeAllListeners();
+      const { connected, socket, player } = { ...connectedTo };
+      setConnectionTo({ connected, socket, player, ready: false });
+      socket.removeAllListeners();
+      handleSession(socket, "leave");
     };
   }, []);
 
