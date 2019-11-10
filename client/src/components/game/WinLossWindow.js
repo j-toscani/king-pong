@@ -37,6 +37,6 @@ function WinLossWindow({ handleClick, result }) {
 export default WinLossWindow;
 
 WinLossWindow.propTypes = {
-  result: PropTypes.string,
+  result: PropTypes.bool,
   handleClick: PropTypes.func
 };

@@ -85,7 +85,7 @@ export default function GameBoard({ connectedTo, saveWinLossData }) {
       ></StyledCanvas>
       {game && game.global.play === "ended" && (
         <WinLossWindow
-          result={game.global.winner}
+          result={game.global.winner === connectedTo.player}
           handleClick={handleGameEnding}
         />
       )}
