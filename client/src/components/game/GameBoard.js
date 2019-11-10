@@ -49,8 +49,9 @@ export default function GameBoard({ connectedTo, saveWinLossData }) {
     socket.on("playerOne lost a life", newLifes => {
       setLifes(newLifes);
     });
-
-    socket.emit("first frame", "first frame");
+    if (Number(connectedTo.player) === 1) {
+      socket.emit("first frame", "first frame");
+    }
 
     return () => {
       connectedTo.socket.removeAllListeners();
