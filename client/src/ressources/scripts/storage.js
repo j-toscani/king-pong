@@ -1,6 +1,4 @@
-const storage = process.env.REACT_APP_CLIENT_STORAGE
-  ? sessionStorage
-  : localStorage;
+const storage = localStorage;
 
 export function getItem(key) {
   const jsonValue = storage.getItem(key);
