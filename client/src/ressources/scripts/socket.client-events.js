@@ -1,34 +1,34 @@
 export default function initChatListeners(
-  connection,
+  connectedTo,
   chatHistory,
   updateHistory,
   setConnection,
   routeTo
 ) {
-  const { socket } = connection;
+  const { socket } = connectedTo;
   socket.on("new message", message => {
     updateHistory(message);
   });
+
   socket.on("new server message", message => {
     const newChatHistory = [...chatHistory];
     newChatHistory.push(message);
     updateHistory(newChatHistory);
   });
 
-  socket.on("game ready", () => {
-    const { connected, socket, player } = connection;
-    setConnection({ connected, socket, player, ready: true });
+  socket.on("set player", number => {
+    const connection = { ...connectedTo };
+    setConnection({ ...connection, ready: true, player: number });
   });
 
   socket.on("game not ready", () => {
-    const { connected, socket, player } = connection;
-    setConnection({ connected, socket, player, ready: false });
+    const connection = { ...connectedTo };
+    setConnection({ ...connection, ready: false });
   });
 
   socket.on("start countdown", () => {
-    const { connected, socket, player } = connection;
-
-    setConnection({ connected, socket, player, ready: false });
+    const connection = { ...connectedTo };
+    setConnection({ ...connection, ready: false });
   });
 
   socket.on("game start", () => {

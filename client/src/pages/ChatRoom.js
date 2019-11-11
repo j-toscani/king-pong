@@ -72,7 +72,9 @@ export default function ChatRoom({
         connectedTo.socket.removeAllListeners();
       }
     };
-  }, []);
+  }, [connectedTo]);
+
+  console.log(connectedTo);
 
   return (
     <>

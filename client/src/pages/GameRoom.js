@@ -38,10 +38,11 @@ export default function GameRoom({
       socket.emit("release button", infoToServer);
     } else if (action === "tap") socket.emit("tap button", infoToServer);
   }
+  console.log(connectedTo);
 
   return (
     <>
-      <HeaderLogo headline={`Session's Game`}></HeaderLogo>
+      <HeaderLogo headline={`Have Fun!`}></HeaderLogo>
       <GameRoomContainer>
         <ConcedeButton onClick={handleConcede}>Concede</ConcedeButton>
         <GameBoard

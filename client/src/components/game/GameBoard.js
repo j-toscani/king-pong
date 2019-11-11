@@ -54,16 +54,11 @@ export default function GameBoard({
     socket.on("playerOne lost a life", newLifes => {
       setLifes(newLifes);
     });
-    socket.on("set player", number => {
-      const { connected, socket } = { ...connectedTo };
-      setConnectionTo({ connected, player: number, socket, ready: true });
-    });
-
     socket.emit("first frame", "first frame");
 
     return () => {
-      const { connected, socket, player } = { ...connectedTo };
-      setConnectionTo({ connected, socket, player, ready: false });
+      const connection = { ...connectedTo };
+      setConnectionTo({ ...connection, ready: false });
       socket.removeAllListeners();
       handleSession(socket, "leave");
     };
