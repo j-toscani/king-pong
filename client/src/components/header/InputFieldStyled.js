@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "./node_modules/styled-components";
 
 const InputFieldStyled = styled.button`
   padding: 0;

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "./node_modules/styled-components";
 
 const StyledH2 = styled.h2`
   color: ${props => props.theme.brightFont};
