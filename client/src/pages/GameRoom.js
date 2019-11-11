@@ -17,7 +17,7 @@ export default function GameRoom({
   let history = useHistory();
 
   function saveWinLossData(ending) {
-    const result = ending ? "win" : "lost";
+    const result = ending ? "won" : "lost";
     let count = getItem(result) || 0;
     count += 1;
     setItem(result, count);
@@ -39,28 +39,14 @@ export default function GameRoom({
     } else if (action === "tap") socket.emit("tap button", infoToServer);
   }
 
-  React.useEffect(() => {
-    const { socket } = connectedTo;
-    socket.on("set player", number => {
-      const { connected, socket } = { ...connectedTo };
-      setConnectionTo({ connected, player: number, socket, ready: true });
-    });
-
-    return () => {
-      const { connected, socket, player } = { ...connectedTo };
-      setConnectionTo({ connected, socket, player, ready: false });
-      socket.removeAllListeners();
-      handleSession(socket, "leave");
-    };
-  }, []);
-
   return (
     <>
-      <HeaderLogo headline={`Session's Game`}></HeaderLogo>
+      <HeaderLogo headline={`Have Fun!`}></HeaderLogo>
       <GameRoomContainer>
         <ConcedeButton onClick={handleConcede}>Concede</ConcedeButton>
         <GameBoard
           connectedTo={connectedTo}
+          setConnectionTo={setConnectionTo}
           handleSession={handleSession}
           saveWinLossData={saveWinLossData}
         ></GameBoard>

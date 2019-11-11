@@ -18,7 +18,6 @@ const StyledWindowSee = styled(StyledWindow)`
 `;
 
 function WinLossWindow({ handleClick, result }) {
-  console.log(result);
   return (
     <StyledWindowSee>
       <Headline>{result ? "You Won" : "You Lost"}</Headline>
@@ -37,6 +36,6 @@ function WinLossWindow({ handleClick, result }) {
 export default WinLossWindow;
 
 WinLossWindow.propTypes = {
-  result: PropTypes.string,
+  result: PropTypes.bool,
   handleClick: PropTypes.func
 };

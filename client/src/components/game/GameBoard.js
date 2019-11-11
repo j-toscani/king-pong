@@ -6,7 +6,7 @@ import drawGameState from "../../gameData/draw";
 import WinLossWindow from "./WinLossWindow";
 import PropTypes from "prop-types";
 
-import calculateNewGameStateClient from "../../gameData/calculateNewGameStateClient";
+// import calculateNewGameStateClient from "../../gameData/calculateNewGameStateClient";
 
 const StyledCanvas = styled.canvas`
   background: ${props => props.theme.accent};
@@ -21,7 +21,12 @@ const GameContainer = styled.section`
   position: relative;
 `;
 
-export default function GameBoard({ connectedTo, saveWinLossData }) {
+export default function GameBoard({
+  connectedTo,
+  setConnectionTo,
+  saveWinLossData,
+  handleSession
+}) {
   let history = useHistory();
 
   function handleGameEnding() {
@@ -49,38 +54,23 @@ export default function GameBoard({ connectedTo, saveWinLossData }) {
     socket.on("playerOne lost a life", newLifes => {
       setLifes(newLifes);
     });
-
     socket.emit("first frame", "first frame");
 
     return () => {
-      connectedTo.socket.removeAllListeners();
+      const connection = { ...connectedTo };
+      setConnectionTo({ ...connection, ready: false });
+      socket.removeAllListeners();
+      handleSession(socket, "leave");
     };
   }, []);
 
   React.useEffect(() => {
-    let currentFrame;
-    let canvas = canvasRef.current;
-    let ctx = canvas.getContext("2d");
-    const drawLoop = () => {
-      const now = Date.now();
-      const timeSinceLastDraw = game.global.lastDraw
-        ? now - game.global.lastDraw
-        : 0;
-      game.global.lastDraw = now;
-
-      const newGameState = calculateNewGameStateClient(game, timeSinceLastDraw);
-      const { ball, player1, player2, global } = newGameState;
-
+    if (game) {
+      let canvas = canvasRef.current;
+      let ctx = canvas.getContext("2d");
+      const { ball, player1, player2, global } = game;
       drawGameState(ctx, global, ball, player1, player2);
-
-      if (game.global.play) {
-        currentFrame = requestAnimationFrame(() => drawLoop());
-      }
-    };
-    if (game && game.global.play !== "ended") {
-      drawLoop();
     }
-    return () => cancelAnimationFrame(currentFrame);
   }, [game]);
 
   return (
@@ -101,7 +91,7 @@ export default function GameBoard({ connectedTo, saveWinLossData }) {
       ></StyledCanvas>
       {game && game.global.play === "ended" && (
         <WinLossWindow
-          result={game.global.winner}
+          result={game.global.winner === connectedTo.player}
           handleClick={handleGameEnding}
         />
       )}
