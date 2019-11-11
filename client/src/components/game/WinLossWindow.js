@@ -18,7 +18,6 @@ const StyledWindowSee = styled(StyledWindow)`
 `;
 
 function WinLossWindow({ handleClick, result }) {
-  console.log(result);
   return (
     <StyledWindowSee>
       <Headline>{result ? "You Won" : "You Lost"}</Headline>

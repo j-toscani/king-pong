@@ -74,8 +74,6 @@ export default function ChatRoom({
     };
   }, [connectedTo]);
 
-  console.log(connectedTo);
-
   return (
     <>
       <HeaderNav

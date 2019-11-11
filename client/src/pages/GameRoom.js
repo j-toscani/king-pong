@@ -38,7 +38,6 @@ export default function GameRoom({
       socket.emit("release button", infoToServer);
     } else if (action === "tap") socket.emit("tap button", infoToServer);
   }
-  console.log(connectedTo);
 
   return (
     <>
