@@ -14,6 +14,7 @@ const StyledWindowSee = styled(StyledWindow)`
   z-index: 30;
   left: 10px;
   top: 75px;
+  width: 250px;
   position: absolute;
 `;
 
