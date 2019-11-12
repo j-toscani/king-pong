@@ -48,9 +48,9 @@ export default function SelectRoom({
           <Button
             big
             onClick={() => {
-              routeTo();
-              const { socket } = connectedTo;
-              handleSession(socket, "create");
+              alert(
+                "This feature will be added soon! Talk to the creater for more info :)"
+              );
             }}
           >
             Create Game!

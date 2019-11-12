@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import ChatWindow from "../components/chat/ChatWindow";
 import Button from "../components/Button";
-import HeaderNav from "../components/header/HeaderNav";
 import Overlay from "../components/options/Overlay";
 import { useHistory } from "react-router-dom";
 import { getItem, setItem } from "../ressources/scripts/storage";
 import initChatListeners from "../ressources/scripts/socket.client-events";
+import HeaderLogo from "../components/header/HeaderLogo";
 
 const StyledMain = styled.main`
   flex-direction: column;
@@ -76,11 +76,7 @@ export default function ChatRoom({
 
   return (
     <>
-      <HeaderNav
-        open={settings.open}
-        toggleOpen={toggleOpen}
-        headline={"Chatroom"}
-      />
+      <HeaderLogo headline={"Chat Room"}></HeaderLogo>
       <StyledMain>
         <ChatWindow
           messages={chatHistory}

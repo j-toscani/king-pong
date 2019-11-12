@@ -7,6 +7,12 @@ const Container = styled.main`
   flex-direction: column;
 `;
 
+const ExternalAnker = styled.a`
+  text-decoration: none;
+  color: ${props => props.theme.accent};
+  margin: 3px;
+`;
+
 const GameInfo = styled.div`
   background: ${props => props.theme.contrast};
   margin-top: 50px;
@@ -24,22 +30,26 @@ export default function About() {
       <HeaderPointer headline={"About"} />
       <Container>
         <GameInfo>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sit, sint!
-          Perspiciatis impedit quibusdam necessitatibus labore? Quae error iusto
-          explicabo sequi accusamus accusantium! Ad, quos aut quaerat neque
-          corrupti dolorem.Neque voluptatem, fugiat aperiam autem, accusamus
-          ipsam, provident ea tempora similique esse omnis voluptatum dicta
-          delectus! Et, nulla. Aut quia accusamus asperiores expedita iste
-          molestias, obcaecati assumenda quisquam ipsum saepe?
+          King Pong is a retro Pong game developed in React. It´s key features
+          are crossplattform play, modern design and online multiplayer. It
+          started as a single player game to learn basic JS. The first steps can
+          be found
+          <ExternalAnker href="https://www.github.com/j-toscani/1st-try-pong">
+            here
+          </ExternalAnker>
+          . KingPong now incorporates all the basic functionalities which are
+          necessary for an online-multiplayer game.
         </GameInfo>
         <GameInfo>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sit, sint!
-          Perspiciatis impedit quibusdam esse necessitatibus labore? Quae error
-          iusto explicabo sequi accusamus accusantium! Ad, quos aut quaerat
-          neque corrupti dolorem.Neque voluptatem, fugiat aperiam autem,
-          accusamus ipsam, provident ea tempora similique esse omnis voluptatum
-          dicta delectus! Et, nulla. Aut quia accusamus asperiores expedita iste
-          molestias, obcaecati assumenda quisquam ipsum saepe?
+          In the beginning the focus was a fun game you could play with your
+          friends. In the end, it developed into a journey into the depth of
+          "you only understand it if you did it once" - land. Therefore, most my
+          accomplishments can be found "under the hood". If you want to have a
+          look at the code or have questions visit my git
+          <ExternalAnker href="https://www.github.com/j-toscani/king-pong">
+            repo
+          </ExternalAnker>
+          and hit me up: .
         </GameInfo>
       </Container>
     </>

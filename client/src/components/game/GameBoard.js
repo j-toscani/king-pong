@@ -40,22 +40,28 @@ export default function GameBoard({
 
   React.useEffect(() => {
     const { socket } = connectedTo;
-    socket.on("new frame", frame => {
-      updateGame(frame);
-    });
-    socket.on("playerTwo lost a life", newLifes => {
-      setLifes(newLifes);
-    });
-    socket.on("game ended", game => {
-      game.global.play = "ended";
-      saveWinLossData(game.global.winner);
-      updateGame(game);
-    });
-    socket.on("playerOne lost a life", newLifes => {
-      setLifes(newLifes);
-    });
-    socket.emit("first frame", "first frame");
-
+    if (!socket) {
+      history.push("/main");
+      setTimeout(() => {
+        alert("Not connected to a gameroom");
+      }, 50);
+    } else {
+      socket.on("new frame", frame => {
+        updateGame(frame);
+      });
+      socket.on("playerTwo lost a life", newLifes => {
+        setLifes(newLifes);
+      });
+      socket.on("game ended", game => {
+        game.global.play = "ended";
+        saveWinLossData(game.global.winner);
+        updateGame(game);
+      });
+      socket.on("playerOne lost a life", newLifes => {
+        setLifes(newLifes);
+      });
+      socket.emit("first frame", "first frame");
+    }
     return () => {
       const connection = { ...connectedTo };
       setConnectionTo({ ...connection, ready: false });
