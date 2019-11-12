@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+
 import HeaderPointer from "../components/header/HeaderPointer";
 import ProfileData from "../components/ProfileData";
 
@@ -8,13 +9,12 @@ const Container = styled.main`
   flex-direction: column;
 `;
 
-export default function Profile({ user }) {
-  console.log(user);
+export default function Profile() {
   return (
     <>
       <HeaderPointer headline={"Profile"}></HeaderPointer>
       <Container>
-        <ProfileData user={user}></ProfileData>
+        <ProfileData></ProfileData>
       </Container>
     </>
   );
