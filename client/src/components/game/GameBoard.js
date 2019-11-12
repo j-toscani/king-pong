@@ -6,12 +6,10 @@ import drawGameState from "../../gameData/draw";
 import WinLossWindow from "./WinLossWindow";
 import PropTypes from "prop-types";
 
-// import calculateNewGameStateClient from "../../gameData/calculateNewGameStateClient";
-
 const StyledCanvas = styled.canvas`
   background: ${props => props.theme.accent};
-  width: 300px;
-  height: 400px;
+  width: 270px;
+  height: 350px;
   transform: ${props => (props.player2View ? "rotate(180deg)" : "none")};
 `;
 
