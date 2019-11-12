@@ -2,6 +2,7 @@ import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 import GlobalStyles from "./GlobalStyle";
 import colorTheme from "./themes/color";
+import alternativeColorTheme from "./themes/alternativeColorTheme";
 import darkTheme from "./themes/dark";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import About from "./pages/About";
@@ -24,7 +25,7 @@ const Container = styled.div`
 function App() {
   const [settings, adjustSettings] = React.useState({
     darkmode: false || getItem("darkmode"),
-    sound: true || getItem("sound")
+    colors: true || getItem("colors")
   });
 
   function setSettings(name) {
@@ -34,8 +35,10 @@ function App() {
     adjustSettings(newSettings);
   }
 
+  const colors = settings.colors ? colorTheme : alternativeColorTheme;
+
   return (
-    <ThemeProvider theme={settings.darkmode ? darkTheme : colorTheme}>
+    <ThemeProvider theme={settings.darkmode ? darkTheme : colors}>
       <GlobalStyles />
       <Container>
         <Router>

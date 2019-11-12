@@ -18,7 +18,7 @@ const StyledInputButton = styled.button`
 `;
 
 function isMobile(width) {
-  return width > 420;
+  return width > 500;
 }
 function GameButton({ handleTap, handleRelease, direction }) {
   const { width } = useWindowDimensions();
@@ -32,8 +32,14 @@ function GameButton({ handleTap, handleRelease, direction }) {
   } else {
     return (
       <StyledInputButton
-        onTouchStart={handleTap}
-        onTouchEnd={handleRelease}
+        onTouchStart={e => {
+          e.preventDefault();
+          handleTap();
+        }}
+        onTouchEnd={e => {
+          e.preventDefault();
+          handleRelease();
+        }}
         onContextMenu={e => e.preventDefault()}
       >
         <Pointer rotate={direction === "left"} white />
