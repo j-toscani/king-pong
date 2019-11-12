@@ -28,11 +28,11 @@ function ProfileData() {
       </Container>
       <Container alt="true">
         <div>
-          {getItem("won")} <hr></hr> Won
+          {getItem("won") || 0} <hr></hr> Won
         </div>
         :
         <div>
-          {getItem("lost")}
+          {getItem("lost") || 0}
           <hr></hr> Lost
         </div>
       </Container>
