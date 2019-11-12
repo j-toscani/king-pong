@@ -19,6 +19,7 @@ const Container = styled.div`
 `;
 
 function ProfileData({ user }) {
+  console.log(user);
   return (
     <div>
       <Container>

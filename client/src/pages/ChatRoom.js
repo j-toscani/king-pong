@@ -2,9 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import ChatWindow from "../components/chat/ChatWindow";
 import Button from "../components/Button";
-import Overlay from "../components/options/Overlay";
 import { useHistory } from "react-router-dom";
-import { getItem, setItem } from "../ressources/scripts/storage";
+import { getItem } from "../ressources/scripts/storage";
 import initChatListeners from "../ressources/scripts/socket.client-events";
 import HeaderLogo from "../components/header/HeaderLogo";
 
@@ -22,20 +21,12 @@ const ButtonContainer = styled.div`
 `;
 
 export default function ChatRoom({
-  setSettings,
-  settings,
   connectedTo,
   handleSession,
   setConnectionTo
 }) {
   const history = useHistory();
   const [chatHistory, updateHistory] = React.useState([]);
-  const [open, setOpen] = React.useState(false || getItem("open"));
-
-  function toggleOpen() {
-    setItem("open", !open);
-    setOpen(!open);
-  }
 
   function handleSubmitMessage(content) {
     const newMessage = {
@@ -103,13 +94,6 @@ export default function ChatRoom({
             Chicken out...
           </Button>
         </ButtonContainer>
-        <Overlay
-          setSettings={setSettings}
-          settings={settings}
-          inGame={true}
-          toggleOpen={toggleOpen}
-          open={open}
-        />
       </StyledMain>
     </>
   );

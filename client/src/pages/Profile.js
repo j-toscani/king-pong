@@ -9,6 +9,7 @@ const Container = styled.main`
 `;
 
 export default function Profile({ user }) {
+  console.log(user);
   return (
     <>
       <HeaderPointer headline={"Profile"}></HeaderPointer>
