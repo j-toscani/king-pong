@@ -26,7 +26,7 @@ const StyledWindowGreeting = styled(StyledWindow)`
   justify-content: space-around;
 `;
 
-function GreetingWindow({ setNickname }) {
+function GreetingWindow() {
   const [inputValue, setInputValue] = React.useState(null);
 
   let history = useHistory();
@@ -41,10 +41,8 @@ function GreetingWindow({ setNickname }) {
 
   function submitNickname() {
     if (getItem() === null && inputValue) {
-      const nickname = inputValue;
-      setNickname(nickname);
-      alert(`Hello ${nickname}, let´s play Pong!`);
-      setItem("nickname", nickname);
+      alert(`Hello ${inputValue}, let´s play Pong!`);
+      setItem("nickname", inputValue);
       routeTo("main");
     } else if (!inputValue) {
       alert("Please enter a new nickname.");
