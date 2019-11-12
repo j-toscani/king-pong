@@ -6,12 +6,10 @@ import drawGameState from "../../gameData/draw";
 import WinLossWindow from "./WinLossWindow";
 import PropTypes from "prop-types";
 
-// import calculateNewGameStateClient from "../../gameData/calculateNewGameStateClient";
-
 const StyledCanvas = styled.canvas`
   background: ${props => props.theme.accent};
-  width: 300px;
-  height: 400px;
+  width: 270px;
+  height: 350px;
   transform: ${props => (props.player2View ? "rotate(180deg)" : "none")};
 `;
 
@@ -40,22 +38,28 @@ export default function GameBoard({
 
   React.useEffect(() => {
     const { socket } = connectedTo;
-    socket.on("new frame", frame => {
-      updateGame(frame);
-    });
-    socket.on("playerTwo lost a life", newLifes => {
-      setLifes(newLifes);
-    });
-    socket.on("game ended", game => {
-      game.global.play = "ended";
-      saveWinLossData(game.global.winner);
-      updateGame(game);
-    });
-    socket.on("playerOne lost a life", newLifes => {
-      setLifes(newLifes);
-    });
-    socket.emit("first frame", "first frame");
-
+    if (!socket) {
+      history.push("/main");
+      setTimeout(() => {
+        alert("Not connected to a gameroom");
+      }, 50);
+    } else {
+      socket.on("new frame", frame => {
+        updateGame(frame);
+      });
+      socket.on("playerTwo lost a life", newLifes => {
+        setLifes(newLifes);
+      });
+      socket.on("game ended", game => {
+        game.global.play = "ended";
+        saveWinLossData(game.global.winner);
+        updateGame(game);
+      });
+      socket.on("playerOne lost a life", newLifes => {
+        setLifes(newLifes);
+      });
+      socket.emit("first frame", "first frame");
+    }
     return () => {
       const connection = { ...connectedTo };
       setConnectionTo({ ...connection, ready: false });

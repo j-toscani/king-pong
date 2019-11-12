@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { getItem } from "../ressources/scripts/storage";
 
 const Container = styled.div`
   width: 100vw;
@@ -18,26 +19,26 @@ const Container = styled.div`
   text-align: center;
 `;
 
-function ProfileData({ user }) {
+function ProfileData() {
   return (
     <div>
       <Container>
         <span>Name:</span>
-        <span>{user.name}</span>
+        <span>{getItem("nickname")}</span>
       </Container>
       <Container alt="true">
         <div>
-          {user.wins} <hr></hr> Won
+          {getItem("won") || 0} <hr></hr> Won
         </div>
         :
         <div>
-          {user.losses}
+          {getItem("lost") || 0}
           <hr></hr> Lost
         </div>
       </Container>
       <Container>
         <span>Rank :</span>
-        <span>{`# ${user.rank}`}</span>
+        <span>{"tba"}</span>
       </Container>
     </div>
   );

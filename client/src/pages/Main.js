@@ -54,7 +54,7 @@ export default function Main({ setSettings, settings }) {
             handleSession={handleSessionAction}
           ></SelectRoom>
         </Route>
-        <Route exact path="/main/chat">
+        <Route path="/main/chat">
           <ChatRoom
             setConnectionTo={setConnectionTo}
             connectedTo={connectedTo}
@@ -63,7 +63,7 @@ export default function Main({ setSettings, settings }) {
             handleSession={handleSessionAction}
           ></ChatRoom>
         </Route>
-        <Route exact path="/main/game">
+        <Route path="/main/game">
           <GameRoom
             connectedTo={connectedTo}
             setConnectionTo={setConnectionTo}

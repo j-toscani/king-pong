@@ -26,7 +26,6 @@ function App() {
     darkmode: false || getItem("darkmode"),
     sound: true || getItem("sound")
   });
-  const [nickname, setNickname] = React.useState(getItem("nickname"));
 
   function setSettings(name) {
     const newSettings = { ...settings };
@@ -34,13 +33,6 @@ function App() {
     setItem(name, newSettings[name]);
     adjustSettings(newSettings);
   }
-
-  const user = {
-    name: nickname || "Anonymous",
-    wins: getItem("win") || 0,
-    losses: getItem("lost") || 0,
-    rank: "tba"
-  };
 
   return (
     <ThemeProvider theme={settings.darkmode ? darkTheme : colorTheme}>
@@ -55,28 +47,18 @@ function App() {
           <Route
             path="/main"
             component={() => (
-              <Main
-                setSettings={setSettings}
-                settings={settings}
-                nickname={nickname}
-              />
+              <Main setSettings={setSettings} settings={settings} />
             )}
           />
           <Route
             path="/entername"
             exact
-            component={props => (
-              <NicknameInput
-                setNickname={setNickname}
-                nickname={user.name}
-                {...props}
-              />
-            )}
+            component={props => <NicknameInput {...props} />}
           />
           <Route
             path="/profile"
             exact
-            component={props => <Profile user={user} {...props} />}
+            component={props => <Profile {...props} />}
           />
           <Route path="/" exact component={props => <Welcome {...props} />} />
         </Router>

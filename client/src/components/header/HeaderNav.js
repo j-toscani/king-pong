@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import StyledHeader from "./StyledHeader";
 import StyledH2 from "./StyledH2";
 import LogoStyled from "../../ressources/icons/Logo";
 import Cross from "../../ressources/icons/Cross";
 import Options from "../../ressources/icons/Options";
-import PropTypes from "prop-types";
 
 const ToggleSettings = styled.button`
   background: ${props => props.theme.contrast};

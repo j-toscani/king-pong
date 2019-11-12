@@ -22,11 +22,8 @@ const Container = styled.div`
 function HeartRow({ lifes, p1 }) {
   return (
     <Container p1={p1}>
-      <SingleHeart filled={p1 ? lifes >= 5 : lifes >= 1} />
-      <SingleHeart filled={p1 ? lifes >= 4 : lifes >= 2} />
-      <SingleHeart filled={p1 ? lifes >= 3 : lifes >= 3} />
-      <SingleHeart filled={p1 ? lifes >= 2 : lifes >= 4} />
-      <SingleHeart filled={p1 ? lifes >= 1 : lifes >= 5} />
+      <SingleHeart filled={p1 ? lifes >= 2 : lifes >= 1} />
+      <SingleHeart filled={p1 ? lifes >= 1 : lifes >= 2} />
     </Container>
   );
 }

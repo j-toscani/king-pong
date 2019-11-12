@@ -14,6 +14,7 @@ const StyledWindowSee = styled(StyledWindow)`
   z-index: 30;
   left: 10px;
   top: 75px;
+  width: 250px;
   position: absolute;
 `;
 
@@ -22,12 +23,12 @@ function WinLossWindow({ handleClick, result }) {
     <StyledWindowSee>
       <Headline>{result ? "You Won" : "You Lost"}</Headline>
       {result ? (
-        <p>Your opponent either conceded or lost all lifes!</p>
+        <p>Your opponent lost all lifes!</p>
       ) : (
-        <p>Get into another round and improve!</p>
+        <p>Get into another game and improve!</p>
       )}
       <Button active onClick={handleClick}>
-        Back to Play
+        Back to main screen
       </Button>
     </StyledWindowSee>
   );
