@@ -1,68 +1,36 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# KingPong
 
-## Available Scripts
+Play a classic against your friends. Online! On mobile and Desktop!
 
-In the project directory, you can run:
+## Usage
 
-### `npm start`
+In order to install all dependencies use the following commands:
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```
+npm install
+cd client
+npm install
+```
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+In order for the game to work, you have to make the following adjustments:
 
-### `npm test`
+1. open the file "socket-server.js" and choose a port you want the socket to run on.
+1. Go to the folder "pages" and open the "Main.js" file and look for the following line of code:
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```JS
+...
+React.useEffect(() => {
+const socket = io();
+socket.emit("setname", getItem("nickname"));
+...
+```
 
-### `npm run build`
+1. Add "http://127.0.0.1:<YourPort>" as an argument to the `ìo()` function. <YourPort> has to be the same port your server listens to.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+For developement you can start the server and client at the same time by using the following command:
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```
+npm run dev
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+The game can be viewed here: https://king-pong-nf.herokuapp.com/;
