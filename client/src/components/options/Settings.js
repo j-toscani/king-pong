@@ -39,11 +39,11 @@ export default function Settings({ setSettings, settings }) {
         />
       </Option>
       <Option>
-        Sound
+        Colors
         <SwitchButton
-          id={"Sound"}
-          mode={settings.sound}
-          onClick={() => setSettings("sound")}
+          id={"Colors"}
+          mode={settings.colors}
+          onClick={() => setSettings("colors")}
         />
       </Option>
     </Container>
